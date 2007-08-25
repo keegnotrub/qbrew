@@ -1,0 +1,20 @@
+<!DOCTYPE recipe>
+<recipe generator="qbrew" version="0.4.0" >
+<title>SQA Pale Ale</title>
+<brewer>Joe Sixpack</brewer>
+<style>American Pale Ale</style>
+<batch quantity="5.000000 gal" mash="false" />
+<grains>
+<grain type="Extract" use="Extract" quantity="7.500000 lb" color="5" extract="1.037" >Light Malt Extract</grain>
+<grain type="Grain" use="Steeped" quantity="1.000000 lb" color="40" extract="1.034" >Crystal 40L</grain>
+</grains>
+<hops>
+<hop form="Pellet" alpha="13.9" quantity="0.500000 oz" time="60" >Columbus</hop>
+<hop form="Pellet" alpha="13.9" quantity="0.500000 oz" time="30" >Columbus</hop>
+<hop form="Pellet" alpha="13.9" quantity="0.500000 oz" time="10" >Columbus</hop>
+<hop form="Pellet" alpha="13.9" quantity="0.500000 oz" time="0" >Columbus</hop>
+</hops>
+<miscingredients>
+<miscingredient type="Yeast" notes="smack pack" quantity="1.000000 unit" >London Pale Ale yeast</miscingredient>
+</miscingredients>
+</recipe>

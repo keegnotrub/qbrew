@@ -1,0 +1,45 @@
+#! /bin/sh
+
+STYLESHEET=handbook.xsl
+XSLTCOMPILE="xsltproc --nonet"
+
+XML_CATALOG_FILES=$XML_CATALOG_FILES:./catalog
+XML_CATALOG_FILES=$XML_CATALOG_FILES:/usr/local/share/xml/catalog
+
+export XML_CATALOG_FILES
+export SP_CHARSET_FIXED=yes
+export SP_ENCODING=unicode
+
+# create output directory
+rm -rf book
+mkdir book
+cd book
+
+# process xml
+if [ -e ../handbook.docbook ] ; then
+  echo "Processing handbook.docbook"
+  $XSLTCOMPILE ../$STYLESHEET ../handbook.docbook
+  tidy -indent -quiet -modify *.html
+  LNFILE=`find * -name ln-*.html -print | head -n 1`
+  if test "no$LNFILE" != "no" ; then
+    mv $LNFILE notice.html
+    sed -i .bak -e s/"$LNFILE"/notice.html/ handbook.html
+    rm handbook.html.bak
+  fi
+  # add prefixes to filenames (would be nice if stylesheet could do this)
+  htmllist=`ls *.html`
+  for htmlfile in $htmllist ; do
+    filelist=`ls *.html`
+    for temp in $filelist ; do
+      sed -i .bak -e s/"$htmlfile"/handbook-$htmlfile/ $temp
+    done
+    if [ -e $htmlfile ] ; then
+      mv ${htmlfile} handbook-${htmlfile}
+    fi
+  done
+  rm -f *.bak
+else
+  echo "WARNING: handbook.docbook not found"
+fi
+
+cd ..
