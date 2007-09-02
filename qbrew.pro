@@ -20,19 +20,17 @@ win32 {
     CONFIG -= console
 
     target.path = release
-    INSTALLS += target
-
-    data.path = release
-    data.files = data/* pics/splash.png win/qbrew.ico README LICENSE
-    INSTALLS += data
-
-    doc.path = release/doc
-    doc.files = docs/book/*.html docs/primer/*.html
-    INSTALLS += doc
 
     trans.path = translations
     trans.files = translations/*.qm
-    INSTALLS += trans
+
+    data.path = release
+    data.files = data/* pics/splash.png win/qbrew.ico README LICENSE
+
+    doc.path = release/doc
+    doc.files = docs/book/*.html docs/primer/*.html
+
+    INSTALLS += target trans data doc 
 }
 
 macx {
@@ -45,41 +43,39 @@ macx {
     QMAKE_POST_LINK=strip qbrew.app/Contents/MacOS/qbrew
 
     # install into app bundle
+    trans.path = qbrew.app/Contents/Resources/translations
+    trans.files = translations/*.qm
+
     data.path = qbrew.app/Contents/Resources
     data.files = data/* pics/splash.png mac/application.icns mac/document.icns
-    INSTALLS += data
-
-    misc.path = qbrew.app/Contents
-    misc.files = mac/Info.plist mac/PkgInfo
-    INSTALLS += misc
 
     doc.path = qbrew.app/Contents/Resources/en.lproj
     doc.files = docs/book/*.html docs/primer/*.html
-    INSTALLS += doc
 
-    trans.path = qbrew.app/Contents/Resources/translations
-    trans.files = translations/*.qm
-    INSTALLS += trans
+    misc.path = qbrew.app/Contents
+    misc.files = mac/Info.plist mac/PkgInfo
+
+    INSTALLS += trans data doc misc
 }
 
 unix:!macx {
     configure {
         DEFINES += $$(HAVEDEFS)
         target.path = $$(BINDIR)
+        trans.path = $$(DATADIR)/translations
         data.path = $$(DATADIR)
         doc.path = $$(DOCDIR)
-        trans.path = $$(DATADIR)/translations
     } else {
         target.path = /usr/local/bin
+        trans.path = /usr/local/share/qbrew/translations
         data.path = /usr/local/share/qbrew
         doc.path = /usr/local/share/doc/qbrew
-        trans.path = /usr/local/share/qbrew/translations
     }
 
+    trans.files = translations/*.qm
     data.files = data/* pics/splash.png
     doc.files = docs/book/*.html docs/primer/*.html README LICENSE
-    trans.files = translations/*.qm
-    INSTALLS += target data doc trans
+    INSTALLS += target trans data doc 
 }
 
 RESOURCES = qbrew.qrc
