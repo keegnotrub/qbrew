@@ -81,6 +81,7 @@ Windows Build
        splash.png
        datafile
        doc\html\* (all html help files)
+       translations\* (all qm files)
 
 5) You may also wish to include the Qt DLL and other runtime libraries in the
    installation directory.
