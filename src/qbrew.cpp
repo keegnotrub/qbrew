@@ -821,7 +821,7 @@ void QBrew::saveConfig()
 
 void QBrew::readConfig()
 {
-    QSettings config("usermode.org", "QBrew");
+    QSettings config("usermode", "qbrew");
     config.beginGroup(QString("/") + PACKAGE);
 
     // read general config
@@ -876,7 +876,7 @@ void QBrew::readConfig()
 
 void QBrew::writeConfig()
 {
-    QSettings config("usermode.org", "QBrew");
+    QSettings config("usermode", "qbrew");
     config.beginGroup(QString("/") + PACKAGE);
 
     // write general config
@@ -916,7 +916,7 @@ void QBrew::writeConfig()
 
 void QBrew::restoreState()
 {
-    QSettings config("usermode.org", "QBrew");
+    QSettings config("usermode", "qbrew");
     config.beginGroup(QString("/") + PACKAGE);
 
     // read window state
@@ -949,7 +949,7 @@ void QBrew::restoreState()
 void QBrew::saveState()
 {
     // load config from settings
-    QSettings config("usermode.org", "QBrew");
+    QSettings config("usermode", "qbrew");
     config.beginGroup(QString("/") + PACKAGE);
 
     // write window state
