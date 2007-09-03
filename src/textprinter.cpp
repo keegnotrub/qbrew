@@ -531,10 +531,8 @@ void TextPrinter::exportPdf(const QTextDocument *document,
 
     // file save dialog
     QString dialogcaption = caption.isEmpty() ? "Export PDF" : caption;
-    QString exportname;
-    if (QFile::exists(filename)) {
-        exportname = filename;
-    } else {
+    QString exportname = filename;
+    if (exportname.isEmpty()) {
         exportname = QFileDialog::getSaveFileName(parent_, dialogcaption,
                                                   filename, "*.pdf");
     }

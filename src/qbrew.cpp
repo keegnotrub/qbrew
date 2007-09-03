@@ -75,6 +75,7 @@ void QBrew::initialize(const QString &filename)
     initActions();
 #if defined (Q_WS_MAC)
     // initially defaults for mac
+    setUnifiedTitleAndToolBarOnMac(true);
     ui.maintoolbar->setVisible(false);
     statusBar()->setVisible(true);
 #endif
@@ -211,6 +212,8 @@ void QBrew::initActions()
     connect(ui.actionabout, SIGNAL(triggered()), this, SLOT(helpAbout()));
 
     // insert toolbar toggle action
+    ui.maintoolbar->toggleViewAction()->setStatusTip(tr("Toggle the toolbar"));
+    ui.maintoolbar->toggleViewAction()->setWhatsThis(tr("Enable or disable the Toolbar"));
     ui.menuoptions->insertAction(ui.actiontogglestatusbar,
                                  ui.maintoolbar->toggleViewAction());
 }
@@ -717,7 +720,7 @@ void QBrew::applyGeneralState(const GenConfigState &state)
     }
     if (state.recentnum < oldstate.recentnum) {
         while (state_.general.recentfiles.count() > state_.general.recentnum) {
-            state_.general.recentfiles.pop_back();
+            state_.general.recentfiles.removeLast();
         }
     }
     statusBar()->showMessage(tr(READY), 2000);
@@ -932,6 +935,10 @@ void QBrew::restoreState()
     // read general state
     config.beginGroup(CONFGROUP_GENERAL);
     state_.general.recentfiles = config.value(CONF_GEN_RECENTFILES).toStringList();
+    while (state_.general.recentfiles.count() > state_.general.recentnum) {
+        state_.general.recentfiles.removeLast();
+    }
+
     config.endGroup();
 
     config.endGroup();
@@ -1115,6 +1122,7 @@ void QBrew::autoSave()
     if ((filename_.isEmpty()) || (filename_ == tr(DEFAULT_FILE))) {
         recipe_->saveRecipe(autosavename_);
     } else {
+        if (state_.general.autobackup) backupFile();
         recipe_->saveRecipe(filename_);
     }
     // remove "modified" from caption
