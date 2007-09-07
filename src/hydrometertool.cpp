@@ -26,7 +26,6 @@ HydrometerTool:: HydrometerTool(QWidget* parent)
 {
     ui.setupUi(this);
 
-    // TODO: use appropriate units (F or C)
     QString SUFFIX = QString(" %1%2")
         .arg(Resource::DEGREE)
         .arg(Data::instance()->defaultTempUnit().symbol());
@@ -46,7 +45,7 @@ HydrometerTool:: HydrometerTool(QWidget* parent)
         ui.calibrated->setMinimum(0.0);
         ui.calibrated->setMaximum(100.0);
         ui.calibrated->setValue(15.0);
-        ui.sample->setMinimum(-15);
+        ui.sample->setMinimum(0.0);
         ui.sample->setMaximum(100.0);
         ui.sample->setValue(15.0);
     }

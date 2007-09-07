@@ -69,7 +69,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
     grainpage.view->horizontalHeader()->setHighlightSections(false);
 
     grainpage.view->setColumnWidth(GrainModel::NAME, 20*mw);
-    grainpage.view->setColumnWidth(GrainModel::WEIGHT, 8*mw);
+    grainpage.view->setColumnHidden(GrainModel::WEIGHT, true);
     grainpage.view->setColumnWidth(GrainModel::EXTRACT, 8*mw);
     grainpage.view->setColumnWidth(GrainModel::COLOR, 8*mw);
     grainpage.view->setColumnWidth(GrainModel::TYPE, 8*mw);
