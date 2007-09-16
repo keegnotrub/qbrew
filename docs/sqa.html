@@ -298,6 +298,11 @@
         in increments of 0.01
       </li>
       <li>
+        [___] Verify that the <em><strong>Steep yield</strong></em>
+        spinbox sets the yield for steeped grains, in the range of 0.00 to 1.00
+        in increments of 0.01
+      </li>
+      <li>
         [___] Verify that the <em><strong>Use Tinseth</strong></em> checkbox
         toggles the application calculation routines to use the Tinseth
         bitterness formula instead of the default (Rager) bitterness formula
@@ -319,10 +324,6 @@
       <li>
         [___] Verify that the <em><strong>Hop form</strong></em> combobox
         selects the default hop form for new hop ingredients
-      </li>
-      <li>
-        [___] Verify that the <em><strong>Mash</strong></em> checkbox selects
-        the default for the main view's mash checkbox for new recipes
       </li>
     </ul>
     <h3>
@@ -353,12 +354,14 @@
       <li>
         [___] Verify that the <em><strong>Sample temperature</strong></em>
         spinbox has the suffix of "&deg;F", and ranges from 32.0 to 212.0 in
-        increments of 0.2
+        increments of 0.2. If Metric measurements are used, verify that the
+        suffix is "&deg;C", and ranges from 0.0 to 100.0 degrees.
       </li>
       <li>
-        [___] Verify that the <em><strong>Calibrated
-        temperature</strong></em> spinbox has the suffix of "&deg;F", and
-        ranges from 32.0 to 212.0 in increments of 0.2
+        [___] Verify that the <em><strong>Calibrated temperature</strong></em>
+        spinbox has the suffix of "&deg;F", and  ranges from 32.0 to 212.0 in
+        increments of 0.2. If Metric measurements are used, verify that the
+        suffix is "&deg;C", and ranges from 0.0 to 100.0 degrees.
       </li>
       <li>
         [___] Verify that the <em><strong>Hydrometer reading</strong></em>
@@ -403,17 +406,15 @@
 	1.0
       </li>
       <li>
+        [___] Verify that the <em><strong>Type</strong></em> field combobox has
+        the entries of <em>Grain</em>, <em>Extract</em>, <em>Adjunct</em>,
+        <em>Sugar</em> and <em>Other</em>, and that the  combobox is not user
+        editable.
+      </li>
+      <li>
         [___] Verify that the <em><strong>Use</strong></em> field combobox has
-	the entries of "<em>extract</em>", "<em>mashed</em>",
-	"<em>steeped</em>" and "<em>other</em>", and that the combobox edit
-	field is not user editable
-      </li>
-      <li>
-        [___] Verify that there is always one empty row in the grain list
-      </li>
-      <li>
-        [___] Verify that editing the <em><strong>Grain</strong></em> field of
-	the empty row adds a new grain to the list
+	the entries of <em>Extract</em>, <em>Mashed</em>, <em>Steeped</em>,
+        and <em>Other</em>, and that the combobox is not user editable
       </li>
       <li>
         [___] Verify that setting the <em><strong>Grain</strong></em> field of
@@ -447,13 +448,6 @@
 	of 0.1
       </li>
       <li>
-        [___] Verify that there is always one empty row in the hop list
-      </li>
-      <li>
-        [___] Verify that editing the <em><strong>Hop</strong></em> field of
-	the empty row adds a new hop to the list
-      </li>
-      <li>
         [___] Verify that setting the <em><strong>Hop</strong></em> field of an
 	entry to blank removes the hop from the list
       </li>
@@ -481,15 +475,14 @@
 	combobox that can be edited by the user
       </li>
       <li>
+        [___] Verify that the <em><strong>Type</strong></em> field has a
+	combobox with the entries <em>Yeast</em>, <em>Fining</em>,
+       <em>Herb</em>, <em>Spice</em>, <em>Flavor</em>, <em>Additive</em> and
+       <em>Other</em>.
+      </li>
+      <li>
         [___] Verify that the <em><strong>Notes</strong></em> field has an
 	editbox which is editable by the user
-      </li>
-      <li>
-        [___] Verify that there is always one empty row in the misc list
-      </li>
-      <li>
-        [___] Verify that editing the <em><strong>Misc</strong></em> field of
-	the empty row adds a new ingredient to the list
       </li>
       <li>
         [___] Verify that setting the <em><strong>Misc</strong></em> field of
@@ -529,6 +522,16 @@
         <em><strong>Max. OG</strong></em> spinboxes, and vice versa
       </li>
       <li>
+        [___] Verify that the <em><strong>Min. FG</strong></em> and
+        <em><strong>Max. FG</strong></em> fields have spinboxes that
+        range from 1.000 to 1.150 in increments of 0.001
+      </li>
+      <li>
+        [___] Verify that the <em><strong>Min. FG</strong></em>
+        spinbox has a maximum value equal to the minimum value of the
+        <em><strong>Max. FG</strong></em> spinboxes, and vice versa
+      </li>
+      <li>
         [___] Verify that the <em><strong>Min. IBU</strong></em> and
         <em><strong>Max. IBU</strong></em> fields have spinboxes that
         range from 0 to 120 in increments of 1
@@ -547,13 +550,6 @@
         [___] Verify that the <em><strong>Min. SRM</strong></em>
         spinbox has a maximum value equal to the minimum value of the
         <em><strong>Max. SRM</strong></em> spinboxes, and vice versa
-      </li>
-      <li>
-        [___] Verify that there is always one empty row in the style list
-      </li>
-      <li>
-        [___] Verify that editing the <em><strong>Style</strong></em> field of
-	the empty row adds a new style to the list
       </li>
       <li>
         [___] Verify that setting the <em><strong>Style</strong></em> field of
@@ -619,12 +615,7 @@
         [___] Verify that the <em><strong>Size</strong></em> spinbox displays
         the application batch size (set in the
         <em><strong>Configure</strong></em> dialog) by default, with a range
-        from 0.00 to 100.00 in increments of 0.25
-      </li>
-      <li>
-        [___] Verify that the <em><strong>Mash</strong></em> checkbox can be
-        checked and unchecked, and that it has no immediate effect on any
-        other control
+        from 0.00 to 5000.00 in increments of 0.25
       </li>
       <li>
         [___] Verify that any changes to the <em><strong>Size</strong></em>

@@ -86,8 +86,10 @@ HelpViewer::~HelpViewer()
 
 void HelpViewer::textChanged()
 {
-    setWindowTitle(tr("%1 Help - %2")
-                   .arg(TITLE.constData()).arg(browser_->documentTitle()));
+    // clean up title for caption
+    QString title = browser_->documentTitle().simplified();
+
+    setWindowTitle(tr("%1 Help - %2").arg(TITLE.constData()).arg(title));
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -57,6 +57,8 @@ View::View(QWidget *parent, Recipe *recipe)
     ui.abv->setFont(bold);
     ui.abwlabel->setFont(bold);
     ui.abw->setFont(bold);
+    ui.fglabel->setFont(bold);
+    ui.fg->setFont(bold);
 
     // grain page
     QWidget *widget = new QWidget();
