@@ -580,7 +580,11 @@ double Recipe::calcOG()
         }
         est += yield;
     }
-    est /= size_.amount(Volume::gallon);
+    if (size_.amount()) {
+        est /= size_.amount(Volume::gallon);
+    } else {
+        est = 0.0;
+    }
     return est + 1.0;
 }
 
@@ -610,7 +614,11 @@ int Recipe::calcRagerIBU()
         bitterness += hop.HBU() * Data::instance()->utilization(hop.time());
         // TODO: we should also correct for hop form
     }
-    bitterness /= size_.amount(Volume::gallon);
+    if (size_.amount()) {
+        bitterness /= size_.amount(Volume::gallon);
+    } else {
+        bitterness = 0.0;
+    }
     // correct for boil gravity
     if (og_ > 1.050) bitterness /= 1.0 + ((og_ - 1.050) / 0.2);
     return (int)round(bitterness);
@@ -643,7 +651,11 @@ int Recipe::calcTinsethIBU()
         ibu = (COEFF1 * pow(COEFF2, (og_ - 1.0))) *
             (1.0 - exp(-COEFF3 * hop.time())) *
             (hop.alpha()) * hop.weight().amount(Weight::ounce) * 1000.0;
-        ibu /= (size_.amount(Volume::gallon)) * COEFF4;
+        if (size_.amount()) {
+            ibu /= (size_.amount(Volume::gallon) * COEFF4);
+        } else {
+            ibu = 0.0;
+        }
         bitterness += ibu;
     }
     bitterness *= (GPO / LPG) / 100.0;
@@ -661,7 +673,11 @@ int Recipe::calcSRM()
     foreach(Grain grain, grains_) {
         srm += grain.HCU();
     }
-    srm /= size_.amount(Volume::gallon);
+    if (size_.amount()) {
+        srm /= size_.amount(Volume::gallon);
+    } else {
+        srm = 0.0;
+    }
 
     // switch between two possible calculations
     if (Data::instance()->morey()) {
