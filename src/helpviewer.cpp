@@ -86,9 +86,7 @@ HelpViewer::~HelpViewer()
 
 void HelpViewer::textChanged()
 {
-    // clean up title for caption
-    QString title = browser_->documentTitle().simplified();
-
+    QString title = browser_->documentTitle().simplified(); // cleanup
     setWindowTitle(tr("%1 Help - %2").arg(TITLE.constData()).arg(title));
 }
 
