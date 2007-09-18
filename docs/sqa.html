@@ -651,7 +651,7 @@
       </li>
       <li>
         [___] Verify that the <em><strong>Quantity</strong></em> spinbox
-        has the suffix of "lbs" by default, and ranges from 0.00 to 100.00 in
+        has the suffix of "lb" by default, and ranges from 0.00 to 1000.00 in
         increments of 0.25
       </li>
       <li>
@@ -664,27 +664,24 @@
 	degree sign.
       </li>
       <li>
+        [___] Verify that the <em><strong>Type</strong></em> field combobox has
+        the entries of <em>Grain</em>, <em>Extract</em>, <em>Adjunct</em>,
+        <em>Sugar</em> and <em>Other</em>, and that the  combobox is not user
+        editable.
+      </li>
+      <li>
         [___] Verify that the <em><strong>Use</strong></em> combobox has the
         entries of "<em>extract</em>", "<em>mashed</em>", "<em>steeped</em>"
         and "<em>other</em>", and that the combobox edit field is not user
         editable
       </li>
       <li>
-        [___] Verify that there is always one empty row in the grain list
-      </li>
-      <li>
-        [___] Verify that editing the <em><strong>Grain</strong></em> field of
-	the empty row adds a new grain to the list
-      </li>
-      <li>
         [___] Verify that setting the <em><strong>Grain</strong></em> field of
 	an entry to blank removes the grain from the list
       </li>
       <li>
-        [___] Verify that newly added grains that are normally mashed (as
-	indicated in the <code><strong>qbrewdata</strong></code> database) will
-	have a <em><strong>Use</strong></em> of "<em>steeped</em>" instead when
-	the <em><strong>Mash</strong></em> checkbox is unchecked
+        [___] Verify that using the [+] and [-] buttons will add or remove a
+	grain from the list
       </li>
     </ul>
     <h3>
@@ -707,12 +704,12 @@
       <li>
         [___] Verify that the <em><strong>Quantity</strong></em> spinbox
         has the suffix of "<em>oz</em>" by default, and ranges from 0.00 to
-        100.00 in increments of 0.25
+        1000.00 in increments of 0.25
       </li>
       <li>
         [___] Verify that the <em><strong>Form</strong></em> combobox
-        includes the entries of "<em>pellet</em>", "<em>plug</em>" and
-        "<em>whole</em>" by default, and that the edit field of the combox is
+        includes the entries of "<em>Pellet</em>", "<em>Plug</em>" and
+        "<em>Whole</em>" by default, and that the edit field of the combox is
         user editable
       </li>
       <li>
@@ -724,15 +721,12 @@
         suffix of "<em>min</em>", and ranges from 0 to 120 in increments of 5
       </li>
       <li>
-        [___] Verify that there is always one empty row in the hop list
-      </li>
-      <li>
-        [___] Verify that editing the <em><strong>Hop</strong></em> field of
-	the empty row adds a new hop to the list
-      </li>
-      <li>
         [___] Verify that setting the <em><strong>Hop</strong></em> field of
 	an entry to blank removes the hop from the list
+      </li>
+      <li>
+        [___] Verify that using the [+] and [-] buttons will add or remove a
+	hop from the list
       </li>
     </ul>
     <h3>
@@ -756,22 +750,19 @@
       <li>
         [___] Verify that the <em><strong>Quantity</strong></em> spinbox
         has the suffix of "<em>unit</em>" by default, and ranges from 0.00 to
-        100.00 in increments of 0.25
+        1000.00 in increments of 0.25
       </li>
       <li>
         [___] Verify that the <em><strong>Notes</strong></em> editbox is
         editable by the user
       </li>
       <li>
-        [___] Verify that there is always one empty row in the ingredient list
-      </li>
-      <li>
-        [___] Verify that editing the <em><strong>Misc</strong></em> field of
-	the empty row adds a new ingredient to the list
-      </li>
-      <li>
         [___] Verify that setting the <em><strong>Misc</strong></em> field of
 	an entry to blank removes the ingredient from the list
+      </li>
+      <li>
+        [___] Verify that using the [+] and [-] buttons will add or remove an
+	ingredient from the list
       </li>
     </ul>
     <h3>

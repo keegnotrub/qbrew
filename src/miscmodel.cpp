@@ -135,7 +135,7 @@ bool MiscModel::setData(const QModelIndex &index,
                                TITLE + tr(" - Delete?"),
                                tr("Do you wish to remove this entry?"),
                                QMessageBox::Yes | QMessageBox::Cancel);
-              if (status == 0) {
+              if (status == QMessageBox::Yes) {
                   // remove misc
                   beginRemoveRows(index.parent(), row, row);
 
