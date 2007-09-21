@@ -178,6 +178,7 @@ bool GrainModel::setData(const QModelIndex &index,
               // we don't override weight
               grain.setExtract(newgrain.extract());
               grain.setColor(newgrain.color());
+              grain.setType(newgrain.type());
               grain.setUse(newgrain.use());
           }
           break;

@@ -171,6 +171,7 @@ const QString attrSRMHigh           = "srmhigh";
 const QString tagGrains             = "grains";
 const QString tagGrain              = "grain";
 const QString attrQuantity          = "quantity";
+const QString attrSize              = "size"; // TODO: deprecated
 const QString attrExtract           = "extract";
 const QString attrColor             = "color";
 const QString attrType              = "type";

@@ -162,6 +162,7 @@ bool MiscModel::setData(const QModelIndex &index,
           if (Data::instance()->hasMisc(name)) {
               Misc newmisc = Data::instance()->misc(name);
               // we don't override weight
+              misc.setType(newmisc.type());
               misc.setNotes(newmisc.notes());
           }
           break;

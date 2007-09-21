@@ -223,31 +223,34 @@ bool Recipe::loadRecipe(const QString &filename)
     // get title
     element = root.firstChildElement(tagTitle);
     if (element.isNull()) {
-        qDebug() << "Warning:: bad DOM element" << tagTitle;
+        qDebug() << "Warning:: missing DOM element" << tagTitle;
     } else {
         setTitle(element.text());
     }
     // get brewer
     element = root.firstChildElement(tagBrewer);
     if (element.isNull()) {
-        qDebug() << "Warning:: bad DOM element" << tagBrewer;
+        qDebug() << "Warning:: missing DOM element" << tagBrewer;
     } else {
         setBrewer(element.text());
     }
     // get style
     element = root.firstChildElement(tagStyle);
     if (element.isNull()) {
-        qDebug() << "Warning:: bad DOM element" << tagStyle;
+        qDebug() << "Warning:: missing DOM element" << tagStyle;
     } else {
         // TODO: load/save entire style
         setStyle(element.text());
     }
     // get batch settings // TODO: eliminate this tag, use quantity, efficiency
     element = root.firstChildElement(tagBatch);
-    if (element.isNull()) {
-        qDebug() << "Warning:: bad DOM element" << tagBatch;
-    } else {
-        setSize(Volume(element.attribute(attrQuantity), Volume::gallon));
+    if (!element.isNull()) {
+        if (element.attribute(attrQuantity) != QString()) {
+            setSize(Volume(element.attribute(attrQuantity), Volume::gallon));
+        } else if (element.attribute(attrSize) != QString()) {
+            // deprecated tag
+            setSize(Volume(element.attribute(attrSize), Volume::gallon));
+        }
     }
 
     // get notes
@@ -714,13 +717,12 @@ double Recipe::FGEstimate()
 
 double Recipe::ABV() // recipe version
 {
-    double fg = FGEstimate();
-    return ABW(og_, fg) * fg / 0.79;
+    return (ABV(og_, FGEstimate()));
 }
 
 double Recipe::ABV(double og, double fg) // static version
 { 
-    return ABW(og, fg) * fg / 0.79;
+    return (og - fg) * 1.29;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -736,11 +738,7 @@ double Recipe::ABW() // recipe version
  
 double Recipe::ABW(double og, double fg)  // static version
 {
-    double oe, ae, re;
-    oe = SgToP(og);
-    ae = SgToP(fg);
-    re = (0.1808 * oe) + (0.8192 * ae); // real extract
-    return ((oe - re) / (2.0665 - 0.010665 * oe) / 100.0);
+    return (ABV(og, fg) * 0.785);
 }
 
 //////////////////////////////////////////////////////////////////////////////
