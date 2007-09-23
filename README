@@ -5,7 +5,7 @@ QBrew is a homebrewing recipe calculator for Unix, Macintosh and Windows. The
 QBrew homepage is at <http://www.usermode.org/code.html>.
 
 Please read the INSTALL file for installation instructions. Additional
-documentation can be found in the source tree under './sample/docs'.
+documentation can be found in the source tree under 'docs'.
 
 Please see the AUTHORS file for a list of contributors, and the ChangeLog file
 for a list of changes since the previous release.
