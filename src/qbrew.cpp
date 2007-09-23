@@ -74,10 +74,9 @@ void QBrew::initialize(const QString &filename)
     ui.setupUi(this);
     initActions();
 #if defined (Q_WS_MAC)
-    // initially defaults for mac
-    setUnifiedTitleAndToolBarOnMac(true);
+    // initial defaults for mac
+    setUnifiedTitleAndToolBarOnMac(false);
     ui.maintoolbar->setVisible(false);
-    statusBar()->setVisible(true);
 #endif
 
     // restore window state
