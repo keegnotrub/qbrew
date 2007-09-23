@@ -3,7 +3,7 @@
 ; http://nsis.sf.net
 
 !define PRODUCT "QBrew"
-!define VERSION "0.3.10"
+!define VERSION "0.4.0"
 !define PUBLISHER "Usermode.org"
 !define WEB_SITE "http://www.usermode.org"
 

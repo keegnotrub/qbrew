@@ -93,7 +93,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     hoppage.view->setColumnHidden(HopModel::WEIGHT, true);
     hoppage.view->setColumnHidden(HopModel::TIME, true);
-    hoppage.view->setColumnHidden(HopModel::FORM, true);
+    hoppage.view->setColumnHidden(HopModel::TYPE, true);
     hoppage.view->setColumnWidth(HopModel::NAME, 20*mw);
     hoppage.view->setColumnWidth(HopModel::ALPHA, 8*mw);
 

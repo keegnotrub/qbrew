@@ -160,8 +160,8 @@ void Configure::setRecipeState(const RecipeConfigState &state)
         recipe_->batch->setValue(state.batch);
         recipe_->stylebox->clear();
         recipe_->stylebox->addItems(Data::instance()->stylesList());
-        recipe_->hopform->clear();
-        recipe_->hopform->addItems(Hop::formsStringList());
+        recipe_->hoptype->clear();
+        recipe_->hoptype->addItems(Hop::typeStringList());
 
         // set combo for style string
         int index = recipe_->stylebox->findText(state.style, Qt::MatchExactly);
@@ -170,12 +170,12 @@ void Configure::setRecipeState(const RecipeConfigState &state)
         } else {
             recipe_->stylebox->addItem(state.style);
         }
-        // set combo for hopform string
-        index =  recipe_->hopform->findText(state.hopform, Qt::MatchExactly);
+        // set combo for hoptype string
+        index =  recipe_->hoptype->findText(state.hoptype, Qt::MatchExactly);
         if (index >= 0) {
-            recipe_->hopform->setCurrentIndex(index);
+            recipe_->hoptype->setCurrentIndex(index);
         } else {
-            recipe_->hopform->addItem(state.hopform);
+            recipe_->hoptype->addItem(state.hoptype);
         }
     }
 }
@@ -266,7 +266,7 @@ void Configure::apply()
         // recipe page
         state_.recipe.batch = recipe_->batch->value();
         state_.recipe.style = recipe_->stylebox->currentText();
-        state_.recipe.hopform = recipe_->hopform->currentText();
+        state_.recipe.hoptype = recipe_->hoptype->currentText();
         emit recipeApply(state_.recipe);
     }
 }

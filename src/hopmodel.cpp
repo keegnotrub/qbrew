@@ -61,8 +61,8 @@ QVariant HopModel::data(const QModelIndex &index, int role) const
               return QString::number(hop.alpha(), 'f', 1) + '%';
           case TIME:
               return QString::number(hop.time()) + tr(" min", "minutes");
-          case FORM:
-              return hop.form();
+          case TYPE:
+              return hop.type();
           default:
               return QVariant();
         }
@@ -80,15 +80,15 @@ QVariant HopModel::data(const QModelIndex &index, int role) const
               return hop.alpha();
           case TIME:
               return hop.time();
-          case FORM:
-              return hop.form();
+          case TYPE:
+              return hop.type();
           default:
               return QVariant();
         }
     } else if (role == Qt::TextAlignmentRole) {
         switch (index.column()) {
           case NAME:
-          case FORM:
+          case TYPE:
               return Qt::AlignLeft;
           case WEIGHT:
           case ALPHA:
@@ -167,7 +167,7 @@ bool HopModel::setData(const QModelIndex &index,
           if (Data::instance()->hasHop(name)) {
               Hop newhop = Data::instance()->hop(name);
               // we don't override weight or time
-              hop.setForm(newhop.form());
+              hop.setType(newhop.type());
               hop.setAlpha(newhop.alpha());
           }
           break;
@@ -185,8 +185,8 @@ bool HopModel::setData(const QModelIndex &index,
           hop.setTime(value.toUInt());
           break;
 
-      case FORM:
-          hop.setForm(value.toString());
+      case TYPE:
+          hop.setType(value.toString());
           break;
 
       default:
@@ -265,8 +265,8 @@ QVariant HopModel::headerData(int section, Qt::Orientation orientation,
               return tr("Alpha");
           case TIME:
               return tr("Time");
-          case FORM:
-              return tr("Form");
+          case TYPE:
+              return tr("Type");
           default:
               return QVariant();
         }
@@ -328,8 +328,8 @@ void HopModel::sort(int column, Qt::SortOrder order)
           case ALPHA:
               field = QString::number(hop.alpha(),'f',1).rightJustified(8,'0');
               break;
-          case FORM:
-              field = hop.form();
+          case TYPE:
+              field = hop.type();
               break;
           case TIME:
           default:

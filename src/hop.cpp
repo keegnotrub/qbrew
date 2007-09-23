@@ -21,13 +21,13 @@ const QByteArray Hop::WHOLE_STRING  = QT_TRANSLATE_NOOP("Hop", "Whole");
 // constructor
 
 Hop::Hop()
-    : name_(QObject::tr("Generic")), weight_(), form_(PELLET_STRING),
+    : name_(QObject::tr("Generic")), weight_(), type_(PELLET_STRING),
       alpha_(10.0),  time_(0)
 { ; }
 
-Hop::Hop(const QString &name, const Weight &weight, const QString &form,
+Hop::Hop(const QString &name, const Weight &weight, const QString &typ,
          const double &alpha, const unsigned &time)
-    : name_(name), weight_(weight), form_(form), alpha_(alpha), time_(time)
+    : name_(name), weight_(weight), type_(typ), alpha_(alpha), time_(time)
       
 {
     recalc();
@@ -41,7 +41,7 @@ Hop::~Hop() { ; }
 // Copy constructor
 
 Hop::Hop(const Hop &h)
-    : name_(h.name_), weight_(h.weight_), form_(h.form_), alpha_(h.alpha_),
+    : name_(h.name_), weight_(h.weight_), type_(h.type_), alpha_(h.alpha_),
       time_(h.time_), hbu_(h.hbu_)
 { ; }
 
@@ -55,7 +55,7 @@ Hop Hop::operator=(const Hop &h)
     if (this != &h) {
         name_ = h.name_;
         weight_ = h.weight_;
-        form_ = h.form_;
+        type_ = h.type_;
         alpha_ = h.alpha_;
         time_ = h.time_;
         hbu_ = h.hbu_;
@@ -72,17 +72,17 @@ bool Hop::operator==(const Hop &h) const
 {
     return (name_ == h.name_)
         && (weight_ == h.weight_)
-        && (form_ == h.form_)
+        && (type_ == h.type_)
         && (alpha_ == h.alpha_)
         && (time_ == h.time_);
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// formsStringList()
-// -----------------
-// Return string list of available hop forms
+// typeStringList()
+// ----------------
+// Return string list of available hop types
 
-QStringList Hop::formsStringList()
+QStringList Hop::typeStringList()
 {
     return (QStringList() << PELLET_STRING << PLUG_STRING << WHOLE_STRING);
 }

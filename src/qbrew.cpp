@@ -747,8 +747,8 @@ void QBrew::applyRecipeState(const RecipeConfigState &state)
     if (state.style != oldstate.style) {
         data_->setDefaultStyle(state.style);
     }
-    if (state.hopform != oldstate.hopform) {
-        data_->setDefaultHopForm(state.hopform);
+    if (state.hoptype != oldstate.hoptype) {
+        data_->setDefaultHopType(state.hoptype);
     }
 
     statusBar()->showMessage(tr(READY), 2000);
@@ -851,8 +851,15 @@ void QBrew::readConfig()
         config.value(CONF_RECIPE_BATCH, state_.recipe.batch).toDouble();
     state_.recipe.style =
         config.value(CONF_RECIPE_STYLE, state_.recipe.style).toString();
-    state_.recipe.hopform =
-        config.value(CONF_RECIPE_HOPFORM, state_.recipe.hopform).toString();
+    // TODO: CONF_RECIPE_HOPFORM is deprecated (0.4.0)
+    if (config.contains(CONF_RECIPE_HOPFORM)) {
+        state_.recipe.hoptype =
+            config.value(CONF_RECIPE_HOPFORM, state_.recipe.hoptype).toString();
+        config.remove(CONF_RECIPE_HOPFORM);
+    } else {
+        state_.recipe.hoptype =
+            config.value(CONF_RECIPE_HOPTYPE, state_.recipe.hoptype).toString();
+    }
     config.endGroup();
 
     // read calc config
@@ -897,7 +904,7 @@ void QBrew::writeConfig()
     config.beginGroup(CONFGROUP_RECIPE);
     config.setValue(CONF_RECIPE_BATCH, (double)state_.recipe.batch);
     config.setValue(CONF_RECIPE_STYLE, state_.recipe.style);
-    config.setValue(CONF_RECIPE_HOPFORM, state_.recipe.hopform);
+    config.setValue(CONF_RECIPE_HOPTYPE, state_.recipe.hoptype);
     config.endGroup();
 
     // write calc config

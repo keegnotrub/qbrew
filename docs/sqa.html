@@ -322,8 +322,8 @@
         selects the default recipe style for new recipes
       </li>
       <li>
-        [___] Verify that the <em><strong>Hop form</strong></em> combobox
-        selects the default hop form for new hop ingredients
+        [___] Verify that the <em><strong>Hop Type</strong></em> combobox
+        selects the default hop type for new hop ingredients
       </li>
     </ul>
     <h3>
@@ -707,7 +707,7 @@
         1000.00 in increments of 0.25
       </li>
       <li>
-        [___] Verify that the <em><strong>Form</strong></em> combobox
+        [___] Verify that the <em><strong>Type</strong></em> combobox
         includes the entries of "<em>Pellet</em>", "<em>Plug</em>" and
         "<em>Whole</em>" by default, and that the edit field of the combox is
         user editable
@@ -821,35 +821,35 @@
       <li>
         [___] Verify with the <code><strong>stout.qbrew</strong></code>
         recipe, that changing the <em><strong>Mash efficiency</strong></em>
-        to 83 results in a Gravity of 1.081, Bitterness of 83, Estimated FG
-        of 1.020, Alcohol by Volume of 8.2, and Alcohol by Weight of 6.3, and
+        to 83 results in a Gravity of 1.078, Bitterness of 80, Estimated FG
+        of 1.019, Alcohol by Volume of 7.5, and Alcohol by Weight of 5.9, and
         that Color has not changed
       </li>
       <li>
         [___] Verify with the <code><strong>paleale.qbrew</strong></code>
         recipe, that changing the <em><strong>Extract</strong></em> of the
-        Light malt extract to 1.044 results in a Gravity of 1.068, Bitterness
+        Light malt extract to 1.044 results in a Gravity of 1.09, Bitterness
         of 47, and that Color has not changed
       </li>
       <li>
         [___] Verify with the <code><strong>stout.qbrew</strong></code>
         recipe, that changing the <em><strong>Use</strong></em> of the
         British chocolate malt to "steeped" results in a Gravity of 1.067,
-        Bitterness of 88, and that Color has not changed
+        Bitterness of 84, and that Color has not changed
       </li>
       <li>
         [___] Verify with the <code><strong>paleale.qbrew</strong></code>
         recipe, that adding 5 minutes to each hop
         <em><strong>Time</strong></em> results in a Bitterness of 59 without
-        the <em><strong>Use Tinseth</strong></em> checked, 57 with the
+        the <em><strong>Use Tinseth</strong></em> checked, 56 with the
         <em><strong>Use Tinseth</strong></em> checked, and that Gravity and
         Color have not changed
       </li>
       <li>
         [___] Verify with the <code><strong>stout.qbrew</strong></code>
         recipe, that changing the <em><strong>Alpha</strong></em> for all
-        hops to 9.6 results in a Bitterness of 90 without the <em><strong>Use
-        Tinseth</strong></em> checked, 74 with the <em><strong>Use
+        hops to 9.6 results in a Bitterness of 86 without the <em><strong>Use
+        Tinseth</strong></em> checked, 72 with the <em><strong>Use
         Tinseth</strong></em> checked, and that Gravity and Color have not
         changed
       </li>
@@ -861,13 +861,14 @@
     </ul>
     <p>
       Without changing any default values, create a new recipe with the 7.0
-      pounds of mashed British two-row, 1 pound of steeped CaraMunich, 1
-      ounce of pellet Tettnanger at 60 minutes, 0.5 ounces of whole Saaz at
-      10 minutes, and 1 unit of Lager yeast
+      pounds of mashed British two-row (1.038 extract, 2.5 color), 1 pound of
+      steeped CaraMunich (1.033 extract, 75.0 color), 1 ounce of pellet
+      Tettnanger (3.7 alpha) at 60 minutes, 0.5 ounces of whole Saaz (3.5
+      alpha) at 10 minutes, and 1 unit of Lager yeast
     </p>
     <ul type="none">
       <li>
-        [___] Verify that this recipe results in a Gravity of 1.042,
+        [___] Verify that this recipe results in a Gravity of 1.043,
         Bitterness of 17 without <em><strong>Use Tinseth</strong></em>
         checked (16 with), Color of 12 without <em><strong>Use
         Morey</strong></em> checked (11 with), Estimated FG of 1.011, Alcohol
@@ -917,19 +918,19 @@
     <ul type="none">
       <li>
         [___] Verify that the Recipe Gravity is 1.062, the Recipe Bitterness
-        is 27, the Recipe Color is 4, the ABV is 6.2 and the ABW is 4.8
+        is 27, the Recipe Color is 4, the ABV is 6.0 and the ABW is 4.7
       </li>
       <li>
         [___] Verify that entering into the Alcohol tool an
         <em><strong>Original gravity</strong></em> of 1.058 and a
         <em><strong>Final gravity</strong></em> of 1.012 results in an ABV of
-        6.1% and ABW of 4.8%
+        5.9% and ABW of 4.7%
       </li>
       <li>
         [___] Verify that entering into the Alcohol tool an
         <em><strong>Original gravity</strong></em> of 1.070 and a
         <em><strong>Final gravity</strong></em> of 1.018 results in an ABV of
-        7.0% and ABW of 5.4%
+        6.7% and ABW of 5.3%
       </li>
     </ul>
     <h2>
@@ -964,9 +965,8 @@
         dependant upon the use of the QBrew application
       </li>
       <li>
-        [___] Verify that the <code><strong>ChangeLog</strong></code>,
-        <code><strong>README</strong></code> and
-        <code><strong>TODO</strong></code> files have the correct version and
+        [___] Verify that the <code><strong>ChangeLog</strong></code> and
+        <code><strong>README</strong></code> files have the correct version and
         copyright dates
       </li>
       <li>
@@ -1012,7 +1012,7 @@
       </li>
       <li>
         [___] Verify that the default application configuration file on Unix
-        is <code><strong>~/.config/usermode.org/QBrew.conf</strong></code>, and
+        is <code><strong>~/.config/usermode/qbrew.conf</strong></code>, and
 	that the system registry or preferences facility is used under Windows
 	or Macintosh.
       </li>
@@ -1026,7 +1026,7 @@
         [___] Verify that the following files are installed by default to
         <code><strong>/usr/local/share/qbrew</strong></code>:
         <code><strong>qbrewdata</strong></code>,
-        <code><strong>splash.png</strong></code>
+        <code><strong>splash.png</strong></code>, and any available translations
       </li>
       <li>
         [___] Verify that all files under

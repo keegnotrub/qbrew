@@ -2,7 +2,7 @@ QBrew Installation
 ===================
 
 These instructions are for building and installing QBrew from source
-code. QBrew requires the Qt 4.3 or greater development library. This
+code. QBrew requires the Qt 4.3 or greater development libraries. These
 can be found at <http://www.trolltech.com>. Some Linux distributions
 separate Qt into separate runtime and development packages. If this
 is your case, Make sure you have both. QBrew uses the qmake tool to
@@ -46,7 +46,7 @@ Mac OSX Build
 1) Unarchive the source code package, and change into its directory.
 
 2) Set Qt related environment variables (assumes bash shell):
-       QTDIR=/Developer/qt
+       QTDIR=/Developer/qt (or as appropriate)
        QMAKESPEC=macx-g++
        PATH=$PATH:$QTDIR/bin
        export QTDIR QMAKESPEC PATH
@@ -60,6 +60,7 @@ Mac OSX Build
 
 5) You may wish to include the Qt runtime with the application bundle. Please
    see the "Deploying on Application on Qt/Mac" article for more information.
+   A deployment script is included in the mac directory, that may be useful.
 
 6) Now move the application bundle to your desired location
         mv qbrew.app ~/Desktop
@@ -73,7 +74,7 @@ Windows Build
 
 2) Build the package:
        qmake qbrew.pro
-       make
+       make (or nmake)
 
 4) Place into a final installation directory, with the following minimum
    structure:

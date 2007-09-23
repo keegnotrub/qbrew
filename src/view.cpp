@@ -101,7 +101,7 @@ View::View(QWidget *parent, Recipe *recipe)
     hoppage.view->setColumnWidth(HopModel::WEIGHT, 8*mw);
     hoppage.view->setColumnWidth(HopModel::ALPHA, 8*mw);
     hoppage.view->setColumnWidth(HopModel::TIME, 8*mw);
-    hoppage.view->setColumnWidth(HopModel::FORM, 8*mw);
+    hoppage.view->setColumnWidth(HopModel::TYPE, 8*mw);
 
     // misc page
     widget = new QWidget();

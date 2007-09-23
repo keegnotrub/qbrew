@@ -204,7 +204,7 @@ const QString Recipe::recipeHTML()
     html += "<td width=\"15\"></td>\n";
     html += th.arg(tr("Hop"));
     html += "<td width=\"15\"></td>\n";
-    html += th.arg(tr("Form"));
+    html += th.arg(tr("Type"));
     html += "<td width=\"15\"></td>\n";
     html += th.arg(tr("Time"));
     html += "</tr>\n\n";
@@ -218,7 +218,7 @@ const QString Recipe::recipeHTML()
         html += "<td></td>\n";
         html += "<td>" + escape(hop.name()) + "</td>\n";
         html += "<td></td>\n";
-        html += "<td>" + hop.form() + "</td>\n";
+        html += "<td>" + hop.type() + "</td>\n";
         html += "<td></td>\n";
         html += "<td colspan=2>" + QString::number(hop.time()) + tr(" minutes</td>\n</tr>\n\n");
     }
@@ -346,7 +346,7 @@ const QString Recipe::recipeText()
     foreach (Hop hop, hmap.values()) {
         text += hop.name().leftJustified(30, ' ');
         text += hop.weight().toString(2) + ", ";
-        text += hop.form() + ", ";
+        text += hop.type() + ", ";
         text += QString::number(hop.time()) + tr(" minutes\n");
     }
     text += '\n';
@@ -571,11 +571,11 @@ bool Recipe::exportBeerXML(const QString &filename)
         subelement.appendChild(doc.createTextNode
                                (QString::number(hop.time())));
         subrecord.appendChild(subelement);
-        // form
+        // form/type
         subelement = doc.createElement(tagFORM);
         buf = "Leaf";;
-        if (hop.form() == Hop::PELLET_STRING) buf = "Pellet";
-        if (hop.form() == Hop::PLUG_STRING) buf = "Plug";
+        if (hop.type() == Hop::PELLET_STRING) buf = "Pellet";
+        if (hop.type() == Hop::PLUG_STRING) buf = "Plug";
         subelement.appendChild(doc.createTextNode(buf));
         subrecord.appendChild(subelement);
         element.appendChild(subrecord);
@@ -883,11 +883,11 @@ bool Recipe::importBeerXml(const QString &filename)
             hop.setTime(el.text().toUInt());
             el = sub.firstChildElement(tagFORM);
             if (el.text() == "Pellet") {
-                hop.setForm(Hop::PELLET_STRING);
+                hop.setType(Hop::PELLET_STRING);
             } else if (el.text() == "Plug") {
-                hop.setForm(Hop::PLUG_STRING);
+                hop.setType(Hop::PLUG_STRING);
             } else {
-                hop.setForm(Hop::WHOLE_STRING);
+                hop.setType(Hop::WHOLE_STRING);
             }
             addHop(hop);
         }

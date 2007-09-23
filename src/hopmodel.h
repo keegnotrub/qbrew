@@ -43,7 +43,7 @@ class HopModel : public QAbstractTableModel {
     Q_OBJECT
 public:
     // model columns
-    enum { NAME, WEIGHT, ALPHA, TIME, FORM, COUNT };
+    enum { NAME, WEIGHT, ALPHA, TIME, TYPE, COUNT };
 
     HopModel(QObject *parent, HopList *list);
     ~HopModel();

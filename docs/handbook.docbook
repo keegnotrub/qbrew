@@ -388,7 +388,7 @@
         some default recipe values. These settings only affect new
         recipes or ingredients. They include <guilabel>"Batch
         size"</guilabel>, <guilabel>"Recipe style"</guilabel>, and
-        <guilabel>"Hop form"</guilabel>.</para>
+        <guilabel>"Hop type"</guilabel>.</para>
       </section>
 
       <section id="calculationconfig">
@@ -421,7 +421,8 @@
       <para>The basic gravity calculation is the sum of all grains'
       extract times quantity, divided by the batch size. Mashed grains
       will have their extract modified by the mash efficiency. Steeped
-      grains will use only half of their extract.</para>
+      grains will use a lesser efficiency, typically half of their
+      extract.</para>
 
       <para>The color calculated is in <abbrev>SRM</abbrev>, not in
       <abbrev>HCU</abbrev> (homebrew color
@@ -561,6 +562,9 @@
         <listitem>
           <para>...Lee Henderson,  Rob Hudson, and Kevin Pullin for
           contributing bug fixes.</para>
+        </listitem>
+        <listitem>
+          <para>...Tobias Toedter for German translation work.</para>
         </listitem>
         <listitem>
           <para>...Stephen Lowrie for a lot of rote work with

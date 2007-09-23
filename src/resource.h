@@ -65,7 +65,7 @@ const QByteArray CONTRIBUTORS = "Lee Henderson, "
                                 "Abe Kabakoff, "
                                 "Stephen Lowrie, "
                                 "Michal Palczewski, "
-                                "Kevin Pullinm, "
+                                "Kevin Pullin, "
                                 "Tobias Toedter";
 
 const QByteArray READY        = QT_TRANSLATE_NOOP("message",
@@ -132,7 +132,8 @@ const QByteArray CONF_GEN_RECENTNUM    = "/recentnum";
 const QByteArray CONFGROUP_RECIPE       = "/recipedefaults";
 const QByteArray CONF_RECIPE_BATCH      = "/batch";
 const QByteArray CONF_RECIPE_STYLE      = "/style";
-const QByteArray CONF_RECIPE_HOPFORM    = "/hopform";
+ const QByteArray CONF_RECIPE_HOPFORM    = "/hopform"; // TODO: deprecated 0.4.0
+const QByteArray CONF_RECIPE_HOPTYPE    = "/hoptype";
 
 const QByteArray CONFGROUP_CALC         = "/calc";
 const QByteArray CONF_CALC_STEEPYIELD   = "/steepyield";

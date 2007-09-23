@@ -292,9 +292,12 @@ bool Recipe::loadRecipe(const QString &filename)
             // get all hop tags
         sub = element.firstChildElement(tagHop);
         for (; !sub.isNull(); sub=sub.nextSiblingElement(tagHop)) {
+            // TODO: attrForm is deprecated 0.4.0
+            QString hoptype = sub.attribute(attrType);
+            if (hoptype == QString()) hoptype = sub.attribute(attrForm);
             addHop(Hop(sub.text(),
                        Weight(sub.attribute(attrQuantity), Weight::ounce),
-                       sub.attribute(attrForm),
+                       hoptype,
                        sub.attribute(attrAlpha).toDouble(),
                        sub.attribute(attrTime).toUInt()));
         }
@@ -398,7 +401,7 @@ bool Recipe::saveRecipe(const QString &filename)
         subelement = doc.createElement(tagHop);
         subelement.appendChild(doc.createTextNode(hop.name()));
         subelement.setAttribute(attrQuantity, hop.weight().toString());
-        subelement.setAttribute(attrForm, hop.form());
+        subelement.setAttribute(attrType, hop.type());
         subelement.setAttribute(attrAlpha, hop.alpha());
         subelement.setAttribute(attrTime, hop.time());
         element.appendChild(subelement);
@@ -612,10 +615,11 @@ int Recipe::calcIBU()
 
 int Recipe::calcRagerIBU()
 {
+// TODO: update this (and other) hop calculations
     double bitterness = 0.0;
     foreach(Hop hop, hops_) {
         bitterness += hop.HBU() * Data::instance()->utilization(hop.time());
-        // TODO: we should also correct for hop form
+        // TODO: we should also correct for hop type
     }
     if (size_.amount()) {
         bitterness /= size_.amount(Volume::gallon);

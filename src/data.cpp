@@ -30,7 +30,7 @@ static QMutex instancelock;
 // Private constructor
 Data::Data()
     : defaultsize_(Volume(5.0, Volume::gallon)), defaultstyle_(),
-      defaulthopform_(Hop::PELLET_STRING), defaultgrainunit_(&Weight::pound),
+      defaulthoptype_(Hop::PELLET_STRING), defaultgrainunit_(&Weight::pound),
       defaulthopunit_(&Weight::ounce),  defaultmiscunit_(&Quantity::generic),
       grainmap_(), hopmap_(), miscmap_(), stylemap_(), utable_(),
       steepyield_(0.5), efficiency_(0.75), tinseth_(true), morey_(true)
@@ -65,7 +65,7 @@ void Data::initialize(const ConfigState &state)
         setDefaultTempUnit(Temperature::fahrenheit);
     }
     setDefaultStyle(state.recipe.style);
-    setDefaultHopForm(state.recipe.hopform);
+    setDefaultHopType(state.recipe.hoptype);
     setDefaultMiscUnit(Quantity::generic);
     setEfficiency(state.calc.efficiency);
 
@@ -122,7 +122,7 @@ Hop Data::hop(const QString &name)
     Hop hop;
     if (hopmap_.contains(name)) hop = hopmap_.value(name);
     hop.setWeight(Weight(1.0, *defaulthopunit_));
-    hop.setForm(defaulthopform_);
+    hop.setType(defaulthoptype_);
     return hop;
 }
 

@@ -51,7 +51,7 @@ public:
     Hop();
     // full constructor
     Hop(const QString &name, const Weight &weight,
-        const QString &form, const double &alpha,
+        const QString &typ, const double &alpha,
         const unsigned &time);
     // copy constructor
     Hop(const Hop &h);
@@ -74,15 +74,15 @@ public:
     //get/set boil time
     unsigned time() const;
     void setTime(unsigned time);
-    // get/set form
-    const QString &form() const;
-    void setForm(const QString &form);
+    // get/set type
+    const QString &type() const;
+    void setType(const QString &typ);
 
     // return precalculated value for bitterness
     double HBU();
 
-    // return hop form
-    static QStringList formsStringList();
+    // return hop type
+    static QStringList typeStringList();
 
 private:
     // recalc values
@@ -91,7 +91,7 @@ private:
 private:
     QString name_;
     Weight weight_;
-    QString form_;
+    QString type_;
     double alpha_;
     unsigned time_;
     double hbu_;
@@ -118,11 +118,11 @@ inline void Hop::setWeight(const Weight &weight)
 inline const Weight &Hop::weight() const
     { return weight_; }
 
-inline void Hop::setForm(const QString &form)
-    { form_ = form; }
+inline void Hop::setType(const QString &typ)
+    { type_ = typ; }
 
-inline const QString &Hop::form() const
-    { return form_; }
+inline const QString &Hop::type() const
+    { return type_; }
 
 inline void Hop::setAlpha(double alpha)
     { alpha_ = alpha; recalc(); }

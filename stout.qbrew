@@ -12,8 +12,8 @@
     <grain use="Mashed" extract="1.034" quantity="2.00 lb" type="Grain" color="350" >British chocolate malt</grain>
   </grains>
   <hops>
-    <hop form="Pellet" alpha="9.199999999999999" quantity="2.00 oz" time="60" >Northern Brewer</hop>
-    <hop form="Pellet" alpha="9.199999999999999" quantity="1.00 oz" time="20" >Northern Brewer</hop>
+    <hop type="Pellet" alpha="9.199999999999999" quantity="2.00 oz" time="60" >Northern Brewer</hop>
+    <hop type="Pellet" alpha="9.199999999999999" quantity="1.00 oz" time="20" >Northern Brewer</hop>
   </hops>
   <miscingredients>
     <miscingredient quantity="1.00 unit" notes="" type="Yeast" >Wyeast Irish 1084</miscingredient>

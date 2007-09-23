@@ -62,10 +62,10 @@ struct GenConfigState {
 
 struct RecipeConfigState {
     RecipeConfigState()
-        : batch(5.00), style("Generic Ale"), hopform(Hop::PELLET_STRING) { ; }
+        : batch(5.00), style("Generic Ale"), hoptype(Hop::PELLET_STRING) { ; }
     double batch;
     QString style;
-    QString hopform;
+    QString hoptype;
 };
 
 struct CalcConfigState {

@@ -10,10 +10,10 @@
     <grain use="Steeped" extract="1.034" quantity="1.00 lb" type="Grain" color="40" >Crystal 40L</grain>
   </grains>
   <hops>
-    <hop form="Pellet" alpha="13.9" quantity="0.50 oz" time="60" >Columbus</hop>
-    <hop form="Pellet" alpha="13.9" quantity="0.50 oz" time="30" >Columbus</hop>
-    <hop form="Pellet" alpha="13.9" quantity="0.50 oz" time="10" >Columbus</hop>
-    <hop form="Pellet" alpha="13.9" quantity="0.50 oz" time="0" >Columbus</hop>
+    <hop type="Pellet" alpha="13.9" quantity="0.50 oz" time="60" >Columbus</hop>
+    <hop type="Pellet" alpha="13.9" quantity="0.50 oz" time="30" >Columbus</hop>
+    <hop type="Pellet" alpha="13.9" quantity="0.50 oz" time="10" >Columbus</hop>
+    <hop type="Pellet" alpha="13.9" quantity="0.50 oz" time="0" >Columbus</hop>
   </hops>
   <miscingredients>
     <miscingredient quantity="1.00 unit" notes="smack pack" type="Yeast" >London Pale Ale yeast</miscingredient>

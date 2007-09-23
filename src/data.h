@@ -69,9 +69,9 @@ public:
     const Style &defaultStyle() const;
     void setDefaultStyle(const QString &s);
     void setDefaultStyle(const Style &s);
-    // get/set default hop form
-    const QString &defaultHopForm() const;
-    void setDefaultHopForm(const QString &form);
+    // get/set default hop type
+    const QString &defaultHopType() const;
+    void setDefaultHopType(const QString &t);
     // get/set the default grain units
     const Unit &defaultGrainUnit() const;
     void setDefaultGrainUnit(Unit &u);
@@ -136,7 +136,7 @@ private:
 
     Volume defaultsize_;
     Style defaultstyle_;
-    QString defaulthopform_;
+    QString defaulthoptype_;
     Unit *defaultgrainunit_;
     Unit *defaulthopunit_;
     Unit *defaultmiscunit_;
@@ -156,9 +156,9 @@ private:
 
 // Inlined Methods ///////////////////////////////////////////////////////////
 
-inline const QString &Data::defaultHopForm() const { return defaulthopform_; }
+inline const QString &Data::defaultHopType() const { return defaulthoptype_; }
 
-inline void Data::setDefaultHopForm(const QString &f) { defaulthopform_ = f; }
+inline void Data::setDefaultHopType(const QString &t) { defaulthoptype_ = t; }
 
 inline const Volume &Data::defaultSize() const { return defaultsize_; }
 

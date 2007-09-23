@@ -73,11 +73,11 @@ QWidget *HopDelegate::createEditor(QWidget *parent,
           spin->installEventFilter(const_cast<HopDelegate*>(this));
           return spin;
 
-      case HopModel::FORM:
+      case HopModel::TYPE:
           if (blank) return 0;
           combo = new QComboBox(parent);
           combo->setEditable(true);
-          combo->addItems(Hop::formsStringList());
+          combo->addItems(Hop::typeStringList());
           combo->installEventFilter(const_cast<HopDelegate*>(this));
           return combo;
 
@@ -122,7 +122,7 @@ void HopDelegate::setEditorData(QWidget *editor,
           spin->setValue(value.toUInt());
           break;
 
-      case HopModel::FORM:
+      case HopModel::TYPE:
           combo = static_cast<QComboBox*>(editor);
           if (!combo) return;
           comboindex = combo->findText(value.toString());
@@ -150,7 +150,7 @@ void HopDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     // different kind of editor for each column
     switch (index.column()) {
       case HopModel::NAME:
-      case HopModel::FORM:
+      case HopModel::TYPE:
           combo = static_cast<QComboBox*>(editor);
           if (!combo) return;
           value = combo->currentText();
