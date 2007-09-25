@@ -136,13 +136,15 @@ int main(int argc, char **argv)
     // load qbrew translations
     QString transdir = QBrew::instance()->dataBase() + "translations";
     QTranslator translator;
-    translator.load("qbrew_" + QLocale::system().name(), transdir);
-    app.installTranslator(&translator);
+    if (translator.load("qbrew_" + QLocale::system().name(), transdir)) {
+        app.installTranslator(&translator);
+    }
     // load qt translations
     QString qttransdir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
     QTranslator qttranslator;
-    qttranslator.load("qt_" + QLocale::system().name(), qttransdir);
-    app.installTranslator(&qttranslator);
+    if (qttranslator.load("qt_" + QLocale::system().name(), qttransdir)) {
+        app.installTranslator(&qttranslator);
+    }
 
     // check for additional command line arguments
     QTextStream stream(stdout);
