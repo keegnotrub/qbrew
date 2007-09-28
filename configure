@@ -268,7 +268,7 @@ parse_options() {
                 ;;
 
             --help) usage; exit ;;
-            *) usage; exit ;;
+            *) usage; exit 1 ;;
         esac
     done
 }
