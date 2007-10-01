@@ -839,7 +839,7 @@ void QBrew::readConfig()
     state_.general.autobackup =
         config.value(CONF_GEN_AUTOBACKUP, state_.general.autobackup).toBool();
     state_.general.loadlast =
-        config.value(CONF_GEN_LOADLAST, state_.general.autobackup).toBool();
+        config.value(CONF_GEN_LOADLAST, state_.general.loadlast).toBool();
     state_.general.recentnum =
         config.value(CONF_GEN_RECENTNUM, state_.general.recentnum).toUInt();
     config.endGroup();
