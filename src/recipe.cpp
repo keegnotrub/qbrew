@@ -539,8 +539,8 @@ QString Recipe::method()
     int mash = 0;
 
     foreach(Grain grain, grains_) {
-        if (grain.use() == Grain::MASHED_STRING) mash++;
-        else if (grain.use() == Grain::EXTRACT_STRING) extract++;
+        if (grain.use().toLower() == Grain::MASHED_STRING.toLower()) mash++;
+        else if (grain.use().toLower() == Grain::EXTRACT_STRING.toLower()) extract++;
     }
 
     if (mash > 0) {
@@ -577,10 +577,10 @@ double Recipe::calcOG()
     double est = 0.0;
     foreach(Grain grain, grains_) {
         yield = grain.yield();
-        if (grain.use() == Grain::MASHED_STRING) {
+        if (grain.use().toLower() == Grain::MASHED_STRING.toLower()) {
             // adjust for mash efficiency
             yield *= Data::instance()->efficiency();
-        } else if (grain.use() == Grain::STEEPED_STRING) {
+        } else if (grain.use().toLower() == Grain::STEEPED_STRING.toLower()) {
                 // steeped grains don't yield nearly as much as mashed grains
                 yield *= Data::instance()->steepYield();
         }

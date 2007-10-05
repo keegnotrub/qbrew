@@ -4,7 +4,7 @@
   xmlns="http://www.w3.org/TR/xhtml1/transitional"
   exclude-result-prefixes="#default">
   
-  <xsl:import href="/usr/local/share/xsl/docbook/html/chunk.xsl"/>
+  <xsl:import href="/usr/share/xml/docbook/stylesheet/nwalsh/html/chunk.xsl"/>
   
   <!-- Parameter overrides -->
   <xsl:variable name="root.filename" select="'index'"/>
