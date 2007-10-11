@@ -49,6 +49,7 @@ QWidget *StyleDelegate::createEditor(QWidget *parent,
           dspin->setDecimals(3);
           dspin->setRange(0.990, 1.150);
           dspin->setSingleStep(0.001);
+          dspin->setAccelerated(true);
           dspin->installEventFilter(const_cast<StyleDelegate*>(this));
           return dspin;
 
@@ -58,6 +59,7 @@ QWidget *StyleDelegate::createEditor(QWidget *parent,
           spin = new QSpinBox(parent);
           spin->setRange(0, 120);
           spin->setSingleStep(1);
+          spin->setAccelerated(true);
           spin->installEventFilter(const_cast<StyleDelegate*>(this));
           return spin;
 
@@ -67,6 +69,7 @@ QWidget *StyleDelegate::createEditor(QWidget *parent,
           spin = new QSpinBox(parent);
           spin->setRange(0, 50);
           spin->setSingleStep(1);
+          spin->setAccelerated(true);
           spin->installEventFilter(const_cast<StyleDelegate*>(this));
           return spin;
 

@@ -123,6 +123,9 @@
          <property name="whatsThis" >
           <string>&lt;p>Use this control to enter the size of the recipe batch&lt;/p></string>
          </property>
+         <property name="accelerated" >
+          <bool>true</bool>
+         </property>
          <property name="maximum" >
           <double>5000.000000000000000</double>
          </property>

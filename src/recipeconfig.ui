@@ -34,6 +34,9 @@
         <property name="whatsThis" >
          <string>&lt;p>Enter the default batch size you wish to use. You may always change an individual recipe's size, but this determines the default size for new recipes.&lt;/p></string>
         </property>
+        <property name="accelerated" >
+         <bool>true</bool>
+        </property>
         <property name="maximum" >
          <double>100.000000000000000</double>
         </property>

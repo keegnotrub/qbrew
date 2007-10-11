@@ -51,6 +51,7 @@ QWidget *HopDelegate::createEditor(QWidget *parent,
           dspin->setSingleStep(0.25);
           suffix = " " + Data::instance()->defaultHopUnit().symbol();
           dspin->setSuffix(suffix);
+          dspin->setAccelerated(true);
           dspin->installEventFilter(const_cast<HopDelegate*>(this));
           return dspin;
 
@@ -61,6 +62,7 @@ QWidget *HopDelegate::createEditor(QWidget *parent,
           dspin->setRange(0.0, 50.0);
           dspin->setSingleStep(0.1);
           dspin->setSuffix("%");
+          dspin->setAccelerated(true);
           dspin->installEventFilter(const_cast<HopDelegate*>(this));
           return dspin;
 
@@ -70,6 +72,7 @@ QWidget *HopDelegate::createEditor(QWidget *parent,
           spin->setRange(0, 120);
           spin->setSingleStep(5);
           spin->setSuffix(tr(" min", "minutes"));
+          spin->setAccelerated(true);
           spin->installEventFilter(const_cast<HopDelegate*>(this));
           return spin;
 

@@ -51,6 +51,7 @@ QWidget *MiscDelegate::createEditor(QWidget *parent,
           spin->setSingleStep(0.25);
           suffix = " " + Data::instance()->defaultMiscUnit().symbol();
           spin->setSuffix(suffix);
+          spin->setAccelerated(true);
           spin->installEventFilter(const_cast<MiscDelegate*>(this));
           return spin;
 

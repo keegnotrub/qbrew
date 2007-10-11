@@ -46,6 +46,7 @@ QWidget *GrainDelegate::createEditor(QWidget *parent,
           spin->setDecimals(3);
           spin->setRange(0.00, 1000.00);
           spin->setSingleStep(0.25);
+          spin->setAccelerated(true);
           suffix = " " + Data::instance()->defaultGrainUnit().symbol();
           spin->setSuffix(suffix);
           spin->installEventFilter(const_cast<GrainDelegate*>(this));
@@ -56,6 +57,7 @@ QWidget *GrainDelegate::createEditor(QWidget *parent,
           spin->setDecimals(3);
           spin->setRange(1.000, 1.100);
           spin->setSingleStep(0.001);
+          spin->setAccelerated(true);
           spin->installEventFilter(const_cast<GrainDelegate*>(this));
           return spin;
 
@@ -65,6 +67,7 @@ QWidget *GrainDelegate::createEditor(QWidget *parent,
           spin->setRange(0.0, 500.0);
           spin->setSingleStep(1.0);
           spin->setSuffix(Resource::DEGREE);
+          spin->setAccelerated(true);
           spin->installEventFilter(const_cast<GrainDelegate*>(this));
           return spin;
 

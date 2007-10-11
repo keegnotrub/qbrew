@@ -54,6 +54,9 @@
         <property name="whatsThis" >
          <string>&lt;p>Enter the mash efficiency for your brew house&lt;/p></string>
         </property>
+        <property name="accelerated" >
+         <bool>true</bool>
+        </property>
         <property name="maximum" >
          <double>1.000000000000000</double>
         </property>
@@ -74,6 +77,9 @@
       </item>
       <item row="2" column="1" >
        <widget class="QDoubleSpinBox" name="steepyield" >
+        <property name="accelerated" >
+         <bool>true</bool>
+        </property>
         <property name="maximum" >
          <double>1.000000000000000</double>
         </property>
