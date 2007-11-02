@@ -35,6 +35,8 @@
 
 #include <QItemDelegate>
 
+// TODO: inherit from QStyleItemDelegate when available in 4.4
+
 class StyleDelegate : public QItemDelegate
 {
     Q_OBJECT
