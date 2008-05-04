@@ -39,12 +39,12 @@ class QWidget;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \class TextPrinter
-/// \version 0.1
+/// \version 0.2
 ///
 /// TextPrinter is a printing utility class. It provides methods to print,
 /// preview, and export to PDF. The page format, including header and footers,
-/// can be defined. The content to be printed is provided to the printing
-/// methods as QTextDocument object.
+/// can be defined. The content to be printed is provided as a QTextDocument
+/// object.
 ///
 /// \todo support for page numbering and other page variables
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,13 +60,11 @@ public:
 
     /// Print the document
     void print(const QTextDocument *document,
-               const QString &caption=QString(),
-               bool wysiwyg=false);
+               const QString &caption=QString());
     /// Export the document to PDF
     void exportPdf(const QTextDocument *document,
                    const QString &caption=QString(),
-                   const QString &filename=QString(),
-                   bool wysiwyg=false);
+                   const QString &filename=QString());
     /// Display the document in a preview dialog
     void preview(const QTextDocument *document,
                  const QString &caption=QString());
@@ -131,8 +129,6 @@ public:
     void setFooterText(const QString &text);
 
 private:
-    friend class PreviewWidget;
-
     // not copyable
     TextPrinter(const TextPrinter&);
     TextPrinter &operator=(const TextPrinter&);
@@ -143,14 +139,20 @@ private:
     QRectF contentRect(QPaintDevice *device);
     QRectF headerRect(QPaintDevice *device);
     QRectF footerRect(QPaintDevice *device);
+
     // paint specific page
     void paintPage(QPainter *painter,
                    QTextDocument *document,
                    int pagenum);
+private slots:
+    // common print routine
+    void print(QPrinter *printer);
 
 private:
     QWidget *parent_;
     QPrinter *printer_;
+
+    QTextDocument *tempdoc_;
 
     double leftmargin_;
     double rightmargin_;

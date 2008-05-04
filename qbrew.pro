@@ -1,4 +1,4 @@
-# Copyright 2007 David Johnson
+# Copyright 2007-2008 David Johnson
 # This project file is free software; the author gives unlimited
 # permission to copy, distribute and modify it.
 
@@ -99,7 +99,6 @@ HEADERS = alcoholtool.h \
 	miscdelegate.h \
 	miscmodel.h \
 	notepage.h \
-	previewdialog.h \
 	quantity.h \
 	recipe.h \
 	resource.h \
@@ -129,7 +128,6 @@ SOURCES = alcoholtool.cpp \
 	miscdelegate.cpp \
 	miscmodel.cpp \
 	notepage.cpp \
-	previewdialog.cpp \
 	quantity.cpp \
 	recipe.cpp \
 	style.cpp \

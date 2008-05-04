@@ -1,12 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // textprinter.h
 // -------------------
-// Copyright (c) 2007 David Johnson <david@usermode.org>
+// Copyright (c) 20072008 David Johnson <david@usermode.org>
 // Please see the header file for copyright and license information.
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "textprinter.h"
-#include "previewdialog.h"
 
 #include <QAbstractTextDocumentLayout>
 #include <QDebug>
@@ -17,6 +16,10 @@
 #include <QTextDocument>
 #include <QTextFrame>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
+#include <QPrintPreviewDialog>
+#endif
+
 static inline double mmToInches(double mm) { return mm * 0.039370147; }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,16 +28,13 @@ static inline double mmToInches(double mm) { return mm * 0.039370147; }
 /// Constructs a TextPrinter object.
 /// Any related dialogs will be displayed centered over the parent, if it is
 /// a QWidget object.
-///
-/// Note that printing will be done with QPrinter::ScreenResolution printer
-/// mode. This is to ensure that preview and printed output have identical
-/// layouts.
 ///////////////////////////////////////////////////////////////////////////////
 
 TextPrinter::TextPrinter(QObject *parent)
     : QObject(parent), parent_(0),
-      printer_(new QPrinter(QPrinter::HighResolution)), leftmargin_(15.0),
-      rightmargin_(15.0), topmargin_(15.0), bottommargin_(15.0), spacing_(5.0),
+      printer_(new QPrinter(QPrinter::HighResolution)), tempdoc_(0),
+      leftmargin_(15.0), rightmargin_(15.0), topmargin_(15.0),
+      bottommargin_(15.0), spacing_(5.0),
       headersize_(0.0), headerrule_(true), headertext_(QString()),
       footersize_(0.0), footerrule_(true), footertext_(QString())
 {
@@ -415,19 +415,16 @@ void TextPrinter::setFooterText(const QString &text)
 ///////////////////////////////////////////////////////////////////////////////
 // print()
 ///////////////////////////////////////////////////////////////////////////////
-/// Print a document. A standard print dialog will be displayed. If the
-/// caption parameter is not empty, it will be used as the title for the print
-/// dialog. TextPrinter does not take ownership of the document, but will
-/// make a clone. The wysiwyg parameter forces the printer resolution down to
-/// screen resolution.
+/// Print a document. A standard print dialog will be displayed. If a QPrinter
+/// is not provided, a temporary printer object will be used. If the caption
+/// parameter is not empty, it will be used as the title for the print
+/// dialog.
 ///
-/// \todo eliminate the wysiwyg hack
 /// \todo add overload taking html string
 ///////////////////////////////////////////////////////////////////////////////
 
 void TextPrinter::print(const QTextDocument *document,
-                        const QString &caption,
-                        bool wysiwyg)
+                        const QString &caption)
 {
     if (!document) return;
 
@@ -440,99 +437,34 @@ void TextPrinter::print(const QTextDocument *document,
     dialog.setWindowTitle(caption.isEmpty() ? "Print Document" : caption);
     if (dialog.exec() == QDialog::Rejected) return;
 
-    // setup document
-    QTextDocument *doc = document->clone();
-    doc->setUseDesignMetrics(true);
-    // TODO: wysiwyg hack
-    if (wysiwyg && parent_) printer_->setResolution(parent_->logicalDpiY());
-    doc->documentLayout()->setPaintDevice(printer_);
-    doc->setPageSize(contentRect(printer_).size());
-    // dump existing margin (if any)
-    QTextFrameFormat fmt = doc->rootFrame()->frameFormat();
-    fmt.setMargin(0);
-    doc->rootFrame()->setFrameFormat(fmt);
+    // print it
+    tempdoc_ = document->clone();
+    print(printer_);
 
-    // to iterate through pages we have to worry about
-    // copies, collation, page range, and print order
-
-    // get num copies
-    int doccopies;
-    int pagecopies;
-    if (printer_->collateCopies()) {
-        doccopies = 1;
-        pagecopies = printer_->numCopies();
-    } else {
-        doccopies = printer_->numCopies();
-        pagecopies = 1;
-    }
-
-    // get page range
-    int firstpage = printer_->fromPage();
-    int lastpage = printer_->toPage();
-    if (firstpage == 0 && lastpage == 0) { // all pages
-        firstpage = 1;
-        lastpage = doc->pageCount();
-    }
-
-    // print order
-    bool ascending = true;
-    if (printer_->pageOrder() == QPrinter::LastPageFirst) {
-        int tmp = firstpage;
-        firstpage = lastpage;
-        lastpage = tmp;
-        ascending = false;
-    }
-
-    // loop through and print pages
-    QPainter painter(printer_);
-    for (int dc=0; dc<doccopies; dc++) {
-        int pagenum = firstpage;
-        while (true) {
-            for (int pc=0; pc<pagecopies; pc++) {
-                if (printer_->printerState() == QPrinter::Aborted ||
-                    printer_->printerState() == QPrinter::Error) {
-                    goto breakout;
-                }
-                // print page
-                paintPage(&painter, doc, pagenum);
-                if (pc < pagecopies-1) printer_->newPage();
-            }
-            if (pagenum == lastpage) break;
-            if (ascending) pagenum++;
-            else           pagenum--;
-            printer_->newPage();
-        }
-
-        if (dc < doccopies-1) printer_->newPage();
-    }
-
- breakout:
-    delete doc;
-}
+    delete tempdoc_;
+    tempdoc_ = 0;
+} 
 
 ///////////////////////////////////////////////////////////////////////////////
 // exportPDF()
 ///////////////////////////////////////////////////////////////////////////////
 /// Export the document in PDF format. If caption is not empty, it will be used
 /// as the title for the dialog. If filename is empty, a standard file
-/// selection dialog will be displayed. TextPrinter does not take ownership of
-/// the document, but will make a clone. The wysiwyg parameter forces the
-/// printer resolution down to screen resolution.
-///
-/// \todo eliminate the wysiwyg hack
+/// selection dialog will be displayed.
 ///////////////////////////////////////////////////////////////////////////////
 
 void TextPrinter::exportPdf(const QTextDocument *document,
                             const QString &caption,
-                            const QString &filename,
-                            bool wysiwyg)
+                            const QString &filename)
 {
     if (!document) return;
 
     // file save dialog
     QString dialogcaption = caption.isEmpty() ? "Export PDF" : caption;
-    QString exportname = filename;
-    if (exportname.isEmpty()) {
+    QString exportname;
+    if (QFile::exists(filename)) {
+        exportname = filename;
+    } else {
         exportname = QFileDialog::getSaveFileName(parent_, dialogcaption,
                                                   filename, "*.pdf");
     }
@@ -544,48 +476,42 @@ void TextPrinter::exportPdf(const QTextDocument *document,
     printer_->setOutputFormat(QPrinter::PdfFormat);
     printer_->setOutputFileName(exportname);
 
-    // setup document
-    QTextDocument *doc = document->clone();
-    // TODO: hack to get wysiwyg
-    if (wysiwyg && parent_) printer_->setResolution(parent_->logicalDpiY());
-    doc->documentLayout()->setPaintDevice(printer_);
-    doc->setPageSize(contentRect(printer_).size());
-    // dump existing margin (if any)
-    QTextFrameFormat fmt = doc->rootFrame()->frameFormat();
-    fmt.setMargin(0);
-    doc->rootFrame()->setFrameFormat(fmt);
+    // print it
+    tempdoc_ = document->clone();
+    print(printer_);
 
-    // print pdf
-    QPainter painter(printer_);
-    for (int pagenum=1; pagenum<=doc->pageCount(); pagenum++) {
-        paintPage(&painter, doc, pagenum);
-        if (pagenum < doc->pageCount()) printer_->newPage();
-    }
-    delete doc;
+    delete tempdoc_;
+    tempdoc_ = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // preview()
 ///////////////////////////////////////////////////////////////////////////////
 /// Displays a print preview dialog. If caption is not empty, it will be used
-/// as the title of the dialog. The preview dialog will have buttons for
-/// zooming and page setup. If the user accepts the dialog, the print()
-/// method will be called.
+/// as the title of the dialog.
 ///////////////////////////////////////////////////////////////////////////////
 
 void TextPrinter::preview(const QTextDocument *document,
                           const QString &caption)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
     if (!document) return;
 
-    PreviewDialog *dialog = new PreviewDialog(document, this, parent_);
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer_, parent_);
     dialog->setWindowTitle(caption.isEmpty() ? "Print Preview" : caption);
 
-    if (dialog->exec() == QDialog::Rejected) return;
+    connect(dialog, SIGNAL(paintRequested(QPrinter*)),
+            this, SLOT(print(QPrinter*)));
 
-    print(document);
+    // preview it
+    tempdoc_ = document->clone();
+    dialog->exec();
+
+    delete tempdoc_;
+    tempdoc_ = 0;
 
     delete dialog;
+#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -667,6 +593,79 @@ QRectF TextPrinter::footerRect(QPaintDevice *device)
     return rect;
 };
 
+// print() ////////////////////////////////////////////////////////////////////
+// Common printing routine. Print tempdoc_ to given printer device.
+
+void TextPrinter::print(QPrinter *printer)
+{
+    if (!printer || !tempdoc_) return;
+
+    tempdoc_->setUseDesignMetrics(true);
+    tempdoc_->documentLayout()->setPaintDevice(printer);
+    tempdoc_->setPageSize(contentRect(printer).size());
+    // dump existing margin (if any)
+    QTextFrameFormat fmt = tempdoc_->rootFrame()->frameFormat();
+    fmt.setMargin(0);
+    tempdoc_->rootFrame()->setFrameFormat(fmt);
+
+    // to iterate through pages we have to worry about
+    // copies, collation, page range, and print order
+
+    // get num copies
+    int doccopies;
+    int pagecopies;
+    if (printer->collateCopies()) {
+        doccopies = 1;
+        pagecopies = printer->numCopies();
+    } else {
+        doccopies = printer->numCopies();
+        pagecopies = 1;
+    }
+
+    // get page range
+    int firstpage = printer->fromPage();
+    int lastpage = printer->toPage();
+    if (firstpage == 0 && lastpage == 0) { // all pages
+        firstpage = 1;
+        lastpage = tempdoc_->pageCount();
+    }
+
+    // print order
+    bool ascending = true;
+    if (printer->pageOrder() == QPrinter::LastPageFirst) {
+        int tmp = firstpage;
+        firstpage = lastpage;
+        lastpage = tmp;
+        ascending = false;
+    }
+
+    // loop through and print pages
+    QPainter painter(printer);
+    painter.setRenderHints(QPainter::Antialiasing |
+                           QPainter::TextAntialiasing |
+                           QPainter::SmoothPixmapTransform, true);
+    for (int dc=0; dc<doccopies; dc++) {
+        int pagenum = firstpage;
+        while (true) {
+            for (int pc=0; pc<pagecopies; pc++) {
+                if (printer->printerState() == QPrinter::Aborted ||
+                    printer->printerState() == QPrinter::Error) {
+                    return;
+                }
+                // print page
+                paintPage(&painter, tempdoc_, pagenum);
+                if (pc < pagecopies-1) printer->newPage();
+            }
+            if (pagenum == lastpage) break;
+            if (ascending) pagenum++;
+            else           pagenum--;
+            printer->newPage();
+        }
+
+        if (dc < doccopies-1) printer->newPage();
+    }
+}
+
 // paintPage() ////////////////////////////////////////////////////////////////
 // paint an individual page of the document to the painter
 
@@ -675,6 +674,7 @@ void TextPrinter::paintPage(QPainter *painter,
                            int pagenum)
 {
     QRectF rect;
+    double hp = painter->device()->logicalDpiY() / 144.0; // half point
 
     // header
     if (headersize_ > 0) {
@@ -682,7 +682,8 @@ void TextPrinter::paintPage(QPainter *painter,
 
         rect = headerRect(painter->device());
         if (headerrule_) {
-            painter->setPen(QPen(Qt::black, 1.0));
+
+            painter->setPen(QPen(Qt::black, hp));
             painter->drawLine(rect.bottomLeft(), rect.bottomRight());
         }
 
@@ -710,7 +711,7 @@ void TextPrinter::paintPage(QPainter *painter,
 
         rect = footerRect(painter->device());
         if (footerrule_) {
-            painter->setPen(QPen(Qt::black, 1.0));
+            painter->setPen(QPen(Qt::black, hp));
             painter->drawLine(rect.topLeft(), rect.topRight());
         }
 

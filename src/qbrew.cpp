@@ -179,10 +179,8 @@ void QBrew::initActions()
             this, SLOT(fileSave()));
     connect(ui.actionfilesaveas, SIGNAL(triggered()),
             this, SLOT(fileSaveAs()));
-    // TODO: disable for now...
-    ui.actionfileprintpreview->setVisible(false);
-    // connect(ui.actionfileprintpreview, SIGNAL(triggered()),
-    //        this, SLOT(filePrintPreview()));
+    connect(ui.actionfileprintpreview, SIGNAL(triggered()),
+            this, SLOT(filePrintPreview()));
     connect(ui.actionfileprint, SIGNAL(triggered()),
             this, SLOT(filePrint()));
     connect(ui.actionfileexport, SIGNAL(triggered()),
@@ -209,6 +207,10 @@ void QBrew::initActions()
     connect(ui.actioncontexthelp, SIGNAL(triggered()),
             this, SLOT(helpContext()));
     connect(ui.actionabout, SIGNAL(triggered()), this, SLOT(helpAbout()));
+
+#if (QT_VERSION < QT_VERSION_CHECK(4, 4, 0))
+    ui.actionfileprintpreview->setVisible(false);
+#endif
 
     // insert toolbar toggle action
     ui.maintoolbar->toggleViewAction()->setStatusTip(tr("Toggle the toolbar"));
@@ -510,7 +512,6 @@ void QBrew::fileExport()
 
 void QBrew::filePrintPreview()
 {
-    // TODO: waiting for Qt 4.4.0, and hopefully a better print infrastructure
     statusBar()->showMessage(tr("Print preview..."));
 
     recipe_->previewRecipe(textprinter_);
