@@ -3,7 +3,7 @@
   -------------------
   An Alcohol Percentage Calculator utility for QBrew
   -------------------
-  Copyright 2004-2007, David Johnson <david@usermode.org>
+  Copyright 2004-2008, David Johnson <david@usermode.org>
   Based on code Copyright 2004, Michal Palczewski <michalp@gmail.com>
   All rights reserved.
 

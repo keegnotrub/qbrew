@@ -3,7 +3,7 @@
   -------------------
   Recipe (document) class
   -------------------
-  Copyright 2001-2007, David Johnson
+  Copyright 2001-2008, David Johnson
   Please see the header file for copyright and license information
  ***************************************************************************/
 

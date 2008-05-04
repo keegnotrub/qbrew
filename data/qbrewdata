@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE qbrewdata ><qbrewdata version="0.4.0" >
+<!DOCTYPE qbrewdata ><qbrewdata version="0.4.1" >
  <styles>
    <style oglow="1.045" oghigh="1.060" fglow="1.010" fghigh="1.015" ibulow="25" ibuhigh="40"  srmlow="10" srmhigh="17" >American Amber Ale</style>
    <style oglow="1.080" oghigh="1.120" fglow="1.016" fghigh="1.030" ibulow="50" ibuhigh="120" srmlow="10" srmhigh="19" >American Barleywine</style>

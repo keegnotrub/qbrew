@@ -3,7 +3,7 @@
   -------------------
   Brewing data
   -------------------
-  Copyright (c) 2001-2007 David Johnson
+  Copyright 2001-2008 David Johnson
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without

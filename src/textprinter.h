@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // textprinter.h
 // -------------------
-// Copyright (c) 2007 David Johnson <david@usermode.org>
+// Copyright 2007-2008 David Johnson <david@usermode.org>
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without

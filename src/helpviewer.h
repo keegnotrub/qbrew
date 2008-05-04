@@ -3,7 +3,7 @@
   -------------------
   General purpose help file viewer
   -------------------
-  Copyright 2007 David Johnson
+  Copyright 2007-2008 David Johnson
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without

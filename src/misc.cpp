@@ -3,7 +3,7 @@
   -------------------
   A generic ingredient class
   -------------------
-  Copyright 1999-2007, David Johnson
+  Copyright 1999-2008, David Johnson
   Please see the header file for copyright and license information
  ***************************************************************************/
 

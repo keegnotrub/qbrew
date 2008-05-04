@@ -3,7 +3,7 @@
   -------------------
   A hydrometer correction utility for QBrew
   -------------------
-  Copyright 2004-2007, David Johnson <david@usermode.org>
+  Copyright 2004-2008, David Johnson <david@usermode.org>
   Based on code Copyright 2001, Abe Kabakoff <abe_kabakoff@gmx.de>
   All rights reserved.
 

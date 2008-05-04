@@ -3,7 +3,7 @@
   -------------------
   AHA-like style class
   -------------------
-  Copyright 1999-2007, David Johnson
+  Copyright 1999-2008, David Johnson
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without

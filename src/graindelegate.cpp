@@ -3,7 +3,7 @@
   -------------------
   Grain delegate editor
   -------------------
-  Copyright 2006-2007, David Johnson
+  Copyright 2006-2008, David Johnson
   Please see the header file for copyright and license information
  ***************************************************************************/
 

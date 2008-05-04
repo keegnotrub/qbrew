@@ -22,7 +22,7 @@
 	<key>CFBundleExecutable</key>
 	<string>qbrew</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Copyright David Johnson, 1999-2007</string>
+	<string>Copyright David Johnson, 1999-2008</string>
 	<key>CFBundleIconFile</key>
 	<string>application.icns</string>
 	<key>CFBundlePackageType</key>
@@ -30,6 +30,6 @@
 	<key>CFBundleSignature</key>
 	<string>qbrw</string>
 	<key>CFBundleVersion</key>
-	<string>0.4.0</string>
+	<string>0.4.1</string>
 </dict>
 </plist>

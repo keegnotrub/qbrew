@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright 2007 David Johnson
+# Copyright 2007-2008 David Johnson
 # Configuration script for use with qt/qmake projects. This configure
 # script is free software; the author gives unlimited permission to
 # copy, distribute and modify it. Portions of this script adapted

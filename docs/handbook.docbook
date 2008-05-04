@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
 <!ENTITY qbrew          '<application>QBrew</application>'>
-<!ENTITY qbrew.version  "0.4.0">
+<!ENTITY qbrew.version  "0.4.1">
 <!ENTITY qt.version     "4.3 or greater">
 ]>
 
@@ -18,7 +18,7 @@
     </author>
 
     <copyright>
-      <year>1999 - 2007</year>
+      <year>1999 - 2008</year>
       <holder role="david@usermode.org">David Johnson</holder>
     </copyright>
 

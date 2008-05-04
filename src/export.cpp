@@ -3,7 +3,7 @@
   -------------------
   Export methods for the Recipe class
   -------------------
-  Copyright (c) 2005-2007 David Johnson
+  Copyright 2005-2008 David Johnson
   Please see the header file for copyright and license information.
  ***************************************************************************/
 

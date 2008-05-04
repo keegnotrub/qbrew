@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright 2007 David Johnson
+# Copyright 2007-2008 David Johnson
 # The author grants unlimited permission to
 # copy, distribute and modify this script
 

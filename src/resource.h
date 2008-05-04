@@ -3,7 +3,7 @@
   -------------------
   Global application resources. Constants, enumerations and strings.
   -------------------
-  Copyright 2006-2007 David Johnson
+  Copyright 2006-2008 David Johnson
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
 #include <QString>
 
 #define PACKAGE "qbrew"
-#define VERSION "0.4.0"
+#define VERSION "0.4.1"
 
 // some stuff to differentiate between platforms
 #if defined(Q_WS_X11)
@@ -57,7 +57,7 @@ const QByteArray TITLE        = "QBrew";
 const QByteArray DESCRIPTION  = QT_TRANSLATE_NOOP("description",
                                 "A Homebrewer's Recipe Calculator");
 const QByteArray COPYRIGHT    = QT_TRANSLATE_NOOP("copyright",
-                                "Copyright 1999-2007");
+                                "Copyright 1999-2008");
 const QByteArray AUTHOR       = "David Johnson";
 const QByteArray AUTHOR_EMAIL = "david@usermode.org";
 const QByteArray CONTRIBUTORS = "Lee Henderson, "
