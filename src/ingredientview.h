@@ -47,7 +47,6 @@ public:
 private slots:
     void addIngredient();
     void removeIngredient();
-    void columnSort(int column);
 
 private:
     void contextMenuEvent(QContextMenuEvent *event);

@@ -130,8 +130,6 @@ View::View(QWidget *parent, Recipe *recipe)
     // widget connections
     connect(grainmodel_, SIGNAL(modified()),
             this, SLOT(modelModified()));
-    connect(grainpage.view->horizontalHeader(), SIGNAL(sectionClicked(int)),
-            grainpage.view, SLOT(columnSort(int)));
     connect(grainpage.addbutton, SIGNAL(clicked()),
             grainpage.view, SLOT(addIngredient()));
     connect(grainpage.removebutton, SIGNAL(clicked()),
@@ -139,8 +137,6 @@ View::View(QWidget *parent, Recipe *recipe)
 
     connect(hopmodel_, SIGNAL(modified()),
             this, SLOT(modelModified()));
-    connect(hoppage.view->horizontalHeader(), SIGNAL(sectionClicked(int)),
-            hoppage.view, SLOT(columnSort(int)));
     connect(hoppage.addbutton, SIGNAL(clicked()),
             hoppage.view, SLOT(addIngredient()));
     connect(hoppage.removebutton, SIGNAL(clicked()),
@@ -148,8 +144,6 @@ View::View(QWidget *parent, Recipe *recipe)
 
     connect(miscmodel_, SIGNAL(modified()),
             this, SLOT(modelModified()));
-    connect(miscpage.view->horizontalHeader(), SIGNAL(sectionClicked(int)),
-            miscpage.view, SLOT(columnSort(int)));
     connect(miscpage.addbutton, SIGNAL(clicked()),
             miscpage.view, SLOT(addIngredient()));
     connect(miscpage.removebutton, SIGNAL(clicked()),
@@ -261,18 +255,22 @@ void View::flush()
         ui.stylecombo->addItem(recipe_->style().name());
     }
 
-    // update style widgets
-    refresh();
-
     // restore modified flag
     recipe_->setModified(oldmod);
     recipe_->blockSignals(false);
 
-    // reset ingredient views
+    // reset ingredient models
     grainmodel_->flush();
     hopmodel_->flush();
     miscmodel_->flush();
     notepage_->refresh();
+
+    grainpage.view->sortByColumn(0, Qt::AscendingOrder);
+    hoppage.view->sortByColumn(0, Qt::AscendingOrder);
+    miscpage.view->sortByColumn(0, Qt::AscendingOrder);
+
+    // update style widgets
+    refresh();
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -26,6 +26,8 @@
 IngredientView::IngredientView(QWidget *parent)
     : QTableView(parent), addaction_(0), removeaction_(0)
 {
+    setSortingEnabled(true);
+
     // create context menu actions
     addaction_ = new QAction(tr("&Add Ingredient"), this);
     addaction_->setShortcut(QKeySequence(tr("Ctrl+Insert")));
@@ -88,30 +90,4 @@ void IngredientView::removeIngredient()
         model()->removeRows(currentIndex().row(), 1, QModelIndex());
         clearSelection();
     }
-}
-
-//////////////////////////////////////////////////////////////////////////////
-// cColumnSort()
-// -------------
-// Sort the table by specified column
-
-void IngredientView::columnSort(int column)
-{
-    // indicator should show opposite of sort
-    Qt::SortOrder sortorder = Qt::DescendingOrder;
-    Qt::SortOrder indicatororder = Qt::AscendingOrder;
-
-    if (horizontalHeader()->sortIndicatorSection() == column) {
-        if (horizontalHeader()->sortIndicatorOrder() == Qt::AscendingOrder) {
-            sortorder = Qt::DescendingOrder;
-            indicatororder = Qt::AscendingOrder;
-        } else {
-            sortorder = Qt::AscendingOrder;
-            indicatororder = Qt::DescendingOrder;
-        }
-    }
-
-    sortByColumn(column, sortorder);
-    horizontalHeader()->setSortIndicator(column, indicatororder);
-    horizontalHeader()->setSortIndicatorShown(true);
 }

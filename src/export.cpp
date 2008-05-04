@@ -185,11 +185,7 @@ const QString Recipe::recipeHTML()
     html += th.arg(tr("Use"));
     html += "</tr>\n\n";
 
-    // presort
-    QMultiMap<QString, Grain> gmap;
-    foreach (Grain grain, grains_) gmap.insert(grain.name(), grain);
-
-    foreach (Grain grain, gmap.values()) {
+    foreach (Grain grain, grains_) {
         html += "<tr>\n<td>" + grain.weight().toString(2) + "</td>\n";
         html += "<td></td>\n";
         html += "<td>" + escape(grain.name()) + "</td>\n";
@@ -209,11 +205,7 @@ const QString Recipe::recipeHTML()
     html += th.arg(tr("Time"));
     html += "</tr>\n\n";
 
-    // presort
-    QMultiMap<QString, Hop> hmap;
-    foreach (Hop hop, hops_) hmap.insert(hop.name(), hop);
-
-    foreach (Hop hop, hmap.values()) {
+    foreach (Hop hop, hops_) {
         html += "<tr>\n<td>" + hop.weight().toString(2) + "</td>\n";
         html += "<td></td>\n";
         html += "<td>" + escape(hop.name()) + "</td>\n";
@@ -231,11 +223,7 @@ const QString Recipe::recipeHTML()
     html += th.arg(tr("Notes"));
     html += "</tr>\n\n";
 
-    // presort
-    QMultiMap<QString, Misc> mmap;
-    foreach (Misc misc, miscs_) mmap.insert(misc.name(), misc);
-
-    foreach (Misc misc, mmap) {
+    foreach (Misc misc, miscs_) {
         html += "<tr>\n<td>" + misc.quantity().toString(2) + "</td>\n";
         html += "<td></td>\n";
         html += "<td>" + escape(misc.name()) + "</td>\n";
