@@ -15,6 +15,7 @@
 #include <QMessageBox>
 #include <QTextDocument>
 #include <QTextStream>
+#include <QXmlStreamReader>
 
 #include "textprinter.h"
 #include "data.h"
@@ -89,25 +90,27 @@ bool Recipe::nativeFormat(const QString &filename)
     if (!datafile.open(QFile::ReadOnly | QFile::Text)) {
         // error opening file
         qWarning() << "Error: Cannot open" << filename;
-        datafile.close();
         return false;
     }
+    // note: datafile will close on return
 
-    // parse document
-    QDomDocument doc;
-    bool status = doc.setContent(&datafile);
-    datafile.close();
-    if (!status) return false;
+    // find root/first element
+    QXmlStreamReader xml(&datafile);
+    do {
+        xml.readNext();
+    } while (!xml.atEnd() && !xml.isStartElement());
+
+    if (xml.hasError()) return false;
 
     // check the document type
-    QDomElement root = doc.documentElement();
-    if (root.tagName() != tagRecipe) return false;
+    if (xml.name() != tagRecipe) return false;
 
     // check application
-    if (root.attribute(attrApplication) != PACKAGE) {
+    if (xml.attributes().value(attrApplication) != PACKAGE) {
         // check generator if no application
-        if (root.attribute(attrGenerator) != PACKAGE)
+        if (xml.attributes().value(attrGenerator) != PACKAGE) {
             return false;
+        }
     }
 
     return true;
@@ -128,28 +131,35 @@ bool Recipe::beerXmlFormat(const QString &filename)
     if (!datafile.open(QFile::ReadOnly | QFile::Text)) {
         // error opening file
         qWarning() << "Error: Cannot open" << filename;
-        datafile.close();
         return false;
     }
+    // note: datafile will close on return
 
-    // parse document
-    QDomDocument doc;
-    bool status = doc.setContent(&datafile);
-    datafile.close();
-    if (!status) return false;
+    // find root/first element
+    QXmlStreamReader xml(&datafile);
+    do {
+        xml.readNext();
+    } while (!xml.atEnd() && !xml.isStartElement());
+    if (xml.hasError()) return false;
 
     // check the document type
-    QDomElement root = doc.documentElement();
-    if (root.tagName() != tagRECIPES) return false;
+    if (xml.name() != tagRECIPES) return false;
 
     // check for RECIPE
-    QDomElement element, sub;
-    element = root.firstChildElement(tagRECIPE);
-    if (!element.isNull()) {
-        // check VERSION
-        sub = element.firstChildElement(tagVERSION);
-        if (!sub.isNull()) {
-            if (sub.text() == "1") return true;
+    while (!xml.atEnd()) {
+        xml.readNext();
+        if (xml.isStartElement()) {
+            if (xml.name() == tagRECIPE) {
+                // check VERSION
+                while (!xml.atEnd()) {
+                    xml.readNext();
+                    if (xml.isStartElement()) {
+                        if (xml.name() == tagVERSION) {
+                            if (xml.readElementText() == "1") return true;
+                        }
+                    }
+                }
+            }
         }
     }
 
