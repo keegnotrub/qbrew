@@ -1,14 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // textprinter.h
 // -------------------
-// Copyright 2007-2008 David Johnson <david@usermode.org>
+// Copyright (c) 20072008 David Johnson <david@usermode.org>
 // Please see the header file for copyright and license information.
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "textprinter.h"
 
 #include <QAbstractTextDocumentLayout>
-#include <QDebug>
+#include <QDate>
 #include <QFileDialog>
 #include <QLocale>
 #include <QPainter>
@@ -35,8 +35,9 @@ TextPrinter::TextPrinter(QObject *parent)
       printer_(new QPrinter(QPrinter::HighResolution)), tempdoc_(0),
       leftmargin_(15.0), rightmargin_(15.0), topmargin_(15.0),
       bottommargin_(15.0), spacing_(5.0),
-      headersize_(0.0), headerrule_(true), headertext_(QString()),
-      footersize_(0.0), footerrule_(true), footertext_(QString())
+      headersize_(0.0), headerrule_(0.5), headertext_(QString()),
+      footersize_(0.0), footerrule_(0.5), footertext_(QString()),
+      dateformat_()
 {
     if (parent) parent_ = qobject_cast<QWidget*>(parent);
 
@@ -74,7 +75,7 @@ TextPrinter::~TextPrinter()
 /// enumeration.
 ///////////////////////////////////////////////////////////////////////////////
 
-QPrinter::PageSize TextPrinter::pageSize()
+QPrinter::PageSize TextPrinter::pageSize() const
 {
     return printer_->pageSize(); 
 }
@@ -99,7 +100,7 @@ void TextPrinter::setPageSize(QPrinter::PageSize size)
 /// enumeration.
 ///////////////////////////////////////////////////////////////////////////////
 
-QPrinter::Orientation TextPrinter::orientation()
+QPrinter::Orientation TextPrinter::orientation() const
 {
     return printer_->orientation();
 }
@@ -123,7 +124,7 @@ void TextPrinter::setOrientation(QPrinter::Orientation orientation)
 /// Return the left page margin width in millimeters.
 ///////////////////////////////////////////////////////////////////////////////
 
-double TextPrinter::leftMargin()
+double TextPrinter::leftMargin() const
 {
     return leftmargin_;
 }
@@ -149,7 +150,7 @@ void TextPrinter::setLeftMargin(double margin)
 /// Return the right page margin width in millimeters.
 ///////////////////////////////////////////////////////////////////////////////
 
-double TextPrinter::rightMargin()
+double TextPrinter::rightMargin() const
 {
     return rightmargin_;
 }
@@ -175,7 +176,7 @@ void TextPrinter::setRightMargin(double margin)
 /// Return the top page margin size in millimeters.
 ///////////////////////////////////////////////////////////////////////////////
 
-double TextPrinter::topMargin()
+double TextPrinter::topMargin() const
 {
     return topmargin_;
 }
@@ -201,7 +202,7 @@ void TextPrinter::setTopMargin(double margin)
 /// Return the bottom page margin size in millimeters.
 ///////////////////////////////////////////////////////////////////////////////
 
-double TextPrinter::bottomMargin()
+double TextPrinter::bottomMargin() const
 {
     return bottommargin_;
 }
@@ -245,7 +246,7 @@ void TextPrinter::setMargins(double margin)
 /// blocks. This is defined in millimeters.
 ///////////////////////////////////////////////////////////////////////////////
 
-double TextPrinter::spacing()
+double TextPrinter::spacing() const
 {
     return spacing_;
 }
@@ -272,7 +273,7 @@ void TextPrinter::setSpacing(double spacing)
 /// Return the height of the header block  in millimeters.
 ///////////////////////////////////////////////////////////////////////////////
 
-double TextPrinter::headerSize()
+double TextPrinter::headerSize() const
 {
     return headersize_;
 }
@@ -296,10 +297,10 @@ void TextPrinter::setHeaderSize(double size)
 ///////////////////////////////////////////////////////////////////////////////
 // headerRule()
 ///////////////////////////////////////////////////////////////////////////////
-/// Return whether the rule for the header is enabled.
+/// Return the size of the header rule in points. One point is 1/72 inch.
 ///////////////////////////////////////////////////////////////////////////////
 
-bool TextPrinter::headerRule()
+double TextPrinter::headerRule() const
 {
     return headerrule_;
 }
@@ -307,13 +308,14 @@ bool TextPrinter::headerRule()
 ///////////////////////////////////////////////////////////////////////////////
 // setHeaderRule()
 ///////////////////////////////////////////////////////////////////////////////
-/// Enable or disable the header rule. If enabled (default), the rule will be
-/// drawn below the header.
+/// Set the header rule size in points. By default, the header rule is one half
+/// point (1/144 inch). To turn off the rule, set the rule size to 0. The rule
+/// will be  drawn below the header area.
 ///////////////////////////////////////////////////////////////////////////////
 
-void TextPrinter::setHeaderRule(bool on)
+void TextPrinter::setHeaderRule(double pointsize)
 {
-    headerrule_ = on;
+    headerrule_ = qMax(0.0, pointsize);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -322,7 +324,7 @@ void TextPrinter::setHeaderRule(bool on)
 /// Return the text for the header.
 ///////////////////////////////////////////////////////////////////////////////
 
-const QString &TextPrinter::headerText()
+const QString &TextPrinter::headerText() const
 {
     return headertext_;
 }
@@ -331,7 +333,10 @@ const QString &TextPrinter::headerText()
 // setHeaderText()
 ///////////////////////////////////////////////////////////////////////////////
 /// Set the text for the header. Rich text is supported. HTML tags may be used
-/// to format the text and align elements.
+/// to format the text and align elements. The following page variables may be
+/// included in the text:
+/// - \&page; - Insert current page number
+/// - \&date; - Insert current date, using the format set with setPageFormat()
 ///////////////////////////////////////////////////////////////////////////////
 
 void TextPrinter::setHeaderText(const QString &text)
@@ -345,7 +350,7 @@ void TextPrinter::setHeaderText(const QString &text)
 /// Return the height of the footer block in millimeters.
 ///////////////////////////////////////////////////////////////////////////////
 
-double TextPrinter::footerSize()
+double TextPrinter::footerSize() const
 {
     return footersize_;
 }
@@ -369,10 +374,10 @@ void TextPrinter::setFooterSize(double size)
 ///////////////////////////////////////////////////////////////////////////////
 // footerRule()
 ///////////////////////////////////////////////////////////////////////////////
-/// Return whether the rule for the footer is set.
+/// Return the size of the footer rule in points. One point is 1/72 inch.
 ///////////////////////////////////////////////////////////////////////////////
 
-bool TextPrinter::footerRule()
+double TextPrinter::footerRule() const
 {
     return footerrule_;
 }
@@ -380,13 +385,14 @@ bool TextPrinter::footerRule()
 ///////////////////////////////////////////////////////////////////////////////
 // setFooterRule()
 ///////////////////////////////////////////////////////////////////////////////
-/// Enable or disable the footer rule. If enabled (default), the rule will be
-/// drawn above the footer.
+/// Set the footer rule size in points. By default, the footer rule is one half
+/// point (1/144 inch). To turn off the rule, set the rule size to 0. The rule
+/// will be  drawn just above the footer area.
 ///////////////////////////////////////////////////////////////////////////////
 
-void TextPrinter::setFooterRule(bool on)
+void TextPrinter::setFooterRule(double pointsize)
 {
-    footerrule_ = on;
+    footerrule_ = qMax(0.0, pointsize);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -395,7 +401,7 @@ void TextPrinter::setFooterRule(bool on)
 /// Return the text for the footer.
 ///////////////////////////////////////////////////////////////////////////////
 
-const QString &TextPrinter::footerText()
+const QString &TextPrinter::footerText() const
 {
     return footertext_;
 }
@@ -404,12 +410,39 @@ const QString &TextPrinter::footerText()
 // setFooterText()
 ///////////////////////////////////////////////////////////////////////////////
 /// Set the text for the footer. Rich text is supported. HTML tags may be used
-/// to format the text and align elements.
+/// to format the text and align elements. The following page variables may be
+/// included in the text:
+/// - \&page; - Insert current page number
+/// - \&date; - Insert current date, using the format set with setPageFormat()
 ///////////////////////////////////////////////////////////////////////////////
 
 void TextPrinter::setFooterText(const QString &text)
 {
     footertext_ = text;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// dateFormat()
+///////////////////////////////////////////////////////////////////////////////
+/// Return the currently set date format string.
+///////////////////////////////////////////////////////////////////////////////
+
+const QString &TextPrinter::dateFormat() const
+{
+    return dateformat_;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// setDateFormat()
+///////////////////////////////////////////////////////////////////////////////
+/// Set the date format to be used for the \&date; page variable. The format
+/// is the same as that used by QDate::toString(). If no format is set, the
+/// format defaults to Qt::TextDate.
+///////////////////////////////////////////////////////////////////////////////
+
+void TextPrinter::setDateFormat(const QString &format)
+{
+    dateformat_ = format;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -571,7 +604,9 @@ QRectF TextPrinter::headerRect(QPaintDevice *device)
                 mmToInches(topmargin_) * device->logicalDpiY(),
                 -mmToInches(rightmargin_) * device->logicalDpiX(), 0);
 
-    rect.setBottom(rect.top() +
+    (headerrule_ / 144.0);
+
+    rect.setBottom(rect.top() + 
                    mmToInches(headersize_) * device->logicalDpiY());
 
     return rect;
@@ -588,7 +623,7 @@ QRectF TextPrinter::footerRect(QPaintDevice *device)
                 -mmToInches(bottommargin_) * device->logicalDpiY());
 
     rect.setTop(rect.bottom() -
-                mmToInches(headersize_) * device->logicalDpiY());
+                mmToInches(footersize_) * device->logicalDpiY());
 
     return rect;
 };
@@ -670,28 +705,39 @@ void TextPrinter::print(QPrinter *printer)
 // paint an individual page of the document to the painter
 
 void TextPrinter::paintPage(QPainter *painter,
-                           QTextDocument *document,
-                           int pagenum)
+                            QTextDocument *document,
+                            int pagenum)
 {
     QRectF rect;
-    double hp = painter->device()->logicalDpiY() / 144.0; // half point
+    double onepoint = painter->device()->logicalDpiY() / 72.0;
 
     // header
     if (headersize_ > 0) {
-        painter->save();
-
         rect = headerRect(painter->device());
-        if (headerrule_) {
-
-            painter->setPen(QPen(Qt::black, hp));
+        if (headerrule_ > 0.0) {
+            painter->save();
+            // allow space between rule and header
+            painter->translate(0, onepoint + (headerrule_ * onepoint / 2.0));
+            painter->setPen(QPen(Qt::black, headerrule_ * onepoint));
             painter->drawLine(rect.bottomLeft(), rect.bottomRight());
+            painter->restore();
         }
 
+        // replace page variables
+        QString header = headertext_;
+        header.replace("&page;", QString::number(pagenum));
+        if (dateformat_.isEmpty()) {
+            header.replace("&date;", QDate::currentDate().toString());
+        } else {
+            header.replace("&date;", QDate::currentDate().toString(dateformat_));
+        }
+
+        painter->save();
         painter->translate(rect.left(), rect.top());
         QRectF clip(0, 0, rect.width(), rect.height());
         QTextDocument doc;
         doc.setUseDesignMetrics(true);
-        doc.setHtml(headertext_);
+        doc.setHtml(header);
         doc.documentLayout()->setPaintDevice(painter->device());
         doc.setPageSize(rect.size());
 
@@ -701,29 +747,39 @@ void TextPrinter::paintPage(QPainter *painter,
         painter->translate(0, newtop);
 
         doc.drawContents(painter, clip);
-        
         painter->restore();
     }
 
     // footer
     if (footersize_ > 0) {
-        painter->save();
-
         rect = footerRect(painter->device());
-        if (footerrule_) {
-            painter->setPen(QPen(Qt::black, hp));
+        if (footerrule_ > 0.0) {
+            painter->save();
+            // allow space between rule and footer
+            painter->translate(0, -onepoint + (-footerrule_ * onepoint / 2.0));
+            painter->setPen(QPen(Qt::black, footerrule_ * onepoint));
             painter->drawLine(rect.topLeft(), rect.topRight());
+            painter->restore();
         }
 
+        // replace page variables
+        QString footer = footertext_;
+        footer.replace("&page;", QString::number(pagenum));
+        if (dateformat_.isEmpty()) {
+            footer.replace("&date;", QDate::currentDate().toString());
+        } else {
+            footer.replace("&date;", QDate::currentDate().toString(dateformat_));
+        }
+
+        painter->save();
         painter->translate(rect.left(), rect.top());
         QRectF clip(0, 0, rect.width(), rect.height());
         QTextDocument doc;
         doc.setUseDesignMetrics(true);
-        doc.setHtml(footertext_);
+        doc.setHtml(footer);
         doc.documentLayout()->setPaintDevice(painter->device());
         doc.setPageSize(rect.size());
         doc.drawContents(painter, clip);
-        
         painter->restore();
     }
 
