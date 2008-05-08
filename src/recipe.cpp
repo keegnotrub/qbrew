@@ -16,6 +16,7 @@
 #include <QTextDocument>
 #include <QTextStream>
 #include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "textprinter.h"
 #include "data.h"
@@ -155,7 +156,8 @@ bool Recipe::beerXmlFormat(const QString &filename)
                     xml.readNext();
                     if (xml.isStartElement()) {
                         if (xml.name() == tagVERSION) {
-                            if (xml.readElementText() == "1") return true;
+                            if (xml.readElementText() == beerXMLVersion)
+                                return true;
                         }
                     }
                 }
@@ -346,91 +348,6 @@ bool Recipe::loadRecipe(const QString &filename)
 
 bool Recipe::saveRecipe(const QString &filename)
 {
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    QDomDocument doc(tagRecipe);
-    doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\""));
-
-    // create the root element
-    QDomElement root = doc.createElement(doc.doctype().name());
-    root.setAttribute(attrApplication, PACKAGE);
-    root.setAttribute(attrVersion, VERSION);
-    doc.appendChild(root);
-
-    // title
-    QDomElement element = doc.createElement(tagTitle);
-    element.appendChild(doc.createTextNode(title_));
-    root.appendChild(element);
-    // brewer
-    element = doc.createElement(tagBrewer);
-    element.appendChild(doc.createTextNode(brewer_));
-    root.appendChild(element);
-    // style
-    // TODO: load/save entire style
-    element = doc.createElement(tagStyle);
-    element.appendChild(doc.createTextNode(style_.name()));
-    root.appendChild(element);
-    root.appendChild(element);
-    // batch settings
-    element = doc.createElement(tagBatch);
-    element.setAttribute(attrQuantity, size_.toString());
-    root.appendChild(element);
-    // notes
-    if (!recipenotes_.isEmpty()) {
-        element = doc.createElement(tagNotes);
-        element.setAttribute(attrClass, classRecipe);
-        element.appendChild(doc.createTextNode(recipenotes_));
-        root.appendChild(element);
-    }
-    if (!batchnotes_.isEmpty()) {
-        element = doc.createElement(tagNotes);
-        element.setAttribute(attrClass, classBatch);
-        element.appendChild(doc.createTextNode(batchnotes_));
-        root.appendChild(element);
-    }
-
-    // grains elements
-    element = doc.createElement(tagGrains);
-    QDomElement subelement;
-    foreach(Grain grain, grains_) {
-        // iterate through grain list
-        subelement = doc.createElement(tagGrain);
-        subelement.appendChild(doc.createTextNode(grain.name()));
-        subelement.setAttribute(attrQuantity, grain.weight().toString());
-        subelement.setAttribute(attrExtract, grain.extract());
-        subelement.setAttribute(attrColor, grain.color());
-        subelement.setAttribute(attrType, grain.type());
-        subelement.setAttribute(attrUse, grain.use());
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
-    // hops elements
-    element = doc.createElement(tagHops);
-    foreach(Hop hop, hops_) {
-        // iterate through hop list
-        subelement = doc.createElement(tagHop);
-        subelement.appendChild(doc.createTextNode(hop.name()));
-        subelement.setAttribute(attrQuantity, hop.weight().toString());
-        subelement.setAttribute(attrType, hop.type());
-        subelement.setAttribute(attrAlpha, hop.alpha());
-        subelement.setAttribute(attrTime, hop.time());
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
-    // miscingredients elements
-    element = doc.createElement(tagMiscs);
-    foreach(Misc misc, miscs_) {
-        // iterate through misc list
-        subelement = doc.createElement(tagMisc);
-        subelement.appendChild(doc.createTextNode(misc.name()));
-        subelement.setAttribute(attrQuantity, misc.quantity().toString());
-        subelement.setAttribute(attrType, misc.type());
-        subelement.setAttribute(attrNotes, misc.notes());
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
     // open file
     QFile datafile(filename);
     if (!datafile.open(QFile::WriteOnly | QFile::Text)) {
@@ -441,13 +358,90 @@ bool Recipe::saveRecipe(const QString &filename)
                              .arg(filename)
                              .arg(datafile.errorString()));
         datafile.close();
-        QApplication::restoreOverrideCursor();
         return false;
     }
 
-    // write it out
-    QTextStream data(&datafile);
-    doc.save(data, 2);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // write out xml
+    QXmlStreamWriter xml(&datafile);
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
+    xml.setAutoFormatting(true);
+    xml.setAutoFormattingIndent(2);
+#endif
+    xml.writeStartDocument();
+    xml.writeDTD(QString("<!DOCTYPE %1>").arg(tagRecipe));
+     
+    // write root element
+    xml.writeStartElement(tagRecipe);
+    xml.writeAttribute(attrApplication, PACKAGE);
+    xml.writeAttribute(attrVersion, VERSION);
+
+    // write recipe information
+    xml.writeTextElement(tagTitle, title_);
+    xml.writeTextElement(tagBrewer, brewer_);
+    xml.writeTextElement(tagStyle, style_.name()); // TODO: save entire style
+    xml.writeEmptyElement(tagBatch);
+    xml.writeAttribute(attrQuantity, size_.toString());
+
+    // write notes
+    if (!recipenotes_.isEmpty()) {
+        xml.writeStartElement(tagNotes);
+        xml.writeAttribute(attrClass, classRecipe);
+        xml.writeCharacters(recipenotes_);
+        xml.writeEndElement();
+    }
+    if (!batchnotes_.isEmpty()) {
+        xml.writeStartElement(tagNotes);
+        xml.writeAttribute(attrClass, classBatch);
+        xml.writeCharacters(batchnotes_);
+        xml.writeEndElement();
+    }
+
+    // write grains
+    xml.writeStartElement(tagGrains);
+    foreach(Grain grain, grains_) {
+        // iterate through grain list
+        xml.writeStartElement(tagGrain);
+        xml.writeAttribute(attrQuantity, grain.weight().toString());
+        xml.writeAttribute(attrExtract, QString::number(grain.extract()));
+        xml.writeAttribute(attrColor, QString::number(grain.color()));
+        xml.writeAttribute(attrType, grain.type());
+        xml.writeAttribute(attrUse, grain.use());
+        xml.writeCharacters(grain.name());
+        xml.writeEndElement();
+    }
+    xml.writeEndElement(); // tagGrains
+
+    // write hops
+    xml.writeStartElement(tagHops);
+    foreach(Hop hop, hops_) {
+        // iterate through hop list
+        xml.writeStartElement(tagHop);
+        xml.writeAttribute(attrQuantity, hop.weight().toString());
+        xml.writeAttribute(attrAlpha, QString::number(hop.alpha()));
+        xml.writeAttribute(attrTime, QString::number(hop.time()));
+        xml.writeAttribute(attrType, hop.type());
+        xml.writeCharacters(hop.name());
+        xml.writeEndElement();
+    }
+    xml.writeEndElement(); // tagHops
+
+    // write misc ingredients
+    xml.writeStartElement(tagMiscs);
+    foreach(Misc misc, miscs_) {
+        // iterate through misc list
+        xml.writeStartElement(tagMisc);
+        xml.writeAttribute(attrQuantity, misc.quantity().toString());
+        xml.writeAttribute(attrType, misc.type());
+        xml.writeAttribute(attrNotes, misc.notes());
+        xml.writeCharacters(misc.name());
+        xml.writeEndElement();
+    }
+    xml.writeEndElement(); // tagMiscs
+
+    xml.writeEndElement(); // tagRecipe
+    xml.writeEndDocument();
     datafile.close();
 
     // recipe is saved, so set flags accordingly
@@ -463,7 +457,6 @@ bool Recipe::saveRecipe(const QString &filename)
 
 void Recipe::previewRecipe(TextPrinter *textprinter)
 {
-    // TODO: waiting for Qt 4.4.0, and hopefully a better print infrastructure
     if (!textprinter) return;
     QTextDocument document;
     document.setHtml(recipeHTML());

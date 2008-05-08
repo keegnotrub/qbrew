@@ -463,6 +463,7 @@ void QBrew::fileExport()
         if (!QFile::exists(fname)) {
             if (fname.indexOf('.') == -1) {
                if (selected == tr(HTML_FILTER)) fname += ".html";
+               else if (selected == tr(BEERXML_FILTER)) fname += ".xml";
                else if (selected == tr(PDF_FILTER)) fname += ".pdf";
                else if (selected == tr(TEXT_FILTER)) fname += ".txt";
             }

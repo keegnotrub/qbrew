@@ -1,10 +1,12 @@
-fix builddocs
+undo/redo
+unit tests
 
 Near and Long Term Future Plans for QBrew
 ---------------------------------------------
 
 Short Term
 ----------
+QHelpEngine
 Imperial units
 Option to use Plato instead of SG
 Session management
