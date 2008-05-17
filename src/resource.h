@@ -151,7 +151,6 @@ const QString attrGenerator         = "generator";
 const QString tagTitle              = "title";
 const QString tagBrewer             = "brewer";
 const QString tagBatch              = "batch";
-const QString attrEfficiency        = "efficiency";
 const QString tagNotes              = "notes";
 const QString attrClass             = "class";
 const QString classRecipe           = tagRecipe;

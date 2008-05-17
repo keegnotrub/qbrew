@@ -8,16 +8,17 @@
  ***************************************************************************/
 
 #include <QDir>
-#include <QDomDocument>
 #include <QFile>
 #include <QMessageBox>
 #include <QMutex>
 #include <QStringList>
 #include <QTextStream>
 
+#include "datareader.h"
 #include "qbrew.h"
 #include "recipe.h"
 #include "resource.h"
+
 #include "data.h"
 
 using namespace Resource;
@@ -199,114 +200,18 @@ bool Data::loadData(const QString &filename, bool quiet)
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    // open dom recipe
-    QDomDocument doc;
-    doc.setContent(&datafile);
+    // parse file
+    DataReader reader(&datafile);
+    bool status = reader.readData(this);
     datafile.close();
 
-    // check the doc type and stuff
-    QDomElement root = doc.documentElement();
-    if (root.tagName() != tagDoc) {
-        // wrong file type
-        qWarning() << "Error: Wrong file type" << filename;
+    if (!status) {
+        qWarning() << "Error: Problem reading file" << filename;
+        qWarning() << reader.errorString();
         QMessageBox::warning(0, TITLE,
-                             QObject::tr("Wrong file type for %1").arg(filename));
+                             QObject::tr("Error reading file %1").arg(filename));
         QApplication::restoreOverrideCursor();
         return false;
-    }
-
-    // check file version
-    if (root.attribute(attrVersion) < DATA_PREVIOUS) {
-        // too old of a version
-        qWarning() << "Error: Unsupported version" << filename;
-        QMessageBox::warning(0, TITLE, QObject::tr("Unsupported version %1")
-                                       .arg(filename));
-        QApplication::restoreOverrideCursor();
-        return false;
-    }
-
-    QDomNodeList nodes;
-    QDomElement element, sub;
-
-    // get all styles tags
-    stylemap_.clear();
-    element = root.firstChildElement(tagStyles);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagStyles)) {
-        // get all style tags
-        sub = element.firstChildElement(tagStyle);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagStyle)) {
-            stylemap_.insert(sub.text(),
-                             Style(sub.text(),
-                                   sub.attribute(attrOGLow).toDouble(),
-                                   sub.attribute(attrOGHigh).toDouble(),
-                                   sub.attribute(attrFGLow, "0.0").toDouble(),
-                                   sub.attribute(attrFGHigh, "0.0").toDouble(),
-                                   sub.attribute(attrIBULow).toInt(),
-                                   sub.attribute(attrIBUHigh).toInt(),
-                                   sub.attribute(attrSRMLow).toInt(),
-                                   sub.attribute(attrSRMHigh).toInt()));
-        }
-    }
-
-    // get all grains tags
-    grainmap_.clear();
-    element = root.firstChildElement(tagGrains);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagGrains)) {
-        // get all grain tags
-        sub = element.firstChildElement(tagGrain);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagGrain)) {
-            // TODO: grain type deprecates data file format (0.4.0)
-            grainmap_.insert(sub.text(),
-                             Grain(sub.text(),
-                                   Weight(1.0, *defaultgrainunit_),
-                                   sub.attribute(attrExtract).toDouble(),
-                                   sub.attribute(attrColor).toDouble(),
-                                   sub.attribute(attrType, Grain::OTHER_STRING),
-                                   sub.attribute(attrUse)));
-        }
-    }
-
-    // get all hops tags
-    hopmap_.clear();
-    element = root.firstChildElement(tagHops);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagHops)) {
-        // get all hop tags
-        sub = element.firstChildElement(tagHop);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagHop)) {
-            hopmap_.insert(sub.text(),
-                           Hop(sub.text(),
-                               Weight(1.0, *defaulthopunit_), QString(),
-                               sub.attribute(attrAlpha).toDouble(), 60));
-        }
-    }
-
-    // get all miscingredients tags
-    miscmap_.clear();
-    element = root.firstChildElement(tagMiscs);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagMiscs)) {
-        // get all hop tags
-        sub = element.firstChildElement(tagMisc);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagMisc)) {
-                    miscmap_.insert(sub.text(),
-                                    Misc(sub.text(),
-                                         Quantity(1.0, *defaultmiscunit_),
-                                         sub.attribute(attrType, Misc::OTHER_STRING),
-                                         sub.attribute(attrNotes)));
-        }
-    }
-
-    // get all utilization tags
-    utable_.clear();
-    UEntry entry;
-    element = root.firstChildElement(tagUtilization);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagUtilization)) {
-        // get all entry tags
-        sub = element.firstChildElement(tagEntry);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagEntry)) {
-            entry.time = sub.attribute(attrTime).toUInt();
-            entry.utilization = sub.attribute(attrUtil).toUInt();
-            addUEntry(entry);
-        }
     }
 
     QApplication::restoreOverrideCursor();
@@ -320,83 +225,6 @@ bool Data::loadData(const QString &filename, bool quiet)
 
 bool Data::saveData(const QString &filename)
 {
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    QDomDocument doc(tagDoc);
-    doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\""));
-
-    // create the root element
-    QDomElement root = doc.createElement(doc.doctype().name());
-    root.setAttribute(attrVersion, VERSION);
-    doc.appendChild(root);
-
-    QDomElement element, subelement;
-
-    // styles elements
-    element = doc.createElement(tagStyles);
-    foreach(Style style, stylemap_) {
-        // iterate through style list
-        subelement = doc.createElement(tagStyle);
-        subelement.appendChild(doc.createTextNode(style.name()));
-        subelement.setAttribute(attrOGLow, style.OGLow());
-        subelement.setAttribute(attrOGHigh, style.OGHi());
-        subelement.setAttribute(attrFGLow, style.FGLow());
-        subelement.setAttribute(attrFGHigh, style.FGHi());
-        subelement.setAttribute(attrIBULow, style.IBULow());
-        subelement.setAttribute(attrIBUHigh, style.IBUHi());
-        subelement.setAttribute(attrSRMLow, style.SRMLow());
-        subelement.setAttribute(attrSRMHigh, style.SRMHi());
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
-    // grains elements
-    element = doc.createElement(tagGrains);
-    foreach(Grain grain, grainmap_) {
-        // iterate through grain list
-        subelement = doc.createElement(tagGrain);
-        subelement.appendChild(doc.createTextNode(grain.name()));
-        subelement.setAttribute(attrExtract, grain.extract());
-        subelement.setAttribute(attrColor, grain.color());
-        subelement.setAttribute(attrType, grain.type());
-        subelement.setAttribute(attrUse, grain.use());
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
-    // hops elements
-    element = doc.createElement(tagHops);
-    foreach(Hop hop, hopmap_) {
-        // iterate through hop list
-        subelement = doc.createElement(tagHop);
-        subelement.appendChild(doc.createTextNode(hop.name()));
-        subelement.setAttribute(attrAlpha, hop.alpha());
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
-    // miscingredients elements
-    element = doc.createElement(tagMiscs);
-    foreach(Misc misc, miscmap_) {
-        // iterate through misc list
-        subelement = doc.createElement(tagMisc);
-        subelement.appendChild(doc.createTextNode(misc.name()));
-        subelement.setAttribute(attrType, misc.type());
-        subelement.setAttribute(attrNotes, misc.notes());
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
-    // utilization elements
-    element = doc.createElement(tagUtilization);
-    foreach(UEntry uentry, utable_) {
-        // iterate through uentry list
-        subelement = doc.createElement(tagEntry);
-        subelement.setAttribute(attrTime, uentry.time);
-        subelement.setAttribute(attrUtil, uentry.utilization);
-        element.appendChild(subelement);
-    }
-    root.appendChild(element);
-
     // open file
     QFile datafile(filename);
     if (!datafile.open(QFile::WriteOnly | QFile::Text)) {
@@ -412,8 +240,8 @@ bool Data::saveData(const QString &filename)
     }
 
     // write it out
-    QTextStream textstream(&datafile);
-    doc.save(textstream, 2);
+    DataWriter writer(&datafile);
+    writer.writeData(this);
     datafile.close();
 
     QApplication::restoreOverrideCursor();

@@ -7,25 +7,21 @@
   Please see the header file for copyright and license information
  ***************************************************************************/
 
-#include <math.h>
+#include <cmath>
 
 #include <QApplication>
-#include <QDomDocument>
 #include <QFile>
 #include <QMessageBox>
 #include <QTextDocument>
 #include <QTextStream>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
-#include "textprinter.h"
+#include "beerxmlreader.h"
 #include "data.h"
-#include "recipe.h"
+#include "recipereader.h"
 #include "resource.h"
+#include "textprinter.h"
 
-#ifndef HAVE_ROUND
-#define round(x) floor(x+0.5)
-#endif
+#include "recipe.h"
 
 using namespace Resource;
 
@@ -41,11 +37,49 @@ const QByteArray Recipe::ALLGRAIN_STRING = QT_TRANSLATE_NOOP("recipe", "All Grai
 // Recipe()
 // --------
 // Default constructor
+
 Recipe::Recipe(QObject *parent)
         : QObject(parent), modified_(false), title_(), brewer_(),
           size_(5.0, Volume::gallon), style_(), grains_(),  hops_(), miscs_(),
           recipenotes_(), batchnotes_(), og_(0.0), ibu_(0), srm_(0)
 { ; }
+
+//////////////////////////////////////////////////////////////////////////////
+// Recipe()
+// --------
+// Copy constructor
+
+Recipe::Recipe(const Recipe &r)
+    : QObject(0), modified_(r.modified_), title_(r.title_), brewer_(r.brewer_),
+      size_(r.size_), style_(r.style_), grains_(r.grains_), hops_(r.hops_),
+      miscs_(r.miscs_), recipenotes_(r.recipenotes_),
+      batchnotes_(r.batchnotes_), og_(r.og_), ibu_(r.ibu_), srm_(r.srm_)
+{
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// operator=()
+// -----------
+// Assignment operator
+Recipe Recipe::operator=(const Recipe &r)
+{
+    if (this != &r) {
+        modified_ = r.modified_;
+        title_ = r.title_;
+        brewer_ = r.brewer_;
+        size_ = r.size_;
+        style_ = r.style_;
+        grains_ = r.grains_;
+        hops_ = r.hops_;
+        miscs_ = r.miscs_;
+        recipenotes_ = r.recipenotes_;
+        batchnotes_ = r.batchnotes_;
+        og_ = r.og_;
+        ibu_ = r.ibu_;
+        srm_ = r.srm_;
+    }
+    return *this;
+}
 
 Recipe::~Recipe()
 { ; }
@@ -76,14 +110,13 @@ void Recipe::newRecipe()
     srm_ = 0;
 
     setModified(false); // new documents are not in a modified state
-    emit (recipeChanged());
+    emit recipeChanged();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // nativeFormat()
 // -------------
 // Is the recipe in native format?
-// Defined as "recipe" doctype with generator or application as "qbrew"
 
 bool Recipe::nativeFormat(const QString &filename)
 {
@@ -93,38 +126,15 @@ bool Recipe::nativeFormat(const QString &filename)
         qWarning() << "Error: Cannot open" << filename;
         return false;
     }
-    // note: datafile will close on return
 
-    // find root/first element
-    QXmlStreamReader xml(&datafile);
-    do {
-        xml.readNext();
-    } while (!xml.atEnd() && !xml.isStartElement());
-
-    if (xml.hasError()) return false;
-
-    // check the document type
-    if (xml.name() != tagRecipe) return false;
-
-    // check application
-    if (xml.attributes().value(attrApplication) != PACKAGE) {
-        // check generator if no application
-        if (xml.attributes().value(attrGenerator) != PACKAGE) {
-            return false;
-        }
-    }
-
-    return true;
+    RecipeReader reader(&datafile);
+    return reader.isRecipeFormat();
 }
-
-// TODO: make BeerXML stuff a plugin?
 
 /////////////////////////////////////////////////////////////////////////////
 // beerXmlFormat()
 // ---------------
 // Is the recipe in BeerXML format?
-// Defined as XML with "<RECIPES>" and "<RECIPE>", VERSION 1
-// Note that BeerXML 1.0 is poorly designed format
 
 bool Recipe::beerXmlFormat(const QString &filename)
 {
@@ -134,44 +144,15 @@ bool Recipe::beerXmlFormat(const QString &filename)
         qWarning() << "Error: Cannot open" << filename;
         return false;
     }
-    // note: datafile will close on return
 
-    // find root/first element
-    QXmlStreamReader xml(&datafile);
-    do {
-        xml.readNext();
-    } while (!xml.atEnd() && !xml.isStartElement());
-    if (xml.hasError()) return false;
-
-    // check the document type
-    if (xml.name() != tagRECIPES) return false;
-
-    // check for RECIPE
-    while (!xml.atEnd()) {
-        xml.readNext();
-        if (xml.isStartElement()) {
-            if (xml.name() == tagRECIPE) {
-                // check VERSION
-                while (!xml.atEnd()) {
-                    xml.readNext();
-                    if (xml.isStartElement()) {
-                        if (xml.name() == tagVERSION) {
-                            if (xml.readElementText() == beerXMLVersion)
-                                return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    return false;
+    BeerXmlReader reader(&datafile);
+    return reader.isBeerXmlFormat();
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // loadRecipe()
 // --------------
-// Load a recipe
+// Load a recipe. Assumes file has been checked with nativeFormat()
 
 bool Recipe::loadRecipe(const QString &filename)
 {
@@ -189,145 +170,28 @@ bool Recipe::loadRecipe(const QString &filename)
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-
-    // open dom recipe
-    QDomDocument doc;
-    doc.setContent(&datafile);
-    datafile.close();
-
-    // check the doc type and stuff
-    QDomElement root = doc.documentElement();
-    if (root.tagName() != tagRecipe) {
-        // wrong file type
-        qWarning() << "Error: Wrong file type" << filename;
-        QMessageBox::warning(0, TITLE,
-                             tr("Wrong file type for %1").arg(filename));
-        QApplication::restoreOverrideCursor();
-         return false;
-    }
-
-    // check application
-    if (root.attribute(attrApplication) != PACKAGE) {
-        // check generator if no application
-        if (root.attribute(attrGenerator) != PACKAGE) {
-            qWarning() << "Not a recipe file for" << TITLE;
-            QMessageBox::warning(0, TITLE,
-                                 tr("Not a recipe for %1").arg(TITLE.data()));
-            QApplication::restoreOverrideCursor();
-             return false;
-        }
-    }
-
-    // check file version
-    if (root.attribute(attrVersion) < RECIPE_PREVIOUS) {
-        // too old of a version
-        qWarning() << "Error: Unsupported version" << filename;
-        QMessageBox::warning(0, TITLE,
-                             tr("Unsupported version %1").arg(filename));
-        QApplication::restoreOverrideCursor();
-         return false;
-    }
-
-    // Note: only use first tag if multiple single-use tags in doc
-    QDomNodeList nodes;
-    QDomElement element, sub;
-
-    // get title
-    element = root.firstChildElement(tagTitle);
-    if (element.isNull()) {
-        qDebug() << "Warning:: missing DOM element" << tagTitle;
-    } else {
-        setTitle(element.text());
-    }
-    // get brewer
-    element = root.firstChildElement(tagBrewer);
-    if (element.isNull()) {
-        qDebug() << "Warning:: missing DOM element" << tagBrewer;
-    } else {
-        setBrewer(element.text());
-    }
-    // get style
-    element = root.firstChildElement(tagStyle);
-    if (element.isNull()) {
-        qDebug() << "Warning:: missing DOM element" << tagStyle;
-    } else {
-        // TODO: load/save entire style
-        setStyle(element.text());
-    }
-    // get batch settings // TODO: eliminate this tag, use quantity, efficiency
-    element = root.firstChildElement(tagBatch);
-    if (!element.isNull()) {
-        if (element.attribute(attrQuantity) != QString()) {
-            setSize(Volume(element.attribute(attrQuantity), Volume::gallon));
-        } else if (element.attribute(attrSize) != QString()) {
-            // deprecated tag
-            setSize(Volume(element.attribute(attrSize), Volume::gallon));
-        }
-    }
-
-    // get notes
+    title_.clear();
+    brewer_.clear();
+    size_ = Data::instance()->defaultSize();
+    style_ = Data::instance()->defaultStyle();
+    grains_.clear();
+    hops_.clear();
+    miscs_.clear();
     recipenotes_.clear();
     batchnotes_.clear();
-    element = root.firstChildElement(tagNotes);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagNotes)) {
-        if (element.hasAttribute(attrClass)) {
-            if (element.attribute(attrClass) == classRecipe) {
-                if (!recipenotes_.isEmpty()) recipenotes_.append('\n');
-                recipenotes_.append(element.text());
-            } else if (element.attribute(attrClass) == classBatch) {
-                if (!batchnotes_.isEmpty()) batchnotes_.append('\n');
-                batchnotes_.append(element.text());
-            }
-        }
-    }
 
-    // get all grains tags
-    grains_.clear();
-    element = root.firstChildElement(tagGrains);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagGrains)) {
-        // get all grain tags
-        sub = element.firstChildElement(tagGrain);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagGrain)) {
-            addGrain(Grain(sub.text(),
-                           Weight(sub.attribute(attrQuantity), Weight::pound),
-                           sub.attribute(attrExtract).toDouble(),
-                           sub.attribute(attrColor).toDouble(),
-                           sub.attribute(attrType, Grain::OTHER_STRING),
-                           sub.attribute(attrUse)));
-        }
-    }
+    // parse file
+    RecipeReader reader(&datafile);
+    bool status = reader.readRecipe(this);
+    datafile.close();
 
-    // get all hops tags
-    hops_.clear();
-    element = root.firstChildElement(tagHops);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagHops)) {
-            // get all hop tags
-        sub = element.firstChildElement(tagHop);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagHop)) {
-            // TODO: attrForm is deprecated 0.4.0
-            QString hoptype = sub.attribute(attrType);
-            if (hoptype == QString()) hoptype = sub.attribute(attrForm);
-            addHop(Hop(sub.text(),
-                       Weight(sub.attribute(attrQuantity), Weight::ounce),
-                       hoptype,
-                       sub.attribute(attrAlpha).toDouble(),
-                       sub.attribute(attrTime).toUInt()));
-        }
-    }
-
-    // get all misc tags
-    miscs_.clear();
-    element = root.firstChildElement(tagMiscs);
-    for (; !element.isNull(); element=element.nextSiblingElement(tagMiscs)) {
-        // get all hop tags
-        sub = element.firstChildElement(tagMisc);
-        for (; !sub.isNull(); sub=sub.nextSiblingElement(tagMisc)) {
-            addMisc(Misc(sub.text(),
-                         Quantity(sub.attribute(attrQuantity),
-                                  Quantity::generic),
-                         sub.attribute(attrType, Misc::OTHER_STRING),
-                         sub.attribute(attrNotes)));
-        }
+    if (!status) {
+        qWarning() << "Error: Problem reading file" << filename;
+        qWarning() << reader.errorString();
+        QMessageBox::warning(0, TITLE,
+                             tr("Error reading file %1").arg(filename));
+        QApplication::restoreOverrideCursor();
+        return false;
     }
 
     // calculate the numbers
@@ -335,7 +199,7 @@ bool Recipe::loadRecipe(const QString &filename)
 
     // just loaded recipes  are not modified
     setModified(false);
-    emit (recipeChanged());
+    emit recipeChanged();
 
     QApplication::restoreOverrideCursor();
     return true;
@@ -364,84 +228,8 @@ bool Recipe::saveRecipe(const QString &filename)
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // write out xml
-    QXmlStreamWriter xml(&datafile);
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
-    xml.setAutoFormatting(true);
-    xml.setAutoFormattingIndent(2);
-#endif
-    xml.writeStartDocument();
-    xml.writeDTD(QString("<!DOCTYPE %1>").arg(tagRecipe));
-     
-    // write root element
-    xml.writeStartElement(tagRecipe);
-    xml.writeAttribute(attrApplication, PACKAGE);
-    xml.writeAttribute(attrVersion, VERSION);
-
-    // write recipe information
-    xml.writeTextElement(tagTitle, title_);
-    xml.writeTextElement(tagBrewer, brewer_);
-    xml.writeTextElement(tagStyle, style_.name()); // TODO: save entire style
-    xml.writeEmptyElement(tagBatch);
-    xml.writeAttribute(attrQuantity, size_.toString());
-
-    // write notes
-    if (!recipenotes_.isEmpty()) {
-        xml.writeStartElement(tagNotes);
-        xml.writeAttribute(attrClass, classRecipe);
-        xml.writeCharacters(recipenotes_);
-        xml.writeEndElement();
-    }
-    if (!batchnotes_.isEmpty()) {
-        xml.writeStartElement(tagNotes);
-        xml.writeAttribute(attrClass, classBatch);
-        xml.writeCharacters(batchnotes_);
-        xml.writeEndElement();
-    }
-
-    // write grains
-    xml.writeStartElement(tagGrains);
-    foreach(Grain grain, grains_) {
-        // iterate through grain list
-        xml.writeStartElement(tagGrain);
-        xml.writeAttribute(attrQuantity, grain.weight().toString());
-        xml.writeAttribute(attrExtract, QString::number(grain.extract()));
-        xml.writeAttribute(attrColor, QString::number(grain.color()));
-        xml.writeAttribute(attrType, grain.type());
-        xml.writeAttribute(attrUse, grain.use());
-        xml.writeCharacters(grain.name());
-        xml.writeEndElement();
-    }
-    xml.writeEndElement(); // tagGrains
-
-    // write hops
-    xml.writeStartElement(tagHops);
-    foreach(Hop hop, hops_) {
-        // iterate through hop list
-        xml.writeStartElement(tagHop);
-        xml.writeAttribute(attrQuantity, hop.weight().toString());
-        xml.writeAttribute(attrAlpha, QString::number(hop.alpha()));
-        xml.writeAttribute(attrTime, QString::number(hop.time()));
-        xml.writeAttribute(attrType, hop.type());
-        xml.writeCharacters(hop.name());
-        xml.writeEndElement();
-    }
-    xml.writeEndElement(); // tagHops
-
-    // write misc ingredients
-    xml.writeStartElement(tagMiscs);
-    foreach(Misc misc, miscs_) {
-        // iterate through misc list
-        xml.writeStartElement(tagMisc);
-        xml.writeAttribute(attrQuantity, misc.quantity().toString());
-        xml.writeAttribute(attrType, misc.type());
-        xml.writeAttribute(attrNotes, misc.notes());
-        xml.writeCharacters(misc.name());
-        xml.writeEndElement();
-    }
-    xml.writeEndElement(); // tagMiscs
-
-    xml.writeEndElement(); // tagRecipe
-    xml.writeEndDocument();
+    RecipeWriter writer(&datafile);
+    writer.writeRecipe(this);
     datafile.close();
 
     // recipe is saved, so set flags accordingly
@@ -631,7 +419,7 @@ int Recipe::calcRagerIBU()
     }
     // correct for boil gravity
     if (og_ > 1.050) bitterness /= 1.0 + ((og_ - 1.050) / 0.2);
-    return (int)round(bitterness);
+    return qRound(bitterness);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -669,7 +457,7 @@ int Recipe::calcTinsethIBU()
         bitterness += ibu;
     }
     bitterness *= (GPO / LPG) / 100.0;
-    return (int)round(bitterness);
+    return qRound(bitterness);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -701,7 +489,7 @@ int Recipe::calcSRM()
             srm += 8.4;
         }
     }
-    return (int)round(srm);
+    return qRound(srm);
 }
 
 // TODO: following formulas need to use constants
@@ -795,4 +583,3 @@ bool Recipe::modified() const
 {
     return modified_;
 }
-

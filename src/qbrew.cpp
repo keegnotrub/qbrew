@@ -1003,7 +1003,7 @@ bool QBrew::openFile(const QString &filename)
             } else {
                 // load was unsuccessful
                 QMessageBox::warning(this, TITLE,
-                                     tr("Unable to load the recipe ")
+                                     tr("Unable to load the recipe %1")
                                      .arg(QFileInfo(filename_).fileName()));
                 return false;
             }

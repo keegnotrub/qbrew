@@ -132,6 +132,8 @@ private:
     Data &operator=(const Data&);
 
 private:
+    friend class DataReader;
+    friend class DataWriter;
     static Data *instance_;
 
     Volume defaultsize_;
@@ -212,19 +214,19 @@ inline void Data::insertHop(const Hop &hop)
 inline void Data::insertMisc(const Misc &misc)
     { miscmap_.insert(misc.name(), misc); }
 
-inline double Data:: efficiency() { return efficiency_; }
+inline double Data::efficiency() { return efficiency_; }
 
 inline void Data::setEfficiency(double e) { efficiency_ = e; }
 
-inline double Data:: steepYield() { return steepyield_; }
+inline double Data::steepYield() { return steepyield_; }
 
 inline void Data::setSteepYield(double y) { steepyield_ = y; }
 
-inline bool Data:: tinseth() { return tinseth_; }
+inline bool Data::tinseth() { return tinseth_; }
 
 inline void Data::setTinseth(bool tinseth) { tinseth_ = tinseth; }
 
-inline bool Data:: morey() { return morey_; }
+inline bool Data::morey() { return morey_; }
 
 inline void Data::setMorey(bool morey) { morey_ = morey; }
 

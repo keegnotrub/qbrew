@@ -147,8 +147,6 @@ DatabaseTool::DatabaseTool(QWidget* parent)
     // setup connections
     connect(grainmodel_, SIGNAL(modified()),
             this, SLOT(dataModified()));
-    connect(grainpage.view->horizontalHeader(), SIGNAL(sectionClicked(int)),
-            grainpage.view, SLOT(columnSort(int)));
     connect(grainpage.addbutton, SIGNAL(clicked()),
             grainpage.view, SLOT(addIngredient()));
     connect(grainpage.removebutton, SIGNAL(clicked()),
@@ -156,8 +154,6 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     connect(hopmodel_, SIGNAL(modified()),
             this, SLOT(dataModified()));
-    connect(hoppage.view->horizontalHeader(), SIGNAL(sectionClicked(int)),
-            hoppage.view, SLOT(columnSort(int)));
     connect(hoppage.addbutton, SIGNAL(clicked()),
             hoppage.view, SLOT(addIngredient()));
     connect(hoppage.removebutton, SIGNAL(clicked()),
@@ -165,8 +161,6 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     connect(miscmodel_, SIGNAL(modified()),
             this, SLOT(dataModified()));
-    connect(miscpage.view->horizontalHeader(), SIGNAL(sectionClicked(int)),
-            miscpage.view, SLOT(columnSort(int)));
     connect(miscpage.addbutton, SIGNAL(clicked()),
             miscpage.view, SLOT(addIngredient()));
     connect(miscpage.removebutton, SIGNAL(clicked()),
@@ -174,8 +168,6 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     connect(stylemodel_, SIGNAL(modified()),
             this, SLOT(dataModified()));
-    connect(stylepage.view->horizontalHeader(), SIGNAL(sectionClicked(int)),
-            stylepage.view, SLOT(columnSort(int)));
     connect(stylepage.addbutton, SIGNAL(clicked()),
             stylepage.view, SLOT(addIngredient()));
     connect(stylepage.removebutton, SIGNAL(clicked()),

@@ -121,7 +121,6 @@ Section	"Uninstall"
 	Delete "$INSTDIR\mingwm10.dll"
 	Delete "$INSTDIR\QtCore4.dll"
 	Delete "$INSTDIR\QtGui4.dll"
-	Delete "$INSTDIR\QtXml4.dll"
 	RMDir "$INSTDIR"
 
 	DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\QBrew"

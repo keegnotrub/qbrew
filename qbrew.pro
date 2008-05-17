@@ -1,3 +1,4 @@
+
 # Copyright 2007-2008 David Johnson
 # This project file is free software; the author gives unlimited
 # permission to copy, distribute and modify it.
@@ -5,7 +6,6 @@
 TARGET = qbrew
 TEMPLATE = app
 CONFIG += qt warn_on
-QT += xml
 
 MOC_DIR = build
 OBJECTS_DIR = build
@@ -81,11 +81,12 @@ unix:!macx {
 RESOURCES = qbrew.qrc
 
 HEADERS = alcoholtool.h \
-	qbrew.h \
+        beerxmlreader.h \
 	configstate.h \
 	configure.h \
 	data.h \
 	databasetool.h \
+        datareader.h \
 	grain.h \
 	graindelegate.h \
 	grainmodel.h \
@@ -99,8 +100,10 @@ HEADERS = alcoholtool.h \
 	miscdelegate.h \
 	miscmodel.h \
 	notepage.h \
+	qbrew.h \
 	quantity.h \
 	recipe.h \
+        recipereader.h \
 	resource.h \
 	style.h \
 	styledelegate.h \
@@ -109,10 +112,11 @@ HEADERS = alcoholtool.h \
 	view.h
 
 SOURCES = alcoholtool.cpp \
-	qbrew.cpp \
+        beerxmlreader.cpp \
 	configure.cpp \
 	data.cpp \
 	databasetool.cpp \
+        datareader.cpp \
 	export.cpp \
 	grain.cpp \
 	graindelegate.cpp \
@@ -128,8 +132,10 @@ SOURCES = alcoholtool.cpp \
 	miscdelegate.cpp \
 	miscmodel.cpp \
 	notepage.cpp \
+	qbrew.cpp \
 	quantity.cpp \
 	recipe.cpp \
+        recipereader.cpp \
 	style.cpp \
 	styledelegate.cpp \
 	stylemodel.cpp \

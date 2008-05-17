@@ -184,44 +184,6 @@ EOT
     echo "built simple Qt program" >> $LOGFILE
 }
 
-func_test() {
-    cwd=`pwd`
-    rm -rf $BUILDDIR
-    mkdir -p $BUILDDIR
-    cd $BUILDDIR
-
-cat > testfunc.pro <<EOT
-TARGET = testfunc
-CONFIG -= app_bundle qt
-SOURCES += testfunc.cpp
-EOT
-    $QMAKE testfunc.pro > /dev/null 2>&1
-
-    # check for round
-    echo -n "Checking for round()..."
-    echo "Checking for round()" >> $LOGFILE
-    rm -f testfunc.cpp
-
-cat > testfunc.cpp <<EOT
-#include <math.h>
-int main() { return (int)round(1.5); }
-EOT
-
-    # build it
-    $MAKE >> $LOGFILE 2>&1
-    result=$?
-
-    if [ "$result" = "0" ] ; then
-        echo "yes"
-        HAVEDEFS="HAVE_ROUND $HAVEDEFS"
-    else
-        echo "no"
-    fi
-
-    cd $cwd
-    rm -rf $BUILDDIR
-}
-
 ### Parse options ###################################################
 
 parse_options() {
@@ -321,7 +283,6 @@ make_test
 qmake_test
 qtversion_test
 build_test
-func_test
 
 ### export variables
 
@@ -333,9 +294,6 @@ if [ ! -z $QTDIR ] ; then
 fi
 if [ ! -z $QMAKESPEC ] ; then
     export QMAKESPEC
-fi
-if [ ! -z HAVEDEFS ] ; then
-    export HAVEDEFS
 fi
 
 ### create Makefile

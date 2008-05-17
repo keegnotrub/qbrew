@@ -59,20 +59,28 @@ public:
     void setName(const QString &name);
     // return high end of OG
     double OGHi() const;
+    void setOGHi(double hi);
     // return low end of OG
     double OGLow() const;
+    void setOGLow(double lo);
     // return high end of FG
     double FGHi() const;
+    void setFGHi(double hi);
     // return low end of FG
     double FGLow() const;
+    void setFGLow(double lo);
     // return high end of IBU
     int IBUHi() const;
+    void setIBUHi(int hi);
     // return low end of IBU
     int IBULow() const;
+    void setIBULow(int lo);
     // return high end of SRM
     int SRMHi() const;
+    void setSRMHi(int hi);
     // return low end of SRM
     int SRMLow() const;
+    void setSRMLow(int lo);
     
 private:
     friend class StyleModel;
@@ -101,19 +109,27 @@ inline const QString &Style::name() const { return name_; }
 inline void Style::setName(const QString &name) { name_ = name; }
 
 inline double Style::OGHi() const { return oghi_; }
+inline void Style::setOGHi(double hi) { oghi_ = hi; }
 
 inline double Style::OGLow() const { return oglow_; }
+inline void Style::setOGLow(double lo) { oglow_ = lo; }
 
 inline double Style::FGHi() const { return fghi_; }
+inline void Style::setFGHi(double hi) { fghi_ = hi; }
 
 inline double Style::FGLow() const { return fglow_; }
+inline void Style::setFGLow(double lo) { fglow_ = lo; }
 
 inline int Style::IBUHi() const { return ibuhi_; }
+inline void Style::setIBUHi(int hi) { ibuhi_ = hi; }
 
 inline int Style::IBULow() const { return ibulow_; }
+inline void Style::setIBULow(int lo) { ibulow_ = lo; }
 
 inline int Style::SRMHi() const { return srmhi_; }
+inline void Style::setSRMHi(int hi) { srmhi_ = hi; }
 
 inline int Style::SRMLow() const { return srmlow_; }
+inline void Style::setSRMLow(int lo) { srmlow_ = lo; }
 
 #endif // STYLE_H

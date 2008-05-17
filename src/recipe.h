@@ -54,7 +54,9 @@ public:
     static const QByteArray ALLGRAIN_STRING;
 
     // default constructor
-    Recipe(QObject *parent);
+    Recipe(QObject *parent=0);
+    Recipe(const Recipe &recipe);
+    Recipe operator=(const Recipe &recipe);
     virtual ~Recipe();
 
     // start a new recipe
@@ -146,7 +148,7 @@ signals:
     // send that the recipe has been modified
     void recipeModified();
 
- private:
+private:
     // calculations
     double calcOG();
     int calcSRM();
