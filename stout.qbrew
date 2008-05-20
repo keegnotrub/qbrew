@@ -4,7 +4,7 @@
   <title>SQA Imperial Stout</title>
   <brewer>Joe Sixpack</brewer>
   <style>Imperial Stout</style>
-  <batch quantity="5.00 gal" />
+  <batch quantity="5.000 gal" />
   <grains>
     <grain use="Mashed" extract="1.037" quantity="10.000 lb" type="Grain" color="1.8" >American two-row</grain>
     <grain use="Mashed" extract="1.027" quantity="0.500 lb" type="Grain" color="500" >British black patent</grain>

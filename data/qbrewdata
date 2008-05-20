@@ -152,7 +152,7 @@
   <grain extract="1.034" color="2.0"  type="Adjunct" use="Mashed" >Flaked wheat</grain>
   <grain extract="1.035" color="2.0"  type="Adjunct" use="Mashed" >Torrified wheat</grain>
   <grain extract="1.046" color="1.0"  type="Sugar"   use="Other">Cane sugar</grain>
-  <grain extract="1.035" color="1.5"  type="Sugar"   use="Other">Honey</grain>
+  <grain extract="1.042" color="1.5"  type="Sugar"   use="Other">Honey</grain>
   <grain extract="1.036" color="5"    type="Sugar"   use="Other">Belgian candi sugar, clear</grain>
   <grain extract="1.036" color="75"   type="Sugar"   use="Other">Belgian candi sugar, amber</grain>
   <grain extract="1.036" color="275"  type="Sugar"   use="Other">Belgian candi sugar, dark</grain>

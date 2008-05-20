@@ -160,7 +160,7 @@
         <title>Exporting and Importing Data</title>
 
         <para>QBrew will import BeerXML recipes, and export native
-        recipes to HTML, BeerXML or plain text format. BeerXML is a
+        recipes to HTML, PDF, BeerXML or plain text format. BeerXML is a
         new format designed for sharing recipes and other brewing
         data. QBrew supports version 1.0.</para>
 
@@ -359,7 +359,7 @@
       configuring &qbrew;. There are four buttons on the bottom of the
       dialog. Pressing the <guilabel>OK</guilabel> button will apply
       all settings and close the dialog. Pressing the
-      <guilabel>Defaults</guilabel> button will reset the dialog to
+      <guilabel>Reset</guilabel> button will reset the dialog to
       default values. Pressing the <guilabel>Apply</guilabel> button
       will apply the settings, but not close the dialog. The
       <guilabel>Cancel</guilabel> button will close the dialog without
