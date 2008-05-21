@@ -194,17 +194,21 @@ void DatabaseTool::fileSave()
                                 "to write to %1").arg(localbase));
     } else {
         // sync with Data...
+        Data::instance()->clearGrains();
         foreach(Grain grain, grains_) {
-            Data::instance()->insertGrain(grain); // replaces existing
+            Data::instance()->insertGrain(grain);
         }
+        Data::instance()->clearHops();
         foreach(Hop hop, hops_) {
-            Data::instance()->insertHop(hop); // replaces existing
+            Data::instance()->insertHop(hop);
         }
+        Data::instance()->clearMiscs();
         foreach(Misc misc, miscs_) {
-            Data::instance()->insertMisc(misc); // replaces existing
+            Data::instance()->insertMisc(misc);
         }
+        Data::instance()->clearStyles();
         foreach(Style style, styles_) {
-            Data::instance()->insertStyle(style); // replaces existing
+            Data::instance()->insertStyle(style);
         }
 
         if (!Data::instance()->saveData(localbase)) {

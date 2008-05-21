@@ -103,11 +103,17 @@ public:
     bool hasHop(const QString &name);
     bool hasMisc(const QString &name);
 
-    // remove data
+    // insert data
     void insertStyle(const Style &style);
     void insertGrain(const Grain &grain);
     void insertHop(const Hop &hop);
     void insertMisc(const Misc &misc);
+
+    // clear data
+    void clearStyles();
+    void clearGrains();
+    void clearHops();
+    void clearMiscs();
 
     // get utilization based on time
     double utilization(unsigned time);
@@ -213,6 +219,14 @@ inline void Data::insertHop(const Hop &hop)
 
 inline void Data::insertMisc(const Misc &misc)
     { miscmap_.insert(misc.name(), misc); }
+
+inline void Data::clearStyles() { stylemap_.clear(); }
+
+inline void Data::clearGrains() { grainmap_.clear(); }
+
+inline void Data::clearHops() { hopmap_.clear(); }
+
+inline void Data::clearMiscs() { miscmap_.clear(); }
 
 inline double Data::efficiency() { return efficiency_; }
 

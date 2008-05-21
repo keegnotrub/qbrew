@@ -3,6 +3,8 @@ Near and Long Term Future Plans for QBrew
 
 Short Term
 ----------
+Undo/redo framework
+Unit tests
 QHelpEngine
 Imperial units
 Option to use Plato instead of SG

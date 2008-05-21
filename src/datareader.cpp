@@ -217,7 +217,7 @@ bool DataWriter::writeData(Data *data)
     writeDTD(QString("<!DOCTYPE %1>").arg(tagDoc));
 
     // write root element
-    writeStartElement(tagRecipe);
+    writeStartElement(tagDoc);
     writeAttribute(attrVersion, VERSION);
 
     // write styles
