@@ -36,11 +36,11 @@ static QString underline(const QString &line);
 QString escape(const QString &s)
 {
     QString x = s;
-    x.replace("&", "&amp;");
-    x.replace("<", "&lt;");
-    x.replace(">", "&gt;");
-    x.replace("'", "&apos;");
-    x.replace("\"", "&quot;");
+    x.replace(QLatin1Char('&'), QLatin1String("&amp;"));
+    x.replace(QLatin1Char('<'), QLatin1String("&lt;"));
+    x.replace(QLatin1Char('>'), QLatin1String("&gt;"));
+    x.replace(QLatin1Char('\''), QLatin1String("&apos;"));
+    x.replace(QLatin1Char('"'), QLatin1String("&quot;"));
     return x;
 }
 
