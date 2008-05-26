@@ -183,6 +183,7 @@ DatabaseTool::~DatabaseTool() {}
 
 void DatabaseTool::fileSave()
 {
+    // TODO: use QDesktopServices in next non-bugfix release (0.5.0)
     QString localbase = QDIR_HOME + "/." + Resource::DATA_FILE;
 
     QFileInfo finfo(localbase);

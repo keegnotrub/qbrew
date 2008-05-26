@@ -127,6 +127,8 @@ int main(int argc, char **argv)
     Q_INIT_RESOURCE(qbrew);
 
     QApplication app(argc, argv);
+    app.setApplicationName(PACKAGE);
+    app.setOrganizationName(TITLE);
 
 #if defined(Q_WS_MACX)
     // disable icons on Mac menus (as is customary)

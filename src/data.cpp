@@ -70,13 +70,17 @@ void Data::initialize(const ConfigState &state)
     setDefaultMiscUnit(Quantity::generic);
     setEfficiency(state.calc.efficiency);
 
-    // load data file - try user home directory first, quietly...
-    if (!loadData(QDIR_HOME + "/." + DATA_FILE, true)) {
-        // then try the default data file
-        if (!loadData(QBrew::instance()->dataBase() + DATA_FILE)) {
-            qWarning() << "Warning: could not open data file";
-            QMessageBox::warning(0, TITLE, QObject::tr("Could not open data file"));
-        }
+    // load data file - look in standard locations
+    // TODO: use QDesktopServices in next non-bugfix release (0.5.0)
+    bool status = false;
+    // try home directory first
+    if (!status) status = loadData(QDIR_HOME + "/." + DATA_FILE, true);
+    // then try system data directory
+    if (!status) status = loadData(QBrew::instance()->dataBase() + DATA_FILE);
+
+    if (!status) {
+        qWarning() << "Warning: could not open data file";
+        QMessageBox::warning(0, TITLE, QObject::tr("Could not open data file"));
     }
 }
 
