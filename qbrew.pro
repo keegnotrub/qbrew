@@ -15,6 +15,8 @@ UI_DIR = build
 INCLUDEPATH += src
 VPATH = src
 
+QMAKE_DISTCLEAN = config.log
+
 win32 {
     RC_FILE = win\icon.rc
     CONFIG -= console
