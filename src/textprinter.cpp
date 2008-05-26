@@ -604,8 +604,6 @@ QRectF TextPrinter::headerRect(QPaintDevice *device)
                 mmToInches(topmargin_) * device->logicalDpiY(),
                 -mmToInches(rightmargin_) * device->logicalDpiX(), 0);
 
-    (headerrule_ / 144.0);
-
     rect.setBottom(rect.top() + 
                    mmToInches(headersize_) * device->logicalDpiY());
 
