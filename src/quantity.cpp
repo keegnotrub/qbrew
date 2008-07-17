@@ -47,7 +47,7 @@ double Unit::convert(double amount, const Unit &other) const
 {
     // if converting from self...
     if (other.name_ == name_) return amount;
-    
+
     if (conversions_.contains(other.name())) {
         return (conversions_.value(other.name()))(amount);
     }

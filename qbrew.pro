@@ -6,6 +6,7 @@
 TARGET = qbrew
 TEMPLATE = app
 CONFIG += qt warn_on
+QT += xml
 
 MOC_DIR = build
 OBJECTS_DIR = build
@@ -83,12 +84,12 @@ unix:!macx {
 RESOURCES = qbrew.qrc
 
 HEADERS = alcoholtool.h \
-        beerxmlreader.h \
+	beerxmlreader.h \
 	configstate.h \
 	configure.h \
 	data.h \
 	databasetool.h \
-        datareader.h \
+	datareader.h \
 	grain.h \
 	graindelegate.h \
 	grainmodel.h \
@@ -97,7 +98,8 @@ HEADERS = alcoholtool.h \
 	hopdelegate.h \
 	hopmodel.h \
 	hydrometertool.h \
-        ingredientview.h \
+	ingredientview.h \
+	mashwatertool.h \
 	misc.h \
 	miscdelegate.h \
 	miscmodel.h \
@@ -105,7 +107,7 @@ HEADERS = alcoholtool.h \
 	qbrew.h \
 	quantity.h \
 	recipe.h \
-        recipereader.h \
+	recipereader.h \
 	resource.h \
 	style.h \
 	styledelegate.h \
@@ -114,11 +116,11 @@ HEADERS = alcoholtool.h \
 	view.h
 
 SOURCES = alcoholtool.cpp \
-        beerxmlreader.cpp \
+	beerxmlreader.cpp \
 	configure.cpp \
 	data.cpp \
 	databasetool.cpp \
-        datareader.cpp \
+	datareader.cpp \
 	export.cpp \
 	grain.cpp \
 	graindelegate.cpp \
@@ -128,8 +130,9 @@ SOURCES = alcoholtool.cpp \
 	hopdelegate.cpp \
 	hopmodel.cpp \
 	hydrometertool.cpp \
-        ingredientview.cpp \
+	ingredientview.cpp \
 	main.cpp \
+	mashwatertool.cpp \
 	misc.cpp \
 	miscdelegate.cpp \
 	miscmodel.cpp \
@@ -137,7 +140,7 @@ SOURCES = alcoholtool.cpp \
 	qbrew.cpp \
 	quantity.cpp \
 	recipe.cpp \
-        recipereader.cpp \
+	recipereader.cpp \
 	style.cpp \
 	styledelegate.cpp \
 	stylemodel.cpp \
@@ -150,8 +153,9 @@ FORMS = alcoholtool.ui \
 	generalconfig.ui \
 	helpviewer.ui \
 	hydrometertool.ui \
-        ingredientpage.ui \
+	ingredientpage.ui \
 	mainwindow.ui \
+	mashwatertool.ui \
 	noteview.ui \
 	recipeconfig.ui \
 	view.ui

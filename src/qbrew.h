@@ -47,6 +47,7 @@ class Data;
 class DatabaseTool;
 class HelpViewer;
 class HydrometerTool;
+class MashWaterDialog;
 class Recipe;
 class TextPrinter;
 class View;
@@ -87,6 +88,8 @@ class QBrew : public QMainWindow {
     void toolsAlcohol();
     // show the hydrometer tool
     void toolsHydrometer();
+    // show the mashwatertool
+    void toolsMash();
     // show the database tool
     void toolsDatabase();
 
@@ -173,6 +176,7 @@ private:
     AlcoholTool* alcoholtool_;
     DatabaseTool* databasetool_;
     HydrometerTool* hydrometertool_;
+    MashWaterDialog* mashwatertool_;
     Configure* configure_;
     HelpViewer* handbook_;
     HelpViewer* primer_;

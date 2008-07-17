@@ -16,6 +16,7 @@
 #include "recipe.h"
 #include "helpviewer.h"
 #include "hydrometertool.h"
+#include "mashwatertool.h"
 #include "resource.h"
 #include "textprinter.h"
 #include "view.h"
@@ -38,9 +39,9 @@ static QMutex instancelock;
 
 QBrew::QBrew()
     : data_(0), recipe_(0), view_(0), alcoholtool_(0), databasetool_(0),
-      hydrometertool_(0), configure_(0), handbook_(0), primer_(0), state_(),
-      filename_(), newflag_(false), backed_(false), autosave_(0),
-      autosavename_(), textprinter_(0)
+      hydrometertool_(0), mashwatertool_(0), configure_(0), handbook_(0),
+      primer_(0), state_(), filename_(), newflag_(false), backed_(false),
+      autosave_(0), autosavename_(), textprinter_(0)
 { ; }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -73,6 +74,7 @@ void QBrew::initialize(const QString &filename)
     // setup UI
     ui.setupUi(this);
     initActions();
+
 #if defined (Q_WS_MAC)
     // initial defaults for mac
     setUnifiedTitleAndToolBarOnMac(false);
@@ -144,6 +146,7 @@ QBrew::~QBrew()
     // make sure any open windows are closed
     if (alcoholtool_) alcoholtool_->close();
     if (hydrometertool_) hydrometertool_->close();
+    if (mashwatertool_) mashwatertool_->close();
     if (databasetool_) databasetool_->close();
     if (configure_) configure_->close();
     if (handbook_) handbook_->close();
@@ -192,6 +195,8 @@ void QBrew::initActions()
             this, SLOT(toolsAlcohol()));
     connect(ui.actionhydrometertool, SIGNAL(triggered()),
             this, SLOT(toolsHydrometer()));
+    connect(ui.actionmashwatertool, SIGNAL(triggered()),
+            this, SLOT(toolsMash()));
     connect(ui.actiondatabasetool, SIGNAL(triggered()),
             this, SLOT(toolsDatabase()));
 
@@ -567,6 +572,21 @@ void QBrew::toolsHydrometer()
 }
 
 //////////////////////////////////////////////////////////////////////////////
+// toolsMash()
+// -----------------
+// A utility dialog for calculating a mash schedule
+
+void QBrew::toolsMash()
+{
+    if (!mashwatertool_) mashwatertool_ = new MashWaterDialog(this);
+    mashwatertool_->show();
+    mashwatertool_->raise();
+    if (mashwatertool_->isMinimized()) mashwatertool_->showNormal();
+
+    statusBar()->showMessage(tr(READY), 2000);
+}
+
+//////////////////////////////////////////////////////////////////////////////
 // toolsDatabase()
 // ---------------
 // A database editor for ingredients
@@ -796,6 +816,11 @@ void QBrew::applyCalcState(const CalcConfigState &state)
         if (hydrometertool_) {
             delete hydrometertool_;
             hydrometertool_ = 0;
+        }
+        // delete mash water tool
+        if (mashwatertool_) {
+            delete mashwatertool_;
+            mashwatertool_ = 0;
         }
     }
 

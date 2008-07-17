@@ -61,6 +61,7 @@ const QByteArray COPYRIGHT    = QT_TRANSLATE_NOOP("copyright",
 const QByteArray AUTHOR       = "David Johnson";
 const QByteArray AUTHOR_EMAIL = "david@usermode.org";
 const QByteArray CONTRIBUTORS = "Lee Henderson, "
+                                "Tim Howe, "
                                 "Rob Hudson, "
                                 "Abe Kabakoff, "
                                 "Stephen Lowrie, "

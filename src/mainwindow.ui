@@ -46,6 +46,7 @@
     </property>
     <addaction name="actionalcoholtool" />
     <addaction name="actionhydrometertool" />
+    <addaction name="actionmashwatertool" />
     <addaction name="actiondatabasetool" />
    </widget>
    <widget class="QMenu" name="menufile" >
@@ -332,6 +333,14 @@
    </property>
    <property name="whatsThis" >
     <string>Use this command to preview printing the recipe</string>
+   </property>
+  </action>
+  <action name="actionmashwatertool" >
+   <property name="text" >
+    <string>&amp;Mash Schedule Calculation...</string>
+   </property>
+   <property name="statusTip" >
+    <string>Mash volume and temperature calculation utility</string>
    </property>
   </action>
  </widget>
