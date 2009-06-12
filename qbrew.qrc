@@ -1,32 +1,29 @@
 <RCC>
     <qresource prefix="/" >
-        <file>pics/icons/back.png</file>
+        <file>pics/icons/application-exit.png</file>
         <file>pics/icons/configure.png</file>
-        <file>pics/icons/contents.png</file>
-        <file>pics/icons/contexthelp.png</file>
-        <file>pics/icons/down.png</file>
-        <file>pics/icons/editcopy.png</file>
-        <file>pics/icons/editcut.png</file>
-        <file>pics/icons/editpaste.png</file>
-        <file>pics/icons/exit.png</file>
-        <file>pics/icons/fileexport.png</file>
-        <file>pics/icons/filenew.png</file>
-        <file>pics/icons/fileopen.png</file>
-        <file>pics/icons/filepagesetup.png</file>
-        <file>pics/icons/fileprint.png</file>
-        <file>pics/icons/filesave.png</file>
-        <file>pics/icons/filesaveas.png</file>
-        <file>pics/icons/find.png</file>
-        <file>pics/icons/forward.png</file>
-        <file>pics/icons/gohome.png</file>
-        <file>pics/icons/minus.png</file>
-        <file>pics/icons/plus.png</file>
-        <file>pics/icons/redo.png</file>
-        <file>pics/icons/reload.png</file>
-        <file>pics/icons/undo.png</file>
-        <file>pics/icons/up.png</file>
-        <file>pics/icons/viewzoomin.png</file>
-        <file>pics/icons/viewzoomout.png</file>
+        <file>pics/icons/document-export.png</file>
+        <file>pics/icons/document-new.png</file>
+        <file>pics/icons/document-open.png</file>
+        <file>pics/icons/document-print-preview.png</file>
+        <file>pics/icons/document-print.png</file>
+        <file>pics/icons/document-save-as.png</file>
+        <file>pics/icons/document-save.png</file>
+        <file>pics/icons/edit-copy.png</file>
+        <file>pics/icons/edit-cut.png</file>
+        <file>pics/icons/edit-find.png</file>
+        <file>pics/icons/edit-paste.png</file>
+        <file>pics/icons/edit-redo.png</file>
+        <file>pics/icons/edit-undo.png</file>
+        <file>pics/icons/go-down.png</file>
+        <file>pics/icons/go-home.png</file>
+        <file>pics/icons/go-next.png</file>
+        <file>pics/icons/go-previous.png</file>
+        <file>pics/icons/go-up.png</file>
+        <file>pics/icons/help-contents.png</file>
+        <file>pics/icons/help-contextual.png</file>
+        <file>pics/icons/list-add.png</file>
+        <file>pics/icons/list-remove.png</file>
         <file>pics/qbrew.png</file>
     </qresource>
 </RCC>
