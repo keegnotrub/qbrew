@@ -3,6 +3,7 @@ Near and Long Term Future Plans for QBrew
 
 Short Term
 ----------
+Better use of QLocale (for units, etc)
 Undo/redo framework
 Unit tests
 QHelpEngine
