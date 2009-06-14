@@ -64,10 +64,6 @@
      <property name="title">
       <string>Open &amp;Recent</string>
      </property>
-     <property name="icon">
-      <iconset resource="../qbrew.qrc">
-       <normaloff>:/pics/icons/document-open.png</normaloff>:/pics/icons/document-open.png</iconset>
-     </property>
     </widget>
     <addaction name="actionfilenew"/>
     <addaction name="actionfileopen"/>
@@ -115,10 +111,6 @@
    <addaction name="actioncontexthelp"/>
   </widget>
   <action name="actionfilenew">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-new.png</normaloff>:/pics/icons/document-new.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;New</string>
    </property>
@@ -133,10 +125,6 @@
    </property>
   </action>
   <action name="actionfileopen">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-open.png</normaloff>:/pics/icons/document-open.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Open</string>
    </property>
@@ -151,10 +139,6 @@
    </property>
   </action>
   <action name="actionfilesave">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-save.png</normaloff>:/pics/icons/document-save.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -169,10 +153,6 @@
    </property>
   </action>
   <action name="actionfilesaveas">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-save-as.png</normaloff>:/pics/icons/document-save-as.png</iconset>
-   </property>
    <property name="text">
     <string>Save &amp;as...</string>
    </property>
@@ -184,10 +164,6 @@
    </property>
   </action>
   <action name="actionfileprint">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-print.png</normaloff>:/pics/icons/document-print.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Print...</string>
    </property>
@@ -202,10 +178,6 @@
    </property>
   </action>
   <action name="actionfileexport">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-export.png</normaloff>:/pics/icons/document-export.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Export...</string>
    </property>
@@ -217,10 +189,6 @@
    </property>
   </action>
   <action name="actionexit">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/application-exit.png</normaloff>:/pics/icons/application-exit.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -249,10 +217,6 @@
    </property>
   </action>
   <action name="actionconfigure">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/configure.png</normaloff>:/pics/icons/configure.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Configure...</string>
    </property>
@@ -264,10 +228,6 @@
    </property>
   </action>
   <action name="actionhelpcontents">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/help-contents.png</normaloff>:/pics/icons/help-contents.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Contents</string>
    </property>
@@ -293,10 +253,6 @@
    </property>
   </action>
   <action name="actioncontexthelp">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/help-contextual.png</normaloff>:/pics/icons/help-contextual.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;What's This?</string>
    </property>
@@ -335,10 +291,6 @@
    </property>
   </action>
   <action name="actionprimer">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/help-contents.png</normaloff>:/pics/icons/help-contents.png</iconset>
-   </property>
    <property name="text">
     <string>Primer</string>
    </property>
@@ -347,10 +299,6 @@
    </property>
   </action>
   <action name="actionfileprintpreview">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-print-preview.png</normaloff>:/pics/icons/document-print-preview.png</iconset>
-   </property>
    <property name="text">
     <string>Print Pre&amp;view...</string>
    </property>
@@ -370,8 +318,5 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../qbrew.qrc"/>
- </resources>
  <connections/>
 </ui>

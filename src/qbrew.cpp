@@ -65,7 +65,7 @@ void QBrew::initialize(const QString &filename)
     }
 
     // setup look and feel
-    setWindowIcon(QIcon(":/pics/qbrew.png"));
+    setWindowIcon(QIcon(":/qbrew.png"));
     if ((state_.general.lookfeel != QApplication::style()->objectName()) &&
         (QStyleFactory::keys().contains(state_.general.lookfeel))) {
         QApplication::setStyle(state_.general.lookfeel);
@@ -174,20 +174,45 @@ QBrew *QBrew::instance()
 
 void QBrew::initActions()
 {
+    QIcon icon = QIcon(":/icons/22x22/document-new.png");
+    icon.addFile(":/icons/16x16/document-new.png");
+    ui.actionfilenew->setIcon(icon);
     connect(ui.actionfilenew, SIGNAL(triggered()),
             this, SLOT(fileNew()));
+    icon = QIcon(":/icons/22x22/document-open.png");
+    icon.addFile(":/icons/16x16/document-open.png");
+    ui.menuopenrecent->setIcon(icon);
+    ui.actionfileopen->setIcon(icon);
     connect(ui.actionfileopen, SIGNAL(triggered()),
             this,  SLOT(fileOpen()));
+    icon = QIcon(":/icons/22x22/document-save.png");
+    icon.addFile(":/icons/16x16/document-save.png");
+    ui.actionfilesave->setIcon(icon);
     connect(ui.actionfilesave, SIGNAL(triggered()),
             this, SLOT(fileSave()));
+    icon = QIcon(":/icons/22x22/document-save-as.png");
+    icon.addFile(":/icons/16x16/document-save-as.png");
+    ui.actionfilesaveas->setIcon(icon);
     connect(ui.actionfilesaveas, SIGNAL(triggered()),
             this, SLOT(fileSaveAs()));
+    icon = QIcon(":/icons/22x22/document-print-preview.png");
+    icon.addFile(":/icons/16x16/document-print-preview.png");
+    ui.actionfileprintpreview->setIcon(icon);
     connect(ui.actionfileprintpreview, SIGNAL(triggered()),
             this, SLOT(filePrintPreview()));
+    icon = QIcon(":/icons/22x22/document-print.png");
+    icon.addFile(":/icons/16x16/document-print.png");
+    ui.actionfileprint->setIcon(icon);
     connect(ui.actionfileprint, SIGNAL(triggered()),
             this, SLOT(filePrint()));
+    icon = QIcon(":/icons/22x22/document-export.png");
+    icon.addFile(":/icons/16x16/document-export.png");
+    ui.actionfileexport->setIcon(icon);
     connect(ui.actionfileexport, SIGNAL(triggered()),
             this, SLOT(fileExport()));
+    icon = QIcon(":/icons/22x22/application-exit.png");
+    icon.addFile(":/icons/16x16/application-exit.png");
+    ui.actionexit->setIcon(icon);
     connect(ui.actionexit, SIGNAL(triggered()), qApp,
             SLOT(closeAllWindows()));
 
@@ -202,13 +227,25 @@ void QBrew::initActions()
 
     connect(ui.actiontogglestatusbar, SIGNAL(toggled(bool)),
             this, SLOT(optionsStatusbar(bool)));
+    icon = QIcon(":/icons/22x22/configure.png");
+    icon.addFile(":/icons/16x16/configure.png");
+    ui.actionconfigure->setIcon(icon);
     connect(ui.actionconfigure, SIGNAL(triggered()),
             this, SLOT(optionsConfigure()));
 
+    icon = QIcon(":/icons/22x22/help-contents.png");
+    icon.addFile(":/icons/16x16/help-contents.png");
+    ui.actionhelpcontents->setIcon(icon);
     connect(ui.actionhelpcontents, SIGNAL(triggered()),
             this, SLOT(helpContents()));
+    icon = QIcon(":/icons/22x22/help-contents.png");
+    icon.addFile(":/icons/16x16/help-contents.png");
+    ui.actionprimer->setIcon(icon);
     connect(ui.actionprimer, SIGNAL(triggered()),
             this, SLOT(helpPrimer()));
+    icon = QIcon(":/icons/22x22/help-contextual.png");
+    icon.addFile(":/icons/16x16/help-contextual.png");
+    ui.actioncontexthelp->setIcon(icon);
     connect(ui.actioncontexthelp, SIGNAL(triggered()),
             this, SLOT(helpContext()));
     connect(ui.actionabout, SIGNAL(triggered()), this, SLOT(helpAbout()));

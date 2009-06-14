@@ -124,7 +124,7 @@ QString doargs(QStringList arguments, QTextStream &stream)
 
 int main(int argc, char **argv)
 {
-    Q_INIT_RESOURCE(qbrew);
+    Q_INIT_RESOURCE(pics);
 
     QApplication app(argc, argv);
     app.setApplicationName(PACKAGE);

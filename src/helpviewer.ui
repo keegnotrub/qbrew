@@ -82,10 +82,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/go-previous.png</normaloff>:/pics/icons/go-previous.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Backward</string>
    </property>
@@ -100,10 +96,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/go-next.png</normaloff>:/pics/icons/go-next.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Forward</string>
    </property>
@@ -115,10 +107,6 @@
    </property>
   </action>
   <action name="actiongohome">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/go-home.png</normaloff>:/pics/icons/go-home.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Home</string>
    </property>
@@ -130,10 +118,6 @@
    </property>
   </action>
   <action name="actionfileprint">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/document-print.png</normaloff>:/pics/icons/document-print.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Print...</string>
    </property>
@@ -145,10 +129,6 @@
    </property>
   </action>
   <action name="actionquit">
-   <property name="icon">
-    <iconset resource="../qbrew.qrc">
-     <normaloff>:/pics/icons/application-exit.png</normaloff>:/pics/icons/application-exit.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -160,8 +140,5 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="../qbrew.qrc"/>
- </resources>
  <connections/>
 </ui>

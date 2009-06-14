@@ -47,10 +47,26 @@ HelpViewer::HelpViewer(const QString &home, QWidget *parent)
     setCentralWidget(browser_);
 
     // setup actions
+    QIcon icon = QIcon(":/icons/22x22/go-previous.png");
+    icon.addFile(":/icons/16x16/go-previous.png");
+    ui.actionback->setIcon(icon);
     connect(ui.actionback, SIGNAL(triggered()), browser_, SLOT(backward()));
+    icon = QIcon(":/icons/22x22/go-next.png");
+    icon.addFile(":/icons/16x16/go-next.png");
+    ui.actionforward->setIcon(icon);
     connect(ui.actionforward, SIGNAL(triggered()), browser_, SLOT(forward()));
+    icon = QIcon(":/icons/22x22/go-home.png");
+    icon.addFile(":/icons/16x16/go-home.png");
+    ui.actiongohome->setIcon(icon);
     connect(ui.actiongohome, SIGNAL(triggered()), browser_, SLOT(home()));
+    connect(ui.actionforward, SIGNAL(triggered()), browser_, SLOT(forward()));
+    icon = QIcon(":/icons/22x22/document-print.png");
+    icon.addFile(":/icons/16x16/document-print.png");
+    ui.actionfileprint->setIcon(icon);
     connect(ui.actionfileprint, SIGNAL(triggered()), this, SLOT(print()));
+    icon = QIcon(":/icons/22x22/application-exit.png");
+    icon.addFile(":/icons/16x16/application-exit.png");
+    ui.actionquit->setIcon(icon);
     connect(ui.actionquit, SIGNAL(triggered()), this, SLOT(close()));
 
     // setup connections

@@ -127,6 +127,18 @@ View::View(QWidget *parent, Recipe *recipe)
     notepage_ = new NotePage(0, recipe_);
     ui.ingredients->addTab(notepage_, tr("&Notes"));
 
+    // set icons
+    QIcon icon = QIcon(":/icons/22x22/list-add.png");
+    icon.addFile(":/icons/16x16/list-add.png");
+    grainpage.addbutton->setIcon(icon);
+    hoppage.addbutton->setIcon(icon);
+    miscpage.addbutton->setIcon(icon);
+    icon = QIcon(":/icons/22x22/list-remove.png");
+    icon.addFile(":/icons/16x16/list-remove.png");
+    grainpage.removebutton->setIcon(icon);
+    hoppage.removebutton->setIcon(icon);
+    miscpage.removebutton->setIcon(icon);
+
     // widget connections
     connect(grainmodel_, SIGNAL(modified()),
             this, SLOT(modelModified()));
