@@ -539,7 +539,7 @@ void QBrew::fileExport()
             // error in exporting
             QMessageBox::warning(this, TITLE,
                                  tr("Unable to export to %1")
-                                 .arg(QFileInfo(filename_).fileName()));
+                                 .arg(QFileInfo(fname).fileName()));
             statusBar()->showMessage(tr("Error exporting recipe"), 2000);
         }
     } else {
@@ -1076,7 +1076,7 @@ bool QBrew::openFile(const QString &filename)
                 status = recipe_->importBeerXml(filename);
                 if (status) {
                     // set filename to the default (forces a saveas)
-                    filename_ = DEFAULT_FILE;
+                    filename_ = tr(DEFAULT_FILE);
                     setFileCaption(filename_);
                 }
             }

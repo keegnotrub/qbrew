@@ -46,71 +46,91 @@ MashWaterDialog::MashWaterDialog(QWidget *parent)
 
     initUnits();
 
-    strikeWaterTempLabel->setText(calculateWaterTemp());
-    tempUnitsLabel->setText(Resource::DEGREE +
-        Data::instance()->defaultTempUnit().symbol());
+    strikeWaterTempLabel->setText(calculateWaterTemp()
+                                  + Resource::DEGREE
+                                  + Data::instance()->defaultTempUnit().symbol());
 }
 
 void MashWaterDialog::on_strikeWaterVolumeDoubleSpinBox_valueChanged()
 {
     ratioLabel->setText(calculateRatio());
-    strikeWaterTempLabel->setText(calculateWaterTemp());
+    strikeWaterTempLabel->setText(calculateWaterTemp()
+                                  + Resource::DEGREE
+                                  + Data::instance()->defaultTempUnit().symbol());
 
     if(moreButton->isChecked())
     {
-        step2WaterVolumeLabel->setText(calculateStep2WaterVolume());
-        step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+        step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
+                                       + ((units==METRIC_UNITS) ? " liters" : " quarts"));
+        step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                       + ((units==METRIC_UNITS) ? " liters" : " quarts"));
     }
 }
 
 void MashWaterDialog::on_grainMassDoubleSpinBox_valueChanged()
 {
     ratioLabel->setText(calculateRatio());
-    strikeWaterTempLabel->setText(calculateWaterTemp());
+    strikeWaterTempLabel->setText(calculateWaterTemp()
+                                  + Resource::DEGREE
+                                  + Data::instance()->defaultTempUnit().symbol());
 
     if(moreButton->isChecked())
     {
-        step2WaterVolumeLabel->setText(calculateStep2WaterVolume());
-        step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+        step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
+                                       + ((units==METRIC_UNITS) ? " liters" : " quarts"));
+        step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                       + ((units==METRIC_UNITS) ? " liters" : " quarts"));
     }
 }
 
 void MashWaterDialog::on_targetStrikeTempSpinBox_valueChanged()
 {
-    strikeWaterTempLabel->setText(calculateWaterTemp());
+    strikeWaterTempLabel->setText(calculateWaterTemp()
+                                  + Resource::DEGREE
+                                  + Data::instance()->defaultTempUnit().symbol());
 
     if(moreButton->isChecked())
     {
-        step2WaterVolumeLabel->setText(calculateStep2WaterVolume());
-        step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+        step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
+                                       + ((units==METRIC_UNITS) ? " liters" : " quarts"));
+        step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                       + ((units==METRIC_UNITS) ? " liters" : " quarts"));
     }
 }
 
 void MashWaterDialog::on_grainTempSpinBox_valueChanged()
 {
-    strikeWaterTempLabel->setText(calculateWaterTemp());
+    strikeWaterTempLabel->setText(calculateWaterTemp()
+                                  + Resource::DEGREE
+                                  + Data::instance()->defaultTempUnit().symbol());
 }
 
 void MashWaterDialog::on_step2TargetTempSpinBox_valueChanged()
 {
-    step2WaterVolumeLabel->setText(calculateStep2WaterVolume());
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+    step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
+    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
 }
 
 void MashWaterDialog::on_step2WaterTempSpinBox_valueChanged()
 {
-    step2WaterVolumeLabel->setText(calculateStep2WaterVolume());
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+    step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
+    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
 }
 
 void MashWaterDialog::on_step3TargetTempSpinBox_valueChanged()
 {
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
 }
 
 void MashWaterDialog::on_step3WaterTempSpinBox_valueChanged()
 {
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
 }
 
 // The ratio is an interesting bit of info to know,
@@ -224,11 +244,15 @@ void MashWaterDialog::on_moreButton_toggled(bool checked){
     {
         preSetMultiRest();
         ratioLabel->setText(calculateRatio());
-        strikeWaterTempLabel->setText(calculateWaterTemp());
+        strikeWaterTempLabel->setText(calculateWaterTemp()
+                                  + Resource::DEGREE
+                                  + Data::instance()->defaultTempUnit().symbol());
         more_was_checked = true;
     }
-    step2WaterVolumeLabel->setText(calculateStep2WaterVolume());
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume());
+    step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
+    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                   + ((units==METRIC_UNITS) ? " liters" : " quarts"));
   }
 
   // set label as appropriate
@@ -242,9 +266,6 @@ void MashWaterDialog::initUnits()
     {
         strikeWaterVolumeLabel->setText(tr("Quarts of &water"));
         grainMassLabel->setText(tr("Pounds of &grain"));
-        tempUnitsLabel->setText(QString(QChar(0x00B0)) + "F");
-        step2WaterVolumeUnitsLabel->setText(tr("quarts"));
-        step3WaterVolumeUnitsLabel->setText(tr("quarts"));
 
         targetStrikeTempSpinBox->setMinimum(80);
         targetStrikeTempSpinBox->setMaximum(180);
@@ -289,9 +310,6 @@ void MashWaterDialog::initUnits()
     {
         strikeWaterVolumeLabel->setText(tr("Liters of &water"));
         grainMassLabel->setText(tr("Kilograms of &grain"));
-        tempUnitsLabel->setText(QString(QChar(0x00B0)) + "C");
-        step2WaterVolumeUnitsLabel->setText(tr("liters"));
-        step3WaterVolumeUnitsLabel->setText(tr("liters"));
 
         targetStrikeTempSpinBox->setMinimum(27);
         targetStrikeTempSpinBox->setMaximum(82);

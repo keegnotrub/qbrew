@@ -50,14 +50,14 @@
 
 namespace Resource {
 
+// Note: strings will be translated in source with tr()
+
 ///////////////////////////////////////////////////////////////////
 // general application values
 
 const QByteArray TITLE        = "QBrew";
-const QByteArray DESCRIPTION  = QT_TRANSLATE_NOOP("description",
-                                "A Homebrewer's Recipe Calculator");
-const QByteArray COPYRIGHT    = QT_TRANSLATE_NOOP("copyright",
-                                "Copyright 1999-2008");
+const QByteArray DESCRIPTION  = "A Homebrewer's Recipe Calculator";
+const QByteArray COPYRIGHT    = "Copyright 1999-2009";
 const QByteArray AUTHOR       = "David Johnson";
 const QByteArray AUTHOR_EMAIL = "david@usermode.org";
 const QByteArray CONTRIBUTORS = "Lee Henderson, "
@@ -69,8 +69,7 @@ const QByteArray CONTRIBUTORS = "Lee Henderson, "
                                 "Kevin Pullin, "
                                 "Tobias Quathamer";
 
-const QByteArray READY        = QT_TRANSLATE_NOOP("message",
-                                "Ready");
+const QByteArray READY        = "Ready";
 
 const QChar DEGREE            = QChar(0xB0);  // ISO 8859-1
 
@@ -78,35 +77,26 @@ const QChar DEGREE            = QChar(0xB0);  // ISO 8859-1
 // file locations and stuff
 
 const QByteArray FILE_EXT        = PACKAGE;
-const QByteArray FILE_FILTER     = QT_TRANSLATE_NOOP("file filter",
-                                   "QBrew files (*.qbrew)");
-const QByteArray TEXT_FILTER     = QT_TRANSLATE_NOOP("file filter",
-                                   "Text files (*.txt)");
-const QByteArray HTML_FILTER     = QT_TRANSLATE_NOOP("file filter",
-                                   "HTML files (*.html *.htm)");
-const QByteArray BEERXML_FILTER  = QT_TRANSLATE_NOOP("file filter",
-                                   "BeerXML recipes (*.xml)");
-const QByteArray PDF_FILTER      = QT_TRANSLATE_NOOP("file filter",
-                                   "PDF files (*.pdf)");
-const QByteArray ALL_FILTER      = QT_TRANSLATE_NOOP("file filter",
-                                   "All files (*)");
-const QByteArray OPEN_FILTER     = QT_TRANSLATE_NOOP("file filter",
-                                   FILE_FILTER + ";;"
+const QByteArray FILE_FILTER     = "QBrew files (*.qbrew)";
+const QByteArray TEXT_FILTER     = "Text files (*.txt)";
+const QByteArray HTML_FILTER     = "HTML files (*.html *.htm)";
+const QByteArray BEERXML_FILTER  = "BeerXML recipes (*.xml)";
+const QByteArray PDF_FILTER      = "PDF files (*.pdf)";
+const QByteArray ALL_FILTER      = "All files (*)";
+const QByteArray OPEN_FILTER     = FILE_FILTER + ";;"
                                    + BEERXML_FILTER + ";;"
-                                   + ALL_FILTER);
-const QByteArray SAVE_FILTER     = QT_TRANSLATE_NOOP("file filter",
-                                   FILE_FILTER + ";;"
-                                   + ALL_FILTER);
-const QByteArray EXPORT_FILTER   = QT_TRANSLATE_NOOP("file filter",
-                                   HTML_FILTER + ";;"
+                                   + ALL_FILTER;
+const QByteArray SAVE_FILTER     = FILE_FILTER + ";;"
+                                   + ALL_FILTER;
+const QByteArray EXPORT_FILTER   = HTML_FILTER + ";;"
                                    + BEERXML_FILTER + ";;"
                                    + PDF_FILTER + ";;"
-                                   + TEXT_FILTER);
+                                   + TEXT_FILTER;
 
 const QByteArray DATA_FILE       = "qbrewdata";
 const QByteArray HELP_FILE       = "handbook-index.html";
 const QByteArray PRIMER_FILE     = "primer.html";
-const QByteArray DEFAULT_FILE    = QT_TRANSLATE_NOOP("file name", "untitled");
+const QByteArray DEFAULT_FILE    = "untitled";
 
 // previous valid data formats
 const QByteArray RECIPE_PREVIOUS = "0.1.7";
@@ -236,8 +226,8 @@ const QString tagFORM               = "FORM";
 ///////////////////////////////////////////////////////////////////
 // Misc
 
-const QByteArray UNIT_METRIC        = QT_TRANSLATE_NOOP("units", "Metric");
-const QByteArray UNIT_US            = QT_TRANSLATE_NOOP("units", "US");
+const QByteArray UNIT_METRIC        = "Metric";
+const QByteArray UNIT_US            = "US";
 
 }; // namespace Resource
 

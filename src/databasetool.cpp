@@ -41,10 +41,16 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 {
     ui.setupUi(this);
     statusBar()->hide();
-    ui.actionsave->setEnabled(false);
 
     // setup actions
+    QIcon icon = QIcon(":/icons/22x22/document-save.png");
+    icon.addFile(":/icons/16x16/document-save.png");
+    ui.actionsave->setIcon(icon);
+    ui.actionsave->setEnabled(false);
     connect(ui.actionsave, SIGNAL(triggered()), this, SLOT(fileSave()));
+    icon = QIcon(":/icons/22x22/application-exit.png");
+    icon.addFile(":/icons/16x16/application-exit.png");
+    ui.actionquit->setIcon(icon);
     connect(ui.actionquit, SIGNAL(triggered()), this, SLOT(close()));
 
     // get current font information, for sizing

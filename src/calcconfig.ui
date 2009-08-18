@@ -1,116 +1,131 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>CalcConfig</class>
- <widget class="QWidget" name="CalcConfig" >
-  <property name="geometry" >
+ <widget class="QWidget" name="CalcConfig">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>355</width>
-    <height>209</height>
+    <width>345</width>
+    <height>208</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Calc Configuration</string>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout">
    <item>
-    <widget class="QGroupBox" name="calcbox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="calcbox">
+     <property name="title">
       <string>Calculation Options</string>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="unitslabel" >
-        <property name="text" >
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="unitslabel">
+        <property name="text">
          <string>Measurement &amp;units</string>
         </property>
-        <property name="buddy" >
+        <property name="buddy">
          <cstring>units</cstring>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" >
-       <widget class="QComboBox" name="units" >
-        <property name="whatsThis" >
-         <string>&lt;p>Select the units of measurement you wish to use. Your choices are "&lt;b>Metric&lt;/b>" and "&lt;b>US&lt;/b>".&lt;/p></string>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="units">
+        <property name="whatsThis">
+         <string>&lt;p&gt;Select the units of measurement you wish to use. Your choices are &quot;&lt;b&gt;Metric&lt;/b&gt;&quot; and &quot;&lt;b&gt;US&lt;/b&gt;&quot;.&lt;/p&gt;</string>
         </property>
-        <property name="duplicatesEnabled" >
+        <property name="duplicatesEnabled">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" >
-       <widget class="QLabel" name="efficiencylabel" >
-        <property name="text" >
+      <item row="1" column="0">
+       <widget class="QLabel" name="efficiencylabel">
+        <property name="text">
          <string>Mash &amp;efficiency</string>
         </property>
-        <property name="buddy" >
+        <property name="buddy">
          <cstring>efficiency</cstring>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" >
-       <widget class="QDoubleSpinBox" name="efficiency" >
-        <property name="whatsThis" >
-         <string>&lt;p>Enter the mash efficiency for your brew house&lt;/p></string>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="efficiency">
+        <property name="whatsThis">
+         <string>&lt;p&gt;Enter the mash efficiency for your brew house&lt;/p&gt;</string>
         </property>
-        <property name="accelerated" >
+        <property name="accelerated">
          <bool>true</bool>
         </property>
-        <property name="maximum" >
+        <property name="maximum">
          <double>1.000000000000000</double>
         </property>
-        <property name="singleStep" >
+        <property name="singleStep">
          <double>0.010000000000000</double>
         </property>
        </widget>
       </item>
-      <item row="2" column="0" >
-       <widget class="QLabel" name="steeplabel" >
-        <property name="text" >
+      <item row="2" column="0">
+       <widget class="QLabel" name="steeplabel">
+        <property name="text">
          <string>Steep &amp;yield</string>
         </property>
-        <property name="buddy" >
+        <property name="buddy">
          <cstring>steepyield</cstring>
         </property>
        </widget>
       </item>
-      <item row="2" column="1" >
-       <widget class="QDoubleSpinBox" name="steepyield" >
-        <property name="accelerated" >
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="steepyield">
+        <property name="accelerated">
          <bool>true</bool>
         </property>
-        <property name="maximum" >
+        <property name="maximum">
          <double>1.000000000000000</double>
         </property>
-        <property name="singleStep" >
+        <property name="singleStep">
          <double>0.010000000000000</double>
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="2" >
-       <widget class="QCheckBox" name="tinseth" >
-        <property name="whatsThis" >
-         <string>&lt;p>There are two bitterness calculations that QBrew can use.  The default method is to use the &lt;b>Rager&lt;/b> formula. By selecting this check box, you can change the calculation to use the &lt;b>Tinseth&lt;/b> formula.&lt;/p></string>
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="morey">
+        <property name="whatsThis">
+         <string>&lt;p&gt;There are two color calculations that QBrew can use.  The default method uses the &lt;b&gt;Daniels&lt;/b&gt; formula. By selecting this check box, you can change the calculation to use the &lt;b&gt;Morey&lt;/b&gt; formula.&lt;/p&gt;</string>
         </property>
-        <property name="text" >
-         <string>Use &amp;Tinseth bitterness calculation</string>
-        </property>
-        <property name="shortcut" >
-         <string>Alt+T</string>
+        <property name="shortcut">
+         <string>Alt+M</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="2" >
-       <widget class="QCheckBox" name="morey" >
-        <property name="whatsThis" >
-         <string>&lt;p>There are two color calculations that QBrew can use.  The default method uses the &lt;b>Daniels&lt;/b> formula. By selecting this check box, you can change the calculation to use the &lt;b>Morey&lt;/b> formula.&lt;/p></string>
-        </property>
-        <property name="text" >
+      <item row="6" column="0">
+       <widget class="QLabel" name="moreylabel">
+        <property name="text">
          <string>Use &amp;Morey color calculation</string>
         </property>
-        <property name="shortcut" >
-         <string>Alt+M</string>
+        <property name="buddy">
+         <cstring>morey</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="tinsethlabel">
+        <property name="text">
+         <string>Use &amp;Tinseth bitterness calculation</string>
+        </property>
+        <property name="buddy">
+         <cstring>tinseth</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="tinseth">
+        <property name="whatsThis">
+         <string>&lt;p&gt;There are two bitterness calculations that QBrew can use.  The default method is to use the &lt;b&gt;Rager&lt;/b&gt; formula. By selecting this check box, you can change the calculation to use the &lt;b&gt;Tinseth&lt;/b&gt; formula.&lt;/p&gt;</string>
+        </property>
+        <property name="shortcut">
+         <string>Alt+T</string>
         </property>
        </widget>
       </item>
@@ -119,10 +134,10 @@
    </item>
    <item>
     <spacer>
-     <property name="orientation" >
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>337</width>
        <height>81</height>
@@ -136,8 +151,6 @@
   <tabstop>units</tabstop>
   <tabstop>efficiency</tabstop>
   <tabstop>steepyield</tabstop>
-  <tabstop>tinseth</tabstop>
-  <tabstop>morey</tabstop>
  </tabstops>
  <resources/>
  <connections/>

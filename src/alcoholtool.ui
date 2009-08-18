@@ -1,165 +1,142 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>AlcoholTool</class>
- <widget class="QDialog" name="AlcoholTool" >
-  <property name="geometry" >
+ <widget class="QDialog" name="AlcoholTool">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>238</width>
-    <height>218</height>
+    <width>223</width>
+    <height>221</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Alcohol Tool</string>
   </property>
-  <layout class="QVBoxLayout" >
-   <property name="spacing" >
+  <layout class="QVBoxLayout">
+   <property name="spacing">
     <number>6</number>
    </property>
-   <property name="leftMargin" >
-    <number>9</number>
-   </property>
-   <property name="topMargin" >
-    <number>9</number>
-   </property>
-   <property name="rightMargin" >
-    <number>9</number>
-   </property>
-   <property name="bottomMargin" >
+   <property name="margin">
     <number>9</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="alcoholbox" >
-     <property name="title" >
+    <widget class="QGroupBox" name="alcoholbox">
+     <property name="title">
       <string>Alcohol</string>
      </property>
-     <layout class="QGridLayout" >
-      <property name="leftMargin" >
-       <number>9</number>
-      </property>
-      <property name="topMargin" >
-       <number>9</number>
-      </property>
-      <property name="rightMargin" >
-       <number>9</number>
-      </property>
-      <property name="bottomMargin" >
-       <number>9</number>
-      </property>
-      <property name="horizontalSpacing" >
-       <number>6</number>
-      </property>
-      <property name="verticalSpacing" >
-       <number>6</number>
-      </property>
-      <item row="4" column="1" >
-       <widget class="QLabel" name="abw" >
-        <property name="text" >
-         <string>99.9%</string>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="oglabel">
+        <property name="text">
+         <string>&amp;Original gravity</string>
+        </property>
+        <property name="buddy">
+         <cstring>og</cstring>
         </property>
        </widget>
       </item>
-      <item row="3" column="1" >
-       <widget class="QLabel" name="abv" >
-        <property name="text" >
-         <string>99.9%</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1" >
-       <widget class="QDoubleSpinBox" name="og" >
-        <property name="whatsThis" >
+      <item row="0" column="1">
+       <widget class="QDoubleSpinBox" name="og">
+        <property name="whatsThis">
          <string>Enter the measured original gravity of your batch</string>
         </property>
-        <property name="accelerated" >
+        <property name="accelerated">
          <bool>true</bool>
         </property>
-        <property name="decimals" >
+        <property name="decimals">
          <number>3</number>
         </property>
-        <property name="minimum" >
+        <property name="minimum">
          <double>0.900000000000000</double>
         </property>
-        <property name="maximum" >
+        <property name="maximum">
          <double>1.400000000000000</double>
         </property>
-        <property name="singleStep" >
+        <property name="singleStep">
          <double>0.001000000000000</double>
         </property>
-        <property name="value" >
+        <property name="value">
          <double>1.050000000000000</double>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" >
-       <widget class="QDoubleSpinBox" name="fg" >
-        <property name="whatsThis" >
-         <string>Enter the measured final gravity of your batch</string>
-        </property>
-        <property name="accelerated" >
-         <bool>true</bool>
-        </property>
-        <property name="decimals" >
-         <number>3</number>
-        </property>
-        <property name="minimum" >
-         <double>0.900000000000000</double>
-        </property>
-        <property name="maximum" >
-         <double>1.400000000000000</double>
-        </property>
-        <property name="singleStep" >
-         <double>0.001000000000000</double>
-        </property>
-        <property name="value" >
-         <double>1.050000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" >
-       <widget class="QLabel" name="abwlabel" >
-        <property name="text" >
-         <string>Alcohol by Weight</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" >
-       <widget class="QLabel" name="abvlabel" >
-        <property name="text" >
-         <string>Alcohol by Volume</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" >
-       <spacer>
-        <property name="orientation" >
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" >
-         <size>
-          <width>20</width>
-          <height>16</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="0" >
-       <widget class="QLabel" name="fglabel" >
-        <property name="text" >
+      <item row="1" column="0">
+       <widget class="QLabel" name="fglabel">
+        <property name="text">
          <string>&amp;Final gravity</string>
         </property>
-        <property name="buddy" >
+        <property name="buddy">
          <cstring>fg</cstring>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" >
-       <widget class="QLabel" name="oglabel" >
-        <property name="text" >
-         <string>&amp;Original gravity</string>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="fg">
+        <property name="whatsThis">
+         <string>Enter the measured final gravity of your batch</string>
         </property>
-        <property name="buddy" >
-         <cstring>og</cstring>
+        <property name="accelerated">
+         <bool>true</bool>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>0.900000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1.400000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.001000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.050000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <spacer>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>12</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="abvlabel">
+        <property name="text">
+         <string>Alcohol by Volume</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="abwlabel">
+        <property name="text">
+         <string>Alcohol by Weight</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="abw">
+        <property name="text">
+         <string>99.9%</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="abv">
+        <property name="text">
+         <string>99.9%</string>
         </property>
        </widget>
       </item>
@@ -167,11 +144,24 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonbox" >
-     <property name="orientation" >
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonbox">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="standardButtons" >
+     <property name="standardButtons">
       <set>QDialogButtonBox::Ok</set>
      </property>
     </widget>
@@ -190,11 +180,11 @@
    <receiver>AlcoholTool</receiver>
    <slot>close()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>118</x>
      <y>195</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>118</x>
      <y>108</y>
     </hint>

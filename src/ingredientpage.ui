@@ -62,6 +62,10 @@
        <property name="text">
         <string>...</string>
        </property>
+       <property name="icon">
+        <iconset resource="../pics/pics.qrc">
+         <normaloff>:/icons/16x16/list-add.png</normaloff>:/icons/16x16/list-add.png</iconset>
+       </property>
        <property name="iconSize">
         <size>
          <width>16</width>
@@ -80,6 +84,10 @@
        </property>
        <property name="text">
         <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../pics/pics.qrc">
+         <normaloff>:/icons/16x16/list-remove.png</normaloff>:/icons/16x16/list-remove.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -103,5 +111,8 @@
  <tabstops>
   <tabstop>view</tabstop>
  </tabstops>
+ <resources>
+  <include location="../pics/pics.qrc"/>
+ </resources>
  <connections/>
 </ui>
