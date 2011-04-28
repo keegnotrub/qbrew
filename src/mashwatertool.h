@@ -38,9 +38,11 @@ private slots:
     void on_mashoutTargetTempSpinBox_valueChanged();
     void on_mashoutWaterTempSpinBox_valueChanged();
     void on_moreButton_toggled(bool checked);
+    void on_mashoutButton_toggled(bool checked);
     void initUnits();
 
 private:
+    void calculateDerivedValues(); 
     QString calculateWaterTemp() const;
     QString calculateRatio() const;
     QString calculateStep2WaterVolume() const;
@@ -52,12 +54,15 @@ private:
                                  double waterVolume,
                                  double infWaterTemp) const;
     QString calculateTotalWaterVolume() const;
+    QString calculateEstimatedWaterOutputVolume() const;
+    QString calculateTotalVolume() const;
     void preSetMultiRest();
     QString getUnitString() const;
 
     int units;
     double therm_constant;
     bool more_was_checked;
+    bool mashout_was_checked;
     enum { US_UNITS, METRIC_UNITS };
 };
 #endif

@@ -28,6 +28,7 @@ MashWaterDialog::MashWaterDialog(QWidget *parent)
     setupUi(this);
     secondStepGroupBox->hide();
     thirdStepGroupBox->hide();
+    mashoutGroupBox->hide();
     layout()->setSizeConstraint(QLayout::SetFixedSize);
     more_was_checked = false;
 
@@ -46,9 +47,34 @@ MashWaterDialog::MashWaterDialog(QWidget *parent)
 
     initUnits();
 
-    strikeWaterTempLabel->setText(calculateWaterTemp()
-                                  + Resource::DEGREE
-                                  + Data::instance()->defaultTempUnit().symbol());
+    strikeWaterTempLabel->setText(
+        calculateWaterTemp()
+        + Resource::DEGREE
+        + Data::instance()->defaultTempUnit().symbol());
+}
+
+void MashWaterDialog::calculateDerivedValues()
+{
+    if(moreButton->isChecked())
+    {
+        step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
+                                       + (getUnitString()));
+        step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
+                                       + (getUnitString()));
+    }
+
+    if(mashoutButton->isChecked())
+    {
+        mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
+                                         + (getUnitString()));
+    }
+
+    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
+                                   + (getUnitString()));
+    estimatedWaterVolumeOutputLabel->
+    setText(calculateEstimatedWaterOutputVolume()
+            + (getUnitString()));
+    totalVolumeLabel->setText(calculateTotalVolume() + (getUnitString()));
 }
 
 QString MashWaterDialog::getUnitString() const
@@ -59,127 +85,71 @@ QString MashWaterDialog::getUnitString() const
 void MashWaterDialog::on_strikeWaterVolumeDoubleSpinBox_valueChanged()
 {
     ratioLabel->setText(calculateRatio());
-    strikeWaterTempLabel->setText(calculateWaterTemp()
-                                  + Resource::DEGREE
-                                  + Data::instance()->defaultTempUnit().symbol());
+    strikeWaterTempLabel->setText(
+        calculateWaterTemp()
+        + Resource::DEGREE
+        + Data::instance()->defaultTempUnit().symbol());
 
-    if(moreButton->isChecked())
-    {
-        step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
-                                       + (getUnitString()));
-        step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                       + (getUnitString()));
-    }
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                     + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_grainMassDoubleSpinBox_valueChanged()
 {
     ratioLabel->setText(calculateRatio());
-    strikeWaterTempLabel->setText(calculateWaterTemp()
-                                  + Resource::DEGREE
-                                  + Data::instance()->defaultTempUnit().symbol());
+    strikeWaterTempLabel->setText(
+        calculateWaterTemp()
+        + Resource::DEGREE
+        + Data::instance()->defaultTempUnit().symbol());
 
-    if(moreButton->isChecked())
-    {
-        step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
-                                       + (getUnitString()));
-        step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                       + (getUnitString()));
-    }
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                     + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_targetStrikeTempSpinBox_valueChanged()
 {
-    strikeWaterTempLabel->setText(calculateWaterTemp()
-                                  + Resource::DEGREE
-                                  + Data::instance()->defaultTempUnit().symbol());
+    strikeWaterTempLabel->setText(
+        calculateWaterTemp()
+        + Resource::DEGREE
+        + Data::instance()->defaultTempUnit().symbol());
 
-    if(moreButton->isChecked())
-    {
-        step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
-                                       + (getUnitString()));
-        step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                       + (getUnitString()));
-    }
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                     + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_grainTempSpinBox_valueChanged()
 {
-    strikeWaterTempLabel->setText(calculateWaterTemp()
-                                  + Resource::DEGREE
-                                  + Data::instance()->defaultTempUnit().symbol());
+    strikeWaterTempLabel->setText(
+        calculateWaterTemp()
+        + Resource::DEGREE
+        + Data::instance()->defaultTempUnit().symbol());
 }
 
 void MashWaterDialog::on_step2TargetTempSpinBox_valueChanged()
 {
-    step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
-                                   + (getUnitString()));
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                   + (getUnitString()));
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                   + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_step2WaterTempSpinBox_valueChanged()
 {
-    step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
-                                   + (getUnitString()));
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                   + (getUnitString()));
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                   + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_step3TargetTempSpinBox_valueChanged()
 {
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                   + (getUnitString()));
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                   + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_step3WaterTempSpinBox_valueChanged()
 {
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                   + (getUnitString()));
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                   + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_mashoutTargetTempSpinBox_valueChanged()
 {
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                   + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 void MashWaterDialog::on_mashoutWaterTempSpinBox_valueChanged()
 {
-    mashoutWaterVolumeLabel->setText(calculateMashoutWaterVolume()
-                                   + (getUnitString()));
-    totalWaterVolumeLabel->setText(calculateTotalWaterVolume()
-                                   + (getUnitString()));
+    calculateDerivedValues();
 }
 
 // The ratio is an interesting bit of info to know,
@@ -302,8 +272,13 @@ QString MashWaterDialog::calculateWaterVolume(double targetTemp,
 
 QString MashWaterDialog::calculateTotalWaterVolume() const
 {
-    double volume = strikeWaterVolumeDoubleSpinBox->value() +
-    mashoutWaterVolumeLabel->text().replace(getUnitString(),"").toDouble();
+    double volume = strikeWaterVolumeDoubleSpinBox->value();
+
+    if(mashoutButton->isChecked())
+    {
+        volume += 
+        mashoutWaterVolumeLabel->text().replace(getUnitString(),"").toDouble();
+    }
 
     if(moreButton->isChecked())
     {
@@ -320,6 +295,43 @@ QString MashWaterDialog::calculateTotalWaterVolume() const
     return totalVolumeString;
 }
 
+QString MashWaterDialog::calculateEstimatedWaterOutputVolume() const
+{
+    // You lose 1/2 quart per pound (about)
+
+    // this is somewhat redundant...
+    double volume = calculateTotalWaterVolume().toDouble();
+    double grain = grainMassDoubleSpinBox->value();
+
+    volume -= grain * .5;
+
+    QString estimatedVolumeString;
+    QTextStream estimatedVolumeStream(&estimatedVolumeString);
+    estimatedVolumeStream.setRealNumberPrecision(2); // 2 decimal points
+    estimatedVolumeStream.setRealNumberNotation(QTextStream::FixedNotation);
+    estimatedVolumeStream << volume;
+    return estimatedVolumeString;
+}
+
+QString MashWaterDialog::calculateTotalVolume() const
+{
+    // 1 pound of grain + 1 quart of water = 1.3125 quarts of volume,
+    // up until you get a number of quarts equal to the pounds of
+    // grain - after that, it just adds.
+
+    double volume = calculateTotalWaterVolume().toDouble();
+    double grain = grainMassDoubleSpinBox->value();
+
+    volume -= grain;
+    volume += grain * 1.3125;
+
+    QString totalVolumeString;
+    QTextStream totalVolumeStream(&totalVolumeString);
+    totalVolumeStream.setRealNumberPrecision(2); // 2 decimal points
+    totalVolumeStream.setRealNumberNotation(QTextStream::FixedNotation);
+    totalVolumeStream << volume;
+    return totalVolumeString;
+}
 
 // If moreButton is checked, we need to calculate
 // the second and third mash steps.
@@ -338,14 +350,27 @@ void MashWaterDialog::on_moreButton_toggled(bool checked){
                                   + Data::instance()->defaultTempUnit().symbol());
         more_was_checked = true;
     }
-    step2WaterVolumeLabel->setText(calculateStep2WaterVolume()
-                                   + (getUnitString()));
-    step3WaterVolumeLabel->setText(calculateStep3WaterVolume()
-                                   + (getUnitString()));
   }
+
+  calculateDerivedValues();
 
   // set label as appropriate
   moreButton->setText(checked ? tr("&Less <<") : tr("&More >>"));
+}
+
+void MashWaterDialog::on_mashoutButton_toggled(bool checked){
+    if(checked)
+    {
+        mashoutGroupBox->show();
+    }
+    else
+    {
+        mashoutGroupBox->hide();
+    }
+
+    calculateDerivedValues();
+    
+    mashoutButton->setText(checked ? tr("Mashout <<") : tr("Mashout >>"));
 }
 
 // Different presets for different unit bases.
