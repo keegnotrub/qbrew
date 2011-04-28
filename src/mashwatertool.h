@@ -35,6 +35,8 @@ private slots:
     void on_step2WaterTempSpinBox_valueChanged();
     void on_step3TargetTempSpinBox_valueChanged();
     void on_step3WaterTempSpinBox_valueChanged();
+    void on_mashoutTargetTempSpinBox_valueChanged();
+    void on_mashoutWaterTempSpinBox_valueChanged();
     void on_moreButton_toggled(bool checked);
     void initUnits();
 
@@ -43,7 +45,15 @@ private:
     QString calculateRatio() const;
     QString calculateStep2WaterVolume() const;
     QString calculateStep3WaterVolume() const;
+    QString calculateMashoutWaterVolume() const;
+    QString calculateWaterVolume(double targetTemp,
+                                 double initialTemp,
+                                 double grainMass,
+                                 double waterVolume,
+                                 double infWaterTemp) const;
+    QString calculateTotalWaterVolume() const;
     void preSetMultiRest();
+    QString getUnitString() const;
 
     int units;
     double therm_constant;
