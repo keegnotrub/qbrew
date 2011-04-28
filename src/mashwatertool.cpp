@@ -53,7 +53,7 @@ MashWaterDialog::MashWaterDialog(QWidget *parent)
 
 QString MashWaterDialog::getUnitString() const
 {
-    return QString::QString((units==METRIC_UNITS) ? " liters" : " quarts");
+    return QString((units==METRIC_UNITS) ? " liters" : " quarts");
 }
 
 void MashWaterDialog::on_strikeWaterVolumeDoubleSpinBox_valueChanged()
