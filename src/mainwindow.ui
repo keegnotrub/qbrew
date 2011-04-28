@@ -54,6 +54,7 @@
     <addaction name="actionalcoholtool"/>
     <addaction name="actionhydrometertool"/>
     <addaction name="actionmashwatertool"/>
+    <addaction name="actionsugartool"/>
     <addaction name="actiondatabasetool"/>
    </widget>
    <widget class="QMenu" name="menufile">
@@ -315,6 +316,14 @@
    </property>
    <property name="statusTip">
     <string>Mash volume and temperature calculation utility</string>
+   </property>
+  </action>
+  <action name="actionsugartool">
+   <property name="text">
+    <string>&amp;Priming Sugar Calculator...</string>
+   </property>
+   <property name="statusTip">
+    <string>Priming sugar calculation utility</string>
    </property>
   </action>
  </widget>

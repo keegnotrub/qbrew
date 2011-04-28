@@ -17,6 +17,7 @@
 #include "helpviewer.h"
 #include "hydrometertool.h"
 #include "mashwatertool.h"
+#include "sugartool.h"
 #include "resource.h"
 #include "textprinter.h"
 #include "view.h"
@@ -39,9 +40,9 @@ static QMutex instancelock;
 
 QBrew::QBrew()
     : data_(0), recipe_(0), view_(0), alcoholtool_(0), databasetool_(0),
-      hydrometertool_(0), mashwatertool_(0), configure_(0), handbook_(0),
-      primer_(0), state_(), filename_(), newflag_(false), backed_(false),
-      autosave_(0), autosavename_(), textprinter_(0)
+      hydrometertool_(0), mashwatertool_(0), sugartool_(0), configure_(0),
+      handbook_(0), primer_(0), state_(), filename_(), newflag_(false),
+      backed_(false), autosave_(0), autosavename_(), textprinter_(0)
 { ; }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -58,7 +59,7 @@ void QBrew::initialize(const QString &filename)
     if (state_.general.showsplash
         && QFile::exists(dataBase() + tr("splash.png"))) {
         QSplashScreen *splash = new QSplashScreen(dataBase() + tr("splash.png"),
-						 Qt::WindowStaysOnTopHint);
+                         Qt::WindowStaysOnTopHint);
         splash->show();
         QApplication::flush();
         QTimer::singleShot(3000, splash, SLOT(close()));
@@ -147,6 +148,7 @@ QBrew::~QBrew()
     if (alcoholtool_) alcoholtool_->close();
     if (hydrometertool_) hydrometertool_->close();
     if (mashwatertool_) mashwatertool_->close();
+    if (sugartool_) sugartool_->close();
     if (databasetool_) databasetool_->close();
     if (configure_) configure_->close();
     if (handbook_) handbook_->close();
@@ -222,6 +224,8 @@ void QBrew::initActions()
             this, SLOT(toolsHydrometer()));
     connect(ui.actionmashwatertool, SIGNAL(triggered()),
             this, SLOT(toolsMash()));
+    connect(ui.actionsugartool, SIGNAL(triggered()),
+            this, SLOT(toolsSugar()));
     connect(ui.actiondatabasetool, SIGNAL(triggered()),
             this, SLOT(toolsDatabase()));
 
@@ -594,6 +598,21 @@ void QBrew::toolsAlcohol()
 }
 
 //////////////////////////////////////////////////////////////////////////////
+// toolsSugar()
+// --------------
+// A utility dialog for priming sugar calculation
+
+void QBrew::toolsSugar()
+{
+    if (!sugartool_) sugartool_  = new SugarTool(this);
+    sugartool_->show();
+    sugartool_->raise();
+    if (sugartool_->isMinimized()) sugartool_->showNormal();
+
+    statusBar()->showMessage(tr(READY), 2000);
+}
+
+//////////////////////////////////////////////////////////////////////////////
 // toolsHydrometer()
 // -----------------
 // A utility dialog for hydrometer correction
@@ -841,13 +860,20 @@ void QBrew::applyCalcState(const CalcConfigState &state)
                                           Volume::liter));
             data_->setDefaultGrainUnit(Weight::kilogram);
             data_->setDefaultHopUnit(Weight::gram);
+            data_->setDefaultSugarUnit(Weight::gram);
             data_->setDefaultTempUnit(Temperature::celsius);
         } else if (state.units == UNIT_US) {
             data_->setDefaultSize(Volume(state_.recipe.batch,
                                           Volume::gallon));
             data_->setDefaultGrainUnit(Weight::pound);
             data_->setDefaultHopUnit(Weight::ounce);
+            data_->setDefaultSugarUnit(Weight::ounce);
             data_->setDefaultTempUnit(Temperature::fahrenheit);
+        }
+        // delete sugar tool
+        if (sugartool_) {
+            delete sugartool_;
+            sugartool_ = 0;
         }
         // delete hydrometer tool
         if (hydrometertool_) {
@@ -1157,7 +1183,7 @@ void QBrew::recentMenuShow()
         action = new QAction(recentfile, ui.menuopenrecent);
         connect(action, SIGNAL(triggered()),
                 this, SLOT(fileRecent()));
-	ui.menuopenrecent->addAction(action);
+    ui.menuopenrecent->addAction(action);
     }
 }
 
@@ -1174,9 +1200,9 @@ void QBrew::addRecent(const QString &filename)
     QString filepath = finfo.absoluteFilePath();
 
     if (state_.general.recentfiles.contains(filepath))
-	state_.general.recentfiles.removeAll(filepath);
+    state_.general.recentfiles.removeAll(filepath);
     if (state_.general.recentfiles.count() >= state_.general.recentnum)
-	state_.general.recentfiles.removeLast();
+    state_.general.recentfiles.removeLast();
     state_.general.recentfiles.prepend(filepath);
 }
 

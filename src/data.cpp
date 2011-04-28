@@ -58,11 +58,13 @@ void Data::initialize(const ConfigState &state)
         setDefaultSize(Volume(state.recipe.batch, Volume::liter));
         setDefaultGrainUnit(Weight::kilogram);
         setDefaultHopUnit(Weight::gram);
+        setDefaultSugarUnit(Weight::gram);
         setDefaultTempUnit(Temperature::celsius);
     } else if (state.calc.units == UNIT_US) {
         setDefaultSize(Volume(state.recipe.batch, Volume::gallon));
         setDefaultGrainUnit(Weight::pound);
         setDefaultHopUnit(Weight::ounce);
+        setDefaultSugarUnit(Weight::ounce);
         setDefaultTempUnit(Temperature::fahrenheit);
     }
     setDefaultStyle(state.recipe.style);

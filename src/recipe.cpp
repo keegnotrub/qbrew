@@ -516,7 +516,7 @@ double Recipe::ABV() // recipe version
 }
 
 double Recipe::ABV(double og, double fg) // static version
-{ 
+{
     return (og - fg) * 1.29;
 }
 
@@ -530,7 +530,7 @@ double Recipe::ABW() // recipe version
 {
     return (ABW(og_, FGEstimate()));
 }
- 
+
 double Recipe::ABW(double og, double fg)  // static version
 {
     return (ABV(og, fg) * 0.785);
@@ -567,6 +567,29 @@ double Recipe::yieldToExtract(double yield)
 {
     const double SUCROSE = 46.21415;
     return ((yield*SUCROSE)/1000.0)+1.0;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// calculateSugar
+// ----------------
+// calculate priming sugar
+
+double Recipe::calculateSugar(double volumeBeerGal,
+                              double tempF,
+                              double co2Volumes)
+{
+    // Formula from Homebew Digest #5471
+    // http://hbd.org/hbd/archive/5471.html#5471-2
+    // Priming sugar weight in grams = 15.195 * Volume of beer in US
+    // gallons * (Desired carbonation level in volumes of CO2 - 3.0378
+    // + (0.050062 * Fermentation temperature of beer in degrees F) -
+    // (0.00026555 * Fermentation temperature of beer in degrees F^2))
+
+
+    double sugarGrams = 15.195 * volumeBeerGal *
+    ( co2Volumes - 3.0378 + 0.050062 * tempF - .00026555 * tempF * tempF );
+
+    return sugarGrams;
 }
 
 //////////////////////////////////////////////////////////////////////////////

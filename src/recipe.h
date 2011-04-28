@@ -132,6 +132,9 @@ public:
     // convert grain extract to yield
     static double extractToYield(double extract);
     static double yieldToExtract(double yield);
+    static double calculateSugar(double volumeBeerGal,
+                                 double tempF,
+                                 double co2Volumes);
 
     // is the recipe modified?
     bool modified() const;

@@ -78,6 +78,9 @@ public:
     // get/set the default hop units
     const Unit &defaultHopUnit() const;
     void setDefaultHopUnit(Unit &u);
+    // get/set the default sugar units
+    const Unit &defaultSugarUnit() const;
+    void setDefaultSugarUnit(Unit &u);
     // get/set the default misc units
     const Unit &defaultMiscUnit() const;
     void setDefaultMiscUnit(Unit &u);
@@ -147,6 +150,7 @@ private:
     QString defaulthoptype_;
     Unit *defaultgrainunit_;
     Unit *defaulthopunit_;
+    Unit *defaultsugarunit_;
     Unit *defaultmiscunit_;
     Unit *defaulttempunit_;
 
@@ -183,6 +187,10 @@ inline void Data::setDefaultGrainUnit(Unit &u) { defaultgrainunit_ = &u; }
 inline const Unit &Data::defaultHopUnit() const { return *defaulthopunit_; }
 
 inline void Data::setDefaultHopUnit(Unit &u) { defaulthopunit_ = &u; }
+
+inline const Unit &Data::defaultSugarUnit() const { return *defaultsugarunit_; }
+
+inline void Data::setDefaultSugarUnit(Unit &u) { defaultsugarunit_ = &u; }
 
 inline const Unit &Data::defaultMiscUnit() const { return *defaultmiscunit_; }
 

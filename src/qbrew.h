@@ -42,6 +42,7 @@ class QCloseEvent;
 class QTimer;
 
 class AlcoholTool;
+class SugarTool;
 class Configure;
 class Data;
 class DatabaseTool;
@@ -90,6 +91,8 @@ class QBrew : public QMainWindow {
     void toolsHydrometer();
     // show the mashwatertool
     void toolsMash();
+    // show the sugar tool
+    void toolsSugar();
     // show the database tool
     void toolsDatabase();
 
@@ -177,6 +180,7 @@ private:
     DatabaseTool* databasetool_;
     HydrometerTool* hydrometertool_;
     MashWaterDialog* mashwatertool_;
+    SugarTool* sugartool_;
     Configure* configure_;
     HelpViewer* handbook_;
     HelpViewer* primer_;
