@@ -18,7 +18,8 @@ using namespace Resource;
 
 Style::Style()
     : name_("Generic Ale"), oglow_(0.0), oghi_(0.0), fglow_(0.0), fghi_(0.0),
-      ibulow_(0), ibuhi_(100), srmlow_(0), srmhi_(40)
+      ibulow_(0), ibuhi_(100), srmlow_(0), srmhi_(40), co2low_(0.5),
+      co2hi_(5.0)
 { ; }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -29,9 +30,11 @@ Style::Style()
 Style::Style(const QString name, const double &oglow, const double &oghi,
              const double &fglow, const double &fghi,
              const int &ibulow, const int &ibuhi,
-             const int &srmlow, const int &srmhi)
+             const int &srmlow, const int &srmhi,
+             const double &co2low, const double &co2hi)
     : name_(name), oglow_(oglow), oghi_(oghi), fglow_(fglow), fghi_(fghi),
-      ibulow_(ibulow), ibuhi_(ibuhi), srmlow_(srmlow), srmhi_(srmhi)
+      ibulow_(ibulow), ibuhi_(ibuhi), srmlow_(srmlow), srmhi_(srmhi),
+      co2low_(co2low), co2hi_(co2hi)
 {
     // older qbrewdata files might not have FG values
     if (fglow_ == 0.0) fglow_ = ((oglow_ - 1.0) * 0.25) + 1.0;
@@ -41,7 +44,9 @@ Style::Style(const QString name, const double &oglow, const double &oghi,
 Style::Style(const Style &s)
     : name_(s.name_), oglow_(s.oglow_), oghi_(s.oghi_), fglow_(s.fglow_),
       fghi_(s.fghi_), ibulow_(s.ibulow_), ibuhi_(s.ibuhi_),
-      srmlow_(s.srmlow_), srmhi_(s.srmhi_)
+      srmlow_(s.srmlow_), srmhi_(s.srmhi_),
+      co2low_(s.co2low_), co2hi_(s.co2hi_)
+
 { ; }
 
 Style::~Style() { ; }
@@ -63,6 +68,7 @@ Style Style::operator=(const Style &s)
         fglow_ = s.fglow_; fghi_ = s.fghi_;
         ibulow_ = s.ibulow_; ibuhi_ = s.ibuhi_;
         srmlow_ = s.srmlow_; srmhi_ = s.srmhi_;
+        co2low_ = s.co2low_; co2hi_ = s.co2hi_;
     }
     return *this;
 }
@@ -82,5 +88,7 @@ bool Style::operator==(const Style &s) const
              (ibulow_ == s.ibulow_) &&
              (ibuhi_ == s.ibuhi_) &&
              (srmlow_ == s.srmlow_) &&
-             (srmhi_ == s.srmhi_) );
+             (srmhi_ == s.srmhi_) &&
+             (co2low_ == s.co2low_) &&
+             (co2hi_ == s.co2hi_) );
 }

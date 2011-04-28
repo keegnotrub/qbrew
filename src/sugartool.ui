@@ -6,194 +6,325 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>264</width>
-    <height>259</height>
+    <width>705</width>
+    <height>287</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Sugar Tool</string>
   </property>
-  <layout class="QVBoxLayout">
-   <property name="spacing">
-    <number>6</number>
-   </property>
+  <layout class="QGridLayout" name="gridLayout_2">
    <property name="margin">
     <number>9</number>
    </property>
-   <item>
+   <item row="0" column="0">
     <widget class="QGroupBox" name="sugarbox">
      <property name="title">
       <string>Priming Sugar</string>
      </property>
-     <layout class="QFormLayout" name="formLayout">
-      <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::ExpandingFieldsGrow</enum>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="volbeerlabel">
-        <property name="text">
-         <string>Volume of beer</string>
-        </property>
-        <property name="buddy">
-         <cstring>volbeer</cstring>
-        </property>
-       </widget>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0" colspan="2">
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="volbeerlabel">
+          <property name="text">
+           <string>Volume of beer</string>
+          </property>
+          <property name="buddy">
+           <cstring>volbeer</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QDoubleSpinBox" name="volbeer">
+          <property name="whatsThis">
+           <string>Enter the measured original gravity of your batch</string>
+          </property>
+          <property name="accelerated">
+           <bool>true</bool>
+          </property>
+          <property name="decimals">
+           <number>1</number>
+          </property>
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>20.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
+          </property>
+          <property name="value">
+           <double>5.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="templabel">
+          <property name="text">
+           <string>Fermentation Temperature</string>
+          </property>
+          <property name="buddy">
+           <cstring>temp</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QDoubleSpinBox" name="temp">
+          <property name="whatsThis">
+           <string>Enter the measured final gravity of your batch</string>
+          </property>
+          <property name="accelerated">
+           <bool>true</bool>
+          </property>
+          <property name="decimals">
+           <number>0</number>
+          </property>
+          <property name="minimum">
+           <double>32.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>212.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>60.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="volco2label">
+          <property name="text">
+           <string>Desired Volume of CO2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDoubleSpinBox" name="volco2">
+          <property name="decimals">
+           <number>1</number>
+          </property>
+          <property name="minimum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>5.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
+          </property>
+          <property name="value">
+           <double>2.500000000000000</double>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="volbeer">
-        <property name="whatsThis">
-         <string>Enter the measured original gravity of your batch</string>
-        </property>
-        <property name="accelerated">
-         <bool>true</bool>
-        </property>
-        <property name="decimals">
-         <number>1</number>
-        </property>
-        <property name="minimum">
-         <double>1.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>20.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-        <property name="value">
-         <double>5.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="templabel">
-        <property name="text">
-         <string>Fermentation Temperature</string>
-        </property>
-        <property name="buddy">
-         <cstring>temp</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QDoubleSpinBox" name="temp">
-        <property name="whatsThis">
-         <string>Enter the measured final gravity of your batch</string>
-        </property>
-        <property name="accelerated">
-         <bool>true</bool>
-        </property>
-        <property name="decimals">
-         <number>0</number>
-        </property>
-        <property name="minimum">
-         <double>32.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>212.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>1.000000000000000</double>
-        </property>
-        <property name="value">
-         <double>60.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="volco2label">
-        <property name="text">
-         <string>Desired Volume of CO2</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QDoubleSpinBox" name="volco2">
-        <property name="decimals">
-         <number>1</number>
-        </property>
-        <property name="minimum">
-         <double>1.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>5.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-        <property name="value">
-         <double>2.500000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <spacer>
+      <item row="0" column="2">
+       <spacer name="spacer">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+         <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>20</width>
-          <height>12</height>
+          <width>201</width>
+          <height>78</height>
          </size>
         </property>
        </spacer>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="sugarlabel">
-        <property name="text">
-         <string>Amount of sugar to add</string>
-        </property>
-       </widget>
+      <item row="0" column="3">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0" colspan="3">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Style Reference</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="stylelabel">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>&amp;Style</string>
+          </property>
+          <property name="buddy">
+           <cstring>stylecombo</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="2">
+         <widget class="QComboBox" name="stylecombo">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Recipe Style</string>
+          </property>
+          <property name="whatsThis">
+           <string>&lt;p&gt;Use this control to select the style of recipe.&lt;/p&gt;
+&lt;p&gt;This only affects the minimum and maximum values in the &lt;em&gt;characteristics&lt;/em&gt; section&lt;/p&gt;</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <property name="duplicatesEnabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="minco2label">
+          <property name="text">
+           <string>Minimum Volume of CO2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="minco2">
+          <property name="text">
+           <string>0.5</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QLabel" name="maxco2label">
+          <property name="text">
+           <string>Maximum Volume of CO2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLabel" name="maxco2">
+          <property name="text">
+           <string>5.0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="sugarbottlelabel">
-        <property name="text">
-         <string>Bottling:</string>
+      <item row="1" column="0">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLabel" name="sugarbottle">
-        <property name="text">
-         <string>2.0</string>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>9</height>
+         </size>
         </property>
-       </widget>
+       </spacer>
       </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="sugarkeglabel">
-        <property name="text">
-         <string>Kegging:</string>
+      <item row="1" column="3">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-       </widget>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
-      <item row="6" column="1">
-       <widget class="QLabel" name="sugarkeg">
+      <item row="2" column="0">
+       <layout class="QFormLayout" name="formLayout_2">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::ExpandingFieldsGrow</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="sugarlabel">
+          <property name="text">
+           <string>Amount of sugar to add</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="sugarbottlelabel">
+          <property name="text">
+           <string>Bottling:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="sugarbottle">
+          <property name="text">
+           <string>2.0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="sugarkeglabel">
+          <property name="text">
+           <string>Kegging:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="sugarkeg">
+          <property name="text">
+           <string>1.0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="1" colspan="2">
+       <spacer name="spacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>202</width>
+          <height>78</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>1.0</string>
+         <string>WARNING: Overcarbinating can result in blown bottles. Use your head. If it seems like too much sugar, we may have messed up the calculation. Err on the side of caution and scale it back.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
+   <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonbox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -217,8 +348,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>118</x>
-     <y>195</y>
+     <x>127</x>
+     <y>247</y>
     </hint>
     <hint type="destinationlabel">
      <x>118</x>

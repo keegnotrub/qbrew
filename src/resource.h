@@ -147,7 +147,7 @@ const QString attrClass             = "class";
 const QString classRecipe           = tagRecipe;
 const QString classBatch            = tagBatch;
 
-const QString tagDoc                = "qbrewdata"; 
+const QString tagDoc                = "qbrewdata";
 const QString attrVersion           = "version";
 const QString tagStyles             = "styles";
 const QString tagStyle              = "style";
@@ -159,6 +159,8 @@ const QString attrIBULow            = "ibulow";
 const QString attrIBUHigh           = "ibuhigh";
 const QString attrSRMLow            = "srmlow";
 const QString attrSRMHigh           = "srmhigh";
+const QString attrCO2Low            = "co2low";
+const QString attrCO2High           = "co2high";
 const QString tagGrains             = "grains";
 const QString tagGrain              = "grain";
 const QString attrQuantity          = "quantity";
@@ -212,6 +214,8 @@ const QString tagIBUMIN             = "IBU_MIN";
 const QString tagIBUMAX             = "IBU_MAX";
 const QString tagCOLORMIN           = "COLOR_MIN";
 const QString tagCOLORMAX           = "COLOR_MAX";
+const QString tagCO2MIN             = "CO2_MIN";
+const QString tagCO2MAX             = "CO2_MAX";
 
 const QString tagAMOUNT             = "AMOUNT";
 const QString tagAMOUNTISWEIGHT     = "AMOUNT_IS_WEIGHT";

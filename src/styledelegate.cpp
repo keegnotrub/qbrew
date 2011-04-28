@@ -73,6 +73,17 @@ QWidget *StyleDelegate::createEditor(QWidget *parent,
           spin->installEventFilter(const_cast<StyleDelegate*>(this));
           return spin;
 
+      case StyleModel::CO2LOW:
+      case StyleModel::CO2HI:
+          if (blank) return 0;
+          dspin = new QDoubleSpinBox(parent);
+          dspin->setDecimals(1);
+          dspin->setRange(0.0, 5.0);
+          dspin->setSingleStep(0.1);
+          dspin->setAccelerated(true);
+          dspin->installEventFilter(const_cast<StyleDelegate*>(this));
+          return dspin;
+
       default:
           return 0;
     }

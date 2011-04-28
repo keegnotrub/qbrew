@@ -44,6 +44,8 @@ public:
 public slots:
     // for calculating the actual SG
     void recalc();
+    // for updating the min/max CO2 labels
+    void updateCO2(const QString &newStyle);
 
 private:
     Ui::SugarTool ui;

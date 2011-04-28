@@ -149,6 +149,8 @@ DatabaseTool::DatabaseTool(QWidget* parent)
     stylepage.view->setColumnWidth(StyleModel::IBUHI, 8*mw);
     stylepage.view->setColumnWidth(StyleModel::SRMLOW, 8*mw);
     stylepage.view->setColumnWidth(StyleModel::SRMHI, 8*mw);
+    stylepage.view->setColumnWidth(StyleModel::CO2LOW, 8*mw);
+    stylepage.view->setColumnWidth(StyleModel::CO2HI, 8*mw);
 
     // setup connections
     connect(grainmodel_, SIGNAL(modified()),

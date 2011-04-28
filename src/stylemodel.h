@@ -43,7 +43,7 @@ class StyleModel : public QAbstractTableModel {
     Q_OBJECT
 public:
     // model columns
-    enum { NAME, OGLOW, OGHI, FGLOW, FGHI, IBULOW, IBUHI, SRMLOW, SRMHI, COUNT };
+    enum { NAME, OGLOW, OGHI, FGLOW, FGHI, IBULOW, IBUHI, SRMLOW, SRMHI, CO2LOW, CO2HI, COUNT };
 
     StyleModel(QObject *parent, StyleList *list);
     ~StyleModel();

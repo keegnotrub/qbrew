@@ -24,6 +24,8 @@
 
 #include "qbrew.h"
 
+#include <stdio.h>
+
 using namespace Resource;
 
 QBrew *QBrew::instance_ = 0;

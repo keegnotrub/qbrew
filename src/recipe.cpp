@@ -584,6 +584,12 @@ double Recipe::calculateSugar(double volumeBeerGal,
     // gallons * (Desired carbonation level in volumes of CO2 - 3.0378
     // + (0.050062 * Fermentation temperature of beer in degrees F) -
     // (0.00026555 * Fermentation temperature of beer in degrees F^2))
+    //
+    // Carbonation styles from:
+    // www.hbd.org/deb/memberpages/williammenzl/Carbonation.pdf
+    // and:
+    // http://hbd.org/brewery/library/YPrimerMH.html
+    // with anything missing extrapolated from the data given
 
 
     double sugarGrams = 15.195 * volumeBeerGal *

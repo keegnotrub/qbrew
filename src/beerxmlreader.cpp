@@ -630,6 +630,8 @@ bool BeerXmlWriter::writeRecipe(Recipe *recipe)
     writeTextElement(tagIBUMAX, QString::number(recipe->style().IBUHi(),'f',2));
     writeTextElement(tagCOLORMIN, QString::number(recipe->style().SRMLow(),'f',2));
     writeTextElement(tagCOLORMAX, QString::number(recipe->style().SRMHi(),'f',2));
+    writeTextElement(tagCO2MIN, QString::number(recipe->style().CO2Low(),'f',2));
+    writeTextElement(tagCO2MAX, QString::number(recipe->style().CO2Hi(),'f',2));
     writeEndElement(); // tagSTYLE
 
     // fermentables list

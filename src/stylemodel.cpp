@@ -71,6 +71,10 @@ QVariant StyleModel::data(const QModelIndex &index, int role) const
               return QString::number(style.srmlow_);
           case SRMHI:
               return QString::number(style.srmhi_);
+          case CO2LOW:
+              return QString::number(style.co2low_,'f',1);
+          case CO2HI:
+              return QString::number(style.co2hi_,'f',1);
           default:
               return QVariant();
         }
@@ -94,6 +98,10 @@ QVariant StyleModel::data(const QModelIndex &index, int role) const
               return style.srmlow_;
           case SRMHI:
               return style.srmhi_;
+          case CO2LOW:
+              return style.co2low_;
+          case CO2HI:
+              return style.co2hi_;
           default:
               return QVariant();
         }
@@ -109,6 +117,8 @@ QVariant StyleModel::data(const QModelIndex &index, int role) const
           case IBUHI:
           case SRMLOW:
           case SRMHI:
+          case CO2LOW:
+          case CO2HI:
           default:
               return Qt::AlignRight;
         }
@@ -200,6 +210,14 @@ bool StyleModel::setData(const QModelIndex &index,
           style.srmhi_ = value.toUInt();
           break;
 
+      case CO2LOW:
+          style.co2low_ = value.toDouble();
+          break;
+
+      case CO2HI:
+          style.co2hi_ = value.toDouble();
+          break;
+
       default:
           return false;
     }
@@ -209,7 +227,7 @@ bool StyleModel::setData(const QModelIndex &index,
 
     // whole row may have changed
     emit dataChanged(index.sibling(row, NAME),
-                     index.sibling(row, SRMHI));
+                     index.sibling(row, CO2HI));
 
     return true;
 }
@@ -286,6 +304,10 @@ QVariant StyleModel::headerData(int section, Qt::Orientation orientation,
               return tr("Min. SRM");
           case SRMHI:
               return tr("Max. SRM");
+          case CO2LOW:
+              return tr("Min. CO2");
+          case CO2HI:
+              return tr("Max. CO2");
            default:
               return QVariant();
         }
@@ -364,6 +386,12 @@ void StyleModel::sort(int column, Qt::SortOrder order)
               break;
           case SRMHI:
               field = QString::number(style.srmhi_).rightJustified(6,'0');
+              break;
+          case CO2LOW:
+              field = QString::number(style.co2low_).rightJustified(6,'0');
+              break;
+          case CO2HI:
+              field = QString::number(style.co2hi_).rightJustified(6,'0');
               break;
           default:
               field = QString();

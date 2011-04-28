@@ -36,7 +36,7 @@ bool DataReader::readData(Data *data)
     QString buf;
     bool grainsflag=false, hopsflag=false, miscsflag=false;
     bool stylesflag=false, utilflag=false;
- 
+
     data->grainmap_.clear();
     data->hopmap_.clear();
     data->miscmap_.clear();
@@ -83,6 +83,10 @@ bool DataReader::readData(Data *data)
                 style.setSRMLow(buf.toInt());
                 buf = attributes().value(attrSRMHigh).toString();
                 style.setSRMHi(buf.toInt());
+                buf = attributes().value(attrCO2Low).toString();
+                style.setCO2Low(buf.toDouble());
+                buf = attributes().value(attrCO2High).toString();
+                style.setCO2Hi(buf.toDouble());
                 style.setName(readElementText());
                 data->insertStyle(style);
             }
@@ -233,6 +237,8 @@ bool DataWriter::writeData(Data *data)
         writeAttribute(attrIBUHigh, QString::number(style.IBUHi()));
         writeAttribute(attrSRMLow, QString::number(style.SRMLow()));
         writeAttribute(attrSRMHigh, QString::number(style.SRMHi()));
+        writeAttribute(attrCO2Low, QString::number(style.CO2Low()));
+        writeAttribute(attrCO2High, QString::number(style.CO2Hi()));
         writeCharacters(style.name());
         writeEndElement();
     }

@@ -10,11 +10,14 @@
  ***************************************************************************/
 
 #include <QLabel>
+#include <QLocale>
 
 #include "recipe.h"
 #include "resource.h"
 #include "data.h"
 #include "sugartool.h"
+
+#include <stdio.h>
 
 //////////////////////////////////////////////////////////////////////////////
 // AbvcalcTool()
@@ -58,13 +61,42 @@ SugarTool::SugarTool(QWidget* parent)
         ui.temp->setValue(15.0);
     }
 
+    // set up style box
+    ui.stylecombo->clear();
+    ui.stylecombo->addItems(Data::instance()->stylesList());
+
     // connections
     connect(ui.volbeer, SIGNAL(valueChanged(double)), this, SLOT(recalc()));
     connect(ui.temp, SIGNAL(valueChanged(double)), this, SLOT(recalc()));
     connect(ui.volco2, SIGNAL(valueChanged(double)), this, SLOT(recalc()));
+    connect(ui.stylecombo, SIGNAL(activated(const QString &)),
+            this, SLOT(updateCO2(const QString &)));
 
+    updateCO2(ui.stylecombo->currentText());
     recalc();
 }
+
+//////////////////////////////////////////////////////////////////////////////
+// updateCO2()
+// ----------
+// update the CO2 based on the beer style
+
+void SugarTool::updateCO2(const QString &newStyle)
+{
+    Style style;
+    QLocale locale = QLocale::system();
+
+    if (Data::instance()->hasStyle(newStyle)){
+        style = Data::instance()->style(newStyle);
+    }
+    else {
+        style = Style();
+    }
+
+    ui.minco2->setText(locale.toString(style.CO2Low(),'f',1));
+    ui.maxco2->setText(locale.toString(style.CO2Hi(),'f',1));
+}
+
 
 //////////////////////////////////////////////////////////////////////////////
 // recalc()
