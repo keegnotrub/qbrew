@@ -220,8 +220,7 @@ QString MashWaterDialog::calculateStep3WaterVolume() const
     double initialTemp   = step2TargetTempSpinBox->value();
     double grainMass     = grainMassDoubleSpinBox->value();
     double waterVolume   = strikeWaterVolumeDoubleSpinBox->value() +
-                           step2WaterVolumeLabel->text().replace(
-                               getUnitString(),"").toDouble();
+                           calculateStep2WaterVolume().toDouble();
     double infWaterTemp  = step3WaterTempSpinBox->value();
 
     return calculateWaterVolume(targetTemp, initialTemp,
