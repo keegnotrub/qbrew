@@ -8,6 +8,7 @@
 ***************************************************************************/
 
 #include <QtGui>
+#include <QtWidgets>
 
 #include "alcoholtool.h"
 #include "configure.h"
@@ -78,7 +79,7 @@ void QBrew::initialize(const QString &filename)
     ui.setupUi(this);
     initActions();
 
-#if defined (Q_WS_MAC)
+#if defined (Q_OS_MAC)
     // initial defaults for mac
     setUnifiedTitleAndToolBarOnMac(false);
     ui.maintoolbar->setVisible(false);
@@ -1350,7 +1351,7 @@ QString QBrew::dataBase()
         base += "/";
     }
 
-#elif defined(Q_WS_MAC)
+#elif defined(Q_OS_MAC)
     if (QRegExp("Contents/MacOS/?$").indexIn(base) != -1) {
         // we're pointing inside an application bundle
         base += "/../Resources/";
@@ -1386,7 +1387,7 @@ QString QBrew::docBase()
         base += "/doc/";
     }
 
-#elif defined(Q_WS_MAC)
+#elif defined(Q_OS_MAC)
     if (QRegExp("Contents/MacOS/?$").indexIn(base) != -1) {
         // we're pointing inside an application bundle
         base += "/../Resources/en.lproj/";

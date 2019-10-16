@@ -71,7 +71,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     grainpage.view->verticalHeader()->setDefaultSectionSize(mh);
     grainpage.view->verticalHeader()->hide();
-    grainpage.view->horizontalHeader()->setClickable(true);
+    grainpage.view->horizontalHeader()->setSectionsClickable(true);
     grainpage.view->horizontalHeader()->setHighlightSections(false);
 
     grainpage.view->setColumnWidth(GrainModel::NAME, 20*mw);
@@ -94,7 +94,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     hoppage.view->verticalHeader()->setDefaultSectionSize(mh);
     hoppage.view->verticalHeader()->hide();
-    hoppage.view->horizontalHeader()->setClickable(true);
+    hoppage.view->horizontalHeader()->setSectionsClickable(true);
     hoppage.view->horizontalHeader()->setHighlightSections(false);
 
     hoppage.view->setColumnHidden(HopModel::WEIGHT, true);
@@ -116,7 +116,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     miscpage.view->verticalHeader()->setDefaultSectionSize(mh);
     miscpage.view->verticalHeader()->hide();
-    miscpage.view->horizontalHeader()->setClickable(true);
+    miscpage.view->horizontalHeader()->setSectionsClickable(true);
     miscpage.view->horizontalHeader()->setHighlightSections(false);
 
     miscpage.view->setColumnHidden(MiscModel::QUANTITY, true);
@@ -137,7 +137,7 @@ DatabaseTool::DatabaseTool(QWidget* parent)
 
     stylepage.view->verticalHeader()->setDefaultSectionSize(mh);
     stylepage.view->verticalHeader()->hide();
-    stylepage.view->horizontalHeader()->setClickable(true);
+    stylepage.view->horizontalHeader()->setSectionsClickable(true);
     stylepage.view->horizontalHeader()->setHighlightSections(false);
 
     stylepage.view->setColumnWidth(StyleModel::NAME, 20*mw);

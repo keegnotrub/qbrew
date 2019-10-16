@@ -38,7 +38,7 @@
 #include "resource.h"
 
 struct WinConfigState {
-#if defined (Q_WS_MAC)
+#if defined (Q_OS_MAC)
    WinConfigState() : statusbar(true) { ; }
 #else
    WinConfigState() : statusbar(false) { ; }

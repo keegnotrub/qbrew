@@ -42,7 +42,7 @@
 // some stuff to differentiate between platforms
 #if defined(Q_WS_X11)
 #define QDIR_HOME   QDir::homePath()
-#elif defined(Q_WS_MACX)
+#elif defined(Q_OS_MAC)
 #define QDIR_HOME   QDir::homePath()
 #else
 #define QDIR_HOME   QDir::currentPath()

@@ -40,7 +40,7 @@
 #include <QTextStream>
 #include <QTranslator>
 
-#if defined(Q_WS_MACX)
+#if defined(Q_OS_MAC)
 extern void qt_mac_set_menubar_icons(bool enable);
 #endif
 
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
     app.setApplicationName(PACKAGE);
     app.setOrganizationName(TITLE);
 
-#if defined(Q_WS_MACX)
+#if defined(Q_OS_MAC)
     // disable icons on Mac menus (as is customary)
     qt_mac_set_menubar_icons(false);
 #endif

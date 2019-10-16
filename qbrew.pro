@@ -6,7 +6,7 @@
 TARGET = qbrew
 TEMPLATE = app
 CONFIG += qt warn_on
-QT += xml
+QT += widgets printsupport xml
 
 MOC_DIR = build
 OBJECTS_DIR = build
