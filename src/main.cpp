@@ -41,7 +41,7 @@
 #include <QTranslator>
 
 #if defined(Q_OS_MAC)
-extern void qt_mac_set_menubar_icons(bool enable);
+// extern void qt_mac_set_menubar_icons(bool enable);
 #endif
 
 #include "qbrew.h"
@@ -132,7 +132,7 @@ int main(int argc, char **argv)
 
 #if defined(Q_OS_MAC)
     // disable icons on Mac menus (as is customary)
-    qt_mac_set_menubar_icons(false);
+    // qt_mac_set_menubar_icons(false);
 #endif
 
     // load qbrew translations
